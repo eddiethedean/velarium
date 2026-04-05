@@ -54,8 +54,16 @@ def render_typespec(ts: TypeSpec) -> str:
         return f"set[{inner}]"
 
     if ts.kind == TypeKind.DICT:
-        k = render_typespec(ts.args[0]) if ts.args and len(ts.args) > 0 else "typing.Any"
-        v = render_typespec(ts.args[1]) if ts.args and len(ts.args) > 1 else "typing.Any"
+        k = (
+            render_typespec(ts.args[0])
+            if ts.args and len(ts.args) > 0
+            else "typing.Any"
+        )
+        v = (
+            render_typespec(ts.args[1])
+            if ts.args and len(ts.args) > 1
+            else "typing.Any"
+        )
         return f"dict[{k}, {v}]"
 
     if ts.kind == TypeKind.TUPLE:

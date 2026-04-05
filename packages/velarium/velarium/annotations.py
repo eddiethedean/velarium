@@ -70,34 +70,67 @@ def type_to_typespec(
         return _merge_optional(u, optional=opt)
 
     if origin is list or origin is typing.List:
-        inner = type_to_typespec(args[0], optional=False) if args else TypeSpec(kind=TypeKind.ANY)
-        return _merge_optional(TypeSpec(kind=TypeKind.LIST, args=[inner]), optional=optional)
+        inner = (
+            type_to_typespec(args[0], optional=False)
+            if args
+            else TypeSpec(kind=TypeKind.ANY)
+        )
+        return _merge_optional(
+            TypeSpec(kind=TypeKind.LIST, args=[inner]), optional=optional
+        )
 
     if origin is dict or origin is typing.Dict:
-        k = type_to_typespec(args[0], optional=False) if len(args) > 0 else TypeSpec(kind=TypeKind.ANY)
-        v = type_to_typespec(args[1], optional=False) if len(args) > 1 else TypeSpec(kind=TypeKind.ANY)
-        return _merge_optional(TypeSpec(kind=TypeKind.DICT, args=[k, v]), optional=optional)
+        k = (
+            type_to_typespec(args[0], optional=False)
+            if len(args) > 0
+            else TypeSpec(kind=TypeKind.ANY)
+        )
+        v = (
+            type_to_typespec(args[1], optional=False)
+            if len(args) > 1
+            else TypeSpec(kind=TypeKind.ANY)
+        )
+        return _merge_optional(
+            TypeSpec(kind=TypeKind.DICT, args=[k, v]), optional=optional
+        )
 
     if origin is set or origin is typing.Set:
-        inner = type_to_typespec(args[0], optional=False) if args else TypeSpec(kind=TypeKind.ANY)
-        return _merge_optional(TypeSpec(kind=TypeKind.SET, args=[inner]), optional=optional)
+        inner = (
+            type_to_typespec(args[0], optional=False)
+            if args
+            else TypeSpec(kind=TypeKind.ANY)
+        )
+        return _merge_optional(
+            TypeSpec(kind=TypeKind.SET, args=[inner]), optional=optional
+        )
 
     if origin is tuple or origin is typing.Tuple:
         if not args:
             inner = TypeSpec(kind=TypeKind.ANY)
-            return _merge_optional(TypeSpec(kind=TypeKind.TUPLE, args=[inner]), optional=optional)
+            return _merge_optional(
+                TypeSpec(kind=TypeKind.TUPLE, args=[inner]), optional=optional
+            )
         if len(args) == 2 and args[1] is Ellipsis:
             inner = type_to_typespec(args[0], optional=False)
-            return _merge_optional(TypeSpec(kind=TypeKind.TUPLE, args=[inner]), optional=optional)
+            return _merge_optional(
+                TypeSpec(kind=TypeKind.TUPLE, args=[inner]), optional=optional
+            )
         inners = [type_to_typespec(a, optional=False) for a in args]
-        return _merge_optional(TypeSpec(kind=TypeKind.TUPLE, args=inners), optional=optional)
+        return _merge_optional(
+            TypeSpec(kind=TypeKind.TUPLE, args=inners), optional=optional
+        )
 
     if origin is typing.Callable or origin is CallableABC:
         if args:
             param_args, ret = args[0], args[1]
-            if get_origin(param_args) is list:  # pragma: no cover — rare Callable[..., T] shape; else path covers real callables
+            if (
+                get_origin(param_args) is list
+            ):  # pragma: no cover — rare Callable[..., T] shape; else path covers real callables
                 plist = get_args(param_args)
-                plist_ts = TypeSpec(kind=TypeKind.LIST, args=[type_to_typespec(p, optional=False) for p in plist])
+                plist_ts = TypeSpec(
+                    kind=TypeKind.LIST,
+                    args=[type_to_typespec(p, optional=False) for p in plist],
+                )
             else:
                 plist_ts = type_to_typespec(param_args, optional=False)
             ret_ts = type_to_typespec(ret, optional=False)
@@ -105,7 +138,9 @@ def type_to_typespec(
                 TypeSpec(kind=TypeKind.CALLABLE, args=[plist_ts, ret_ts]),
                 optional=optional,
             )
-        return _merge_optional(TypeSpec(kind=TypeKind.CALLABLE, args=None), optional=optional)
+        return _merge_optional(
+            TypeSpec(kind=TypeKind.CALLABLE, args=None), optional=optional
+        )
 
     if isinstance(t, TypeVar):
         return _merge_optional(TypeSpec(kind=TypeKind.TYPE_VAR), optional=optional)
@@ -113,8 +148,12 @@ def type_to_typespec(
     if origin is not None:
         if args:
             inner_args = [type_to_typespec(a, optional=False) for a in args]
-            return _merge_optional(TypeSpec(kind=TypeKind.GENERIC, args=inner_args), optional=optional)
-        return _merge_optional(TypeSpec(kind=TypeKind.GENERIC, args=[]), optional=optional)
+            return _merge_optional(
+                TypeSpec(kind=TypeKind.GENERIC, args=inner_args), optional=optional
+            )
+        return _merge_optional(
+            TypeSpec(kind=TypeKind.GENERIC, args=[]), optional=optional
+        )
 
     if isinstance(t, type):
         if t is int:
@@ -135,14 +174,20 @@ def type_to_typespec(
             return _merge_optional(TypeSpec(kind=TypeKind.TIME), optional=optional)
         if issubclass(t, Enum):
             members = [TypeSpec(kind=TypeKind.LITERAL, default=m.value) for m in t]
-            u = TypeSpec(kind=TypeKind.ENUM, args=members) if members else TypeSpec(kind=TypeKind.ANY)
+            u = (
+                TypeSpec(kind=TypeKind.ENUM, args=members)
+                if members
+                else TypeSpec(kind=TypeKind.ANY)
+            )
             return _merge_optional(u, optional=optional)
         return _merge_optional(TypeSpec(kind=TypeKind.ANY), optional=optional)
 
     return _merge_optional(TypeSpec(kind=TypeKind.ANY), optional=optional)
 
 
-def annotation_to_typespec(annotation: Any, *, globalns: dict[str, Any] | None = None) -> TypeSpec:
+def annotation_to_typespec(
+    annotation: Any, *, globalns: dict[str, Any] | None = None
+) -> TypeSpec:
     """Resolve string annotations and return TypeSpec."""
     if isinstance(annotation, str):
         if globalns is None:

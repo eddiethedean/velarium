@@ -34,7 +34,9 @@ def _load_class(path: str) -> type:
 
 @app.command("ir")
 def dump_ir(
-    target: str = typer.Argument(..., help="Import path: module:Class or module:Outer.Inner"),
+    target: str = typer.Argument(
+        ..., help="Import path: module:Class or module:Outer.Inner"
+    ),
     out: str | None = typer.Option(None, "--out", "-o", help="Write JSON to this file"),
 ) -> None:
     """Print ModelSpec IR as JSON for a dataclass."""

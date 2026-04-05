@@ -80,7 +80,13 @@ def optional_to_union(ts: TypeSpec) -> TypeSpec:
         has_none = any(m.kind == TypeKind.NONE for m in members)
         if not has_none:
             members.append(none)
-        u = TypeSpec(kind=TypeKind.UNION, args=members, optional=True, nullable=ts.nullable, default=ts.default)
+        u = TypeSpec(
+            kind=TypeKind.UNION,
+            args=members,
+            optional=True,
+            nullable=ts.nullable,
+            default=ts.default,
+        )
         return normalize_union(u)
     u = TypeSpec(
         kind=TypeKind.UNION,

@@ -8,7 +8,6 @@ from typing import TypedDict
 
 import pytest
 
-from stubber.ir import ModelSpec, TypeSpec
 from stubber.modelspec_build import (
     _module_globals,
     modelspec_from_dataclass,
@@ -44,7 +43,9 @@ def test_modelspec_skips_non_init_fields() -> None:
     assert "b" not in spec.fields and "a" in spec.fields
 
 
-def test_modelspec_get_type_hints_failure_uses_empty(monkeypatch: pytest.MonkeyPatch) -> None:
+def test_modelspec_get_type_hints_failure_uses_empty(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
     @dataclasses.dataclass
     class Bad:
         x: int
@@ -75,7 +76,9 @@ def test_modelspec_from_typed_dict_rejects_non_typed_dict() -> None:
         modelspec_from_typed_dict(Plain)
 
 
-def test_modelspec_from_typed_dict_hints_failure(monkeypatch: pytest.MonkeyPatch) -> None:
+def test_modelspec_from_typed_dict_hints_failure(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
     def boom(*_a: object, **_k: object) -> dict[str, object]:
         raise RuntimeError("nope")
 
@@ -89,7 +92,9 @@ def test_typespec_from_object() -> None:
     assert ts.kind.value == "int"
 
 
-def test_modelspec_inspect_source_fails_gracefully(monkeypatch: pytest.MonkeyPatch) -> None:
+def test_modelspec_inspect_source_fails_gracefully(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
     import velarium.modelspec_build as mb
 
     def bad_getsourcefile(_obj: object) -> str | None:

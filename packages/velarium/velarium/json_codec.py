@@ -123,7 +123,11 @@ def field_spec_to_dict(f: FieldSpec) -> dict[str, Any]:
         "description": f.description,
         "deprecated": f.deprecated,
     }
-    return {k: v for k, v in out.items() if v is not None or k in ("name", "type", "required")}
+    return {
+        k: v
+        for k, v in out.items()
+        if v is not None or k in ("name", "type", "required")
+    }
 
 
 def field_spec_from_dict(d: dict[str, Any]) -> FieldSpec:

@@ -30,7 +30,9 @@ def modelspec_from_dataclass(cls: type, *, include_extras: bool = False) -> Mode
 
     globalns = _module_globals(cls)
     try:
-        hints = get_type_hints(cls, globalns=globalns, localns=None, include_extras=include_extras)
+        hints = get_type_hints(
+            cls, globalns=globalns, localns=None, include_extras=include_extras
+        )
     except Exception:
         hints = {}
 

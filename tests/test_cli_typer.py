@@ -17,7 +17,9 @@ _runner = CliRunner()
 
 
 def _pkg_paths() -> str:
-    return f"{_REPO_ROOT / 'packages' / 'stubber'}:{_REPO_ROOT / 'packages' / 'velarium'}"
+    return (
+        f"{_REPO_ROOT / 'packages' / 'stubber'}:{_REPO_ROOT / 'packages' / 'velarium'}"
+    )
 
 
 def _env() -> dict[str, str]:

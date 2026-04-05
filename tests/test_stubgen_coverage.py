@@ -32,25 +32,40 @@ def test_render_primitives_and_time(kind: TypeKind) -> None:
 
 def test_render_literal_with_and_without_default() -> None:
     assert "Literal" in render_typespec(TypeSpec(kind=TypeKind.LITERAL, default="a"))
-    assert render_typespec(TypeSpec(kind=TypeKind.LITERAL, default=None)) == "typing.Any"
+    assert (
+        render_typespec(TypeSpec(kind=TypeKind.LITERAL, default=None)) == "typing.Any"
+    )
 
 
 def test_render_list_set_dict_tuple() -> None:
-    assert "list[" in render_typespec(TypeSpec(kind=TypeKind.LIST, args=[TypeSpec(kind=TypeKind.INT)]))
-    assert "set[" in render_typespec(TypeSpec(kind=TypeKind.SET, args=[TypeSpec(kind=TypeKind.INT)]))
+    assert "list[" in render_typespec(
+        TypeSpec(kind=TypeKind.LIST, args=[TypeSpec(kind=TypeKind.INT)])
+    )
+    assert "set[" in render_typespec(
+        TypeSpec(kind=TypeKind.SET, args=[TypeSpec(kind=TypeKind.INT)])
+    )
     assert "dict[" in render_typespec(
-        TypeSpec(kind=TypeKind.DICT, args=[TypeSpec(kind=TypeKind.STR), TypeSpec(kind=TypeKind.INT)])
+        TypeSpec(
+            kind=TypeKind.DICT,
+            args=[TypeSpec(kind=TypeKind.STR), TypeSpec(kind=TypeKind.INT)],
+        )
     )
     assert "tuple[()]" in render_typespec(TypeSpec(kind=TypeKind.TUPLE, args=[]))
     assert "tuple[int, str]" in render_typespec(
-        TypeSpec(kind=TypeKind.TUPLE, args=[TypeSpec(kind=TypeKind.INT), TypeSpec(kind=TypeKind.STR)])
+        TypeSpec(
+            kind=TypeKind.TUPLE,
+            args=[TypeSpec(kind=TypeKind.INT), TypeSpec(kind=TypeKind.STR)],
+        )
     )
 
 
 def test_render_union_empty_and_enum() -> None:
     assert render_typespec(TypeSpec(kind=TypeKind.UNION, args=[])) == "typing.Any"
     assert "|" in render_typespec(
-        TypeSpec(kind=TypeKind.UNION, args=[TypeSpec(kind=TypeKind.INT), TypeSpec(kind=TypeKind.NONE)])
+        TypeSpec(
+            kind=TypeKind.UNION,
+            args=[TypeSpec(kind=TypeKind.INT), TypeSpec(kind=TypeKind.NONE)],
+        )
     )
 
 
@@ -69,7 +84,9 @@ def test_render_enum_literal_and_fallback() -> None:
 
 
 def test_render_callable_branches() -> None:
-    assert "typing.Callable[..., typing.Any]" in render_typespec(TypeSpec(kind=TypeKind.CALLABLE, args=None))
+    assert "typing.Callable[..., typing.Any]" in render_typespec(
+        TypeSpec(kind=TypeKind.CALLABLE, args=None)
+    )
     plist = TypeSpec(
         kind=TypeKind.LIST,
         args=[TypeSpec(kind=TypeKind.INT), TypeSpec(kind=TypeKind.STR)],

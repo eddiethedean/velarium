@@ -6,7 +6,7 @@ import datetime
 import typing
 from collections.abc import Callable
 from enum import Enum
-from typing import Any, Literal, Optional, TypeVar, Union, get_args
+from typing import Any, Literal, Optional, TypeVar, Union
 
 import pytest
 

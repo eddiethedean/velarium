@@ -5,16 +5,20 @@ from __future__ import annotations
 import json
 from enum import Enum
 
-import pytest
-
-from stubber.ir import FieldSpec, ModelConfig, ModelMetadata, ModelSpec, TypeKind, TypeSpec
+from stubber.ir import (
+    FieldSpec,
+    ModelConfig,
+    ModelMetadata,
+    ModelSpec,
+    TypeKind,
+    TypeSpec,
+)
 from stubber.json_codec import (
     dumps_model_spec,
     field_spec_from_dict,
     field_spec_to_dict,
     loads_model_spec,
     model_spec_from_dict,
-    model_spec_to_dict,
     typespec_from_dict,
     typespec_to_dict,
 )
@@ -36,10 +40,10 @@ def test_json_default_value_non_serializable_enum_and_object() -> None:
     out = typespec_to_dict(ts)
     assert out["default"] == 1
 
-    class O:
+    class _ArbitraryObject:
         pass
 
-    ts2 = TypeSpec(kind=TypeKind.INT, default=O())
+    ts2 = TypeSpec(kind=TypeKind.INT, default=_ArbitraryObject())
     out2 = typespec_to_dict(ts2)
     assert "_velarium_repr" in out2["default"]
 
@@ -60,7 +64,11 @@ def test_model_spec_full_roundtrip_with_config_and_metadata() -> None:
     s = dumps_model_spec(m, indent=None)
     m2 = loads_model_spec(s)
     assert m2.name == "M"
-    assert m2.config is not None and m2.config.frozen is True and m2.config.extra == "ignore"
+    assert (
+        m2.config is not None
+        and m2.config.frozen is True
+        and m2.config.extra == "ignore"
+    )
     assert m2.metadata is not None and m2.metadata.source_file == "/a.py"
 
 
