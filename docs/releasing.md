@@ -1,6 +1,6 @@
 # Installing and releasing Velarium packages
 
-The repo is a **[uv](https://docs.astral.sh/uv/) workspace** at the root. **Tier-1** publish targets are **`velarium`** (core IR) and **`velotype`** (stubs + CLI). Scaffold packages (**`viperis`**, **`morphra`**, **`granitus`**, **`velocus`**) are versioned **0.1.0** and buildable; publish them to PyPI only when you want those names live (they remain minimal stubs).
+The repo is a **[uv](https://docs.astral.sh/uv/) workspace** at the root. **Tier-1** publish targets are **`velarium`** (core IR) and **`velotype`** (stubs + CLI). Scaffold packages (**`viperis`**, **`morphra`**, **`granitus`**, **`velocus`**) are versioned in lockstep (e.g. **0.2.0**) and buildable; publish them to PyPI only when you want those names live (they remain minimal stubs).
 
 ## Version numbers
 
@@ -28,7 +28,7 @@ pip install -e packages/velarium -e "packages/velotype[dev]"
 Tagged installs:
 
 ```bash
-pip install git+https://github.com/eddiethedean/velarium.git@v0.1.0#subdirectory=packages/velotype
+pip install git+https://github.com/eddiethedean/velarium.git@v0.2.0#subdirectory=packages/velotype
 ```
 
 (Adjust tag and subdirectory for **`velarium`** or scaffold packages as needed.)
@@ -60,12 +60,12 @@ Then upload:
 uv run twine upload dist/*
 ```
 
-Upload **`velarium`** before **`velotype`** if you step through uploads manually (so **`velotype`**’s `velarium>=0.1.0` resolves on PyPI). A single `twine upload dist/*` is fine once **`velarium`** is already published or all files upload in one batch.
+Upload **`velarium`** before **`velotype`** if you step through uploads manually (so **`velotype`**’s `velarium>=0.2.0` resolves on PyPI). A single `twine upload dist/*` is fine once **`velarium`** is already published or all files upload in one batch.
 
 ### Manual release checklist
 
 1. Bump `__version__` in the package(s) you release and update [CHANGELOG.md](../CHANGELOG.md).
-2. Tag (e.g. `git tag -a v0.1.0 -m "Release 0.1.0"`) and `git push origin v0.1.0`.
+2. Tag (e.g. `git tag -a v0.2.0 -m "Release 0.2.0"`) and `git push origin v0.2.0`.
 3. Build and upload as above.
 
 ### Automated (GitHub Actions)
