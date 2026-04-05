@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- **Phase 0.3 — model sources** — `modelspec_from_pydantic_model` (Pydantic v2 `BaseModel`) and `modelspec_from_attrs_class` (attrs `@define`), optional extras `velarium[pydantic]`, `velarium[attrs]`, `velarium[sources]`; shared `metadata_for_class` for consistent `ModelMetadata`; [model-sources.md](docs/model-sources.md) (builders table, install, conflict policy).
+- **Tests** — deeper coverage for Pydantic/attrs builders (nested models, optional fields, `include_extras`, JSON round-trips, inheritance) and `metadata_for_class` (`getsourcelines` failures).
+
+### Fixed
+
+- **`modelspec_from_attrs_class`** — `attrs.Factory` / `field(factory=…)` no longer placed on `TypeSpec.default` (aligned with Pydantic `default_factory` policy and JSON-safe defaults).
+
 ## [0.2.0] - 2026-04-06
 
 Monorepo packages (**`velarium`**, **`velotype`**, **`viperis`**, **`morphra`**, **`granitus`**, **`velocus`**) are aligned at **0.2.0**. **`velotype`** depends on **`velarium>=0.2.0`**.

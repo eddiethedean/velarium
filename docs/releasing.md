@@ -26,6 +26,8 @@ Before publishing the **0.2.0** tag / GitHub Release, confirm:
 
 Scaffold packages (**`viperis`**, **`morphra`**, **`granitus`**, **`velocus`**) are also **0.2.0** in-repo; only publish them to PyPI if you intend those names to update.
 
+For a **later** release (e.g. **0.3.0**), repeat the same checks with the new version everywhere: each package’s `__version__`, **`velotype`**’s `velarium>=…` lower bound if it changes, a new **`[x.y.z]`** section in [CHANGELOG.md](../CHANGELOG.md), tag **`vx.y.z`**, and update tagged-install / compare-link examples in this doc and the changelog as needed.
+
 ## Install from a Git checkout
 
 ```bash

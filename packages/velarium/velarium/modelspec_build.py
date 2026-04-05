@@ -3,13 +3,13 @@
 from __future__ import annotations
 
 import dataclasses
-import inspect
 from typing import Any
 
 from typing_extensions import is_typeddict
 
 from velarium.annotations import annotation_to_typespec, type_to_typespec
-from velarium.ir import ModelConfig, ModelMetadata, ModelSpec, TypeSpec
+from velarium.ir import ModelConfig, ModelSpec, TypeSpec
+from velarium.model_metadata import metadata_for_class
 from velarium.normalize import normalize_typespec
 from velarium.typing_resolve import get_resolved_hints, module_globals_for_class
 
@@ -47,22 +47,7 @@ def modelspec_from_dataclass(cls: type, *, include_extras: bool = True) -> Model
             )
         fields[f.name] = ts
 
-    src_file = None
-    line_number = None
-    try:
-        src_file = inspect.getsourcefile(cls)
-        lines, start = inspect.getsourcelines(cls)
-        line_number = start
-    except (OSError, TypeError):
-        pass
-
-    meta = ModelMetadata(
-        source_module=cls.__module__,
-        source_file=src_file,
-        line_number=line_number,
-        generated_by="velarium",
-        version=None,
-    )
+    meta = metadata_for_class(cls, include_source=True)
     params = getattr(cls, "__dataclass_params__", None)
     frozen = bool(getattr(params, "frozen", False)) if params is not None else False
     cfg = ModelConfig(frozen=frozen, extra="forbid")
@@ -97,7 +82,7 @@ def modelspec_from_typed_dict(cls: type, *, include_extras: bool = True) -> Mode
             ts = normalize_typespec(ts)
         fields[name] = ts
 
-    meta = ModelMetadata(source_module=cls.__module__, generated_by="velarium")
+    meta = metadata_for_class(cls, include_source=True)
     return ModelSpec(name=cls.__name__, fields=fields, config=None, metadata=meta)
 
 

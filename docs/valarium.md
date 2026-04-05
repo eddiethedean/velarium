@@ -33,7 +33,7 @@ An umbrella CLI (**Velocus**) will orchestrate the ecosystem; today **`velotype`
 - Represent Python types in a normalized graph (`TypeSpec`, `ModelSpec`, …).
 - Encode primitives, unions, generics, structs, and constraints.
 - Provide a language-agnostic schema for downstream tools.
-- Map `typing` constructs and builders (dataclass, `TypedDict`) to IR with documented behavior; see [Supported annotations](supported-annotations.md).
+- Map `typing` constructs and class-based builders (dataclass, `TypedDict`, Pydantic v2, attrs with optional extras) to IR with documented behavior; see [Supported annotations](supported-annotations.md) and [Model sources](model-sources.md).
 
 **Characteristics:** Minimal dependencies (`typing_extensions`), immutable data shapes, JSON-serializable design. The in-repo test suite includes integration tests (`tests/test_ir_integration.py`) and JSON golden fixtures (`tests/fixtures/ir_golden/`) to guard the IR contract.
 
@@ -49,7 +49,7 @@ An umbrella CLI (**Velocus**) will orchestrate the ecosystem; today **`velotype`
 
 **Input:** Python files. **Output:** Velarium IR.
 
-**Status:** Scaffold — builders today live in **`velarium`** (e.g. dataclass → IR); **viperis** will generalize source-level ingestion.
+**Status:** Scaffold — class-based builders today live in **`velarium`** (see [Model sources](model-sources.md)); **viperis** will generalize source-level ingestion.
 
 **Monorepo:** [`packages/viperis`](../packages/viperis/README.md) · PyPI: **`viperis`** (placeholder releases as needed)
 
@@ -191,7 +191,7 @@ The Git repository is a **[uv](https://docs.astral.sh/uv/) workspace** (see root
 
 | Directory | PyPI name | Status |
 |-----------|-----------|--------|
-| `packages/velarium` | `velarium` | **Core IR** — JSON, normalization, dataclass/TypedDict builders |
+| `packages/velarium` | `velarium` | **Core IR** — JSON, normalization, builders ([Model sources](model-sources.md)) |
 | `packages/velotype` | `velotype` | **IR → `.pyi`** — `velotype` CLI (`ir`, `stub`) |
 | `packages/viperis` | `viperis` | Scaffold — Python → IR |
 | `packages/morphra` | `morphra` | Scaffold — IR → Pydantic |

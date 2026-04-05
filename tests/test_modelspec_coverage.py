@@ -122,11 +122,12 @@ def test_modelspec_inspect_source_fails_gracefully(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     import velarium.modelspec_build as mb
+    import velarium.model_metadata as mm
 
     def bad_getsourcefile(_obj: object) -> str | None:
         raise OSError("no source")
 
-    monkeypatch.setattr(mb.inspect, "getsourcefile", bad_getsourcefile)
+    monkeypatch.setattr(mm.inspect, "getsourcefile", bad_getsourcefile)
 
     @dataclasses.dataclass
     class X:

@@ -15,11 +15,14 @@ from velarium.json_codec import (
     model_spec_from_dict,
     model_spec_to_dict,
 )
+from velarium.model_metadata import metadata_for_class
+from velarium.modelspec_attrs import modelspec_from_attrs_class
 from velarium.modelspec_build import (
     modelspec_from_dataclass,
     modelspec_from_typed_dict,
     typespec_from_object,
 )
+from velarium.modelspec_pydantic import modelspec_from_pydantic_model
 from velarium.normalize import normalize_typespec, normalize_union, optional_to_union
 from velotype.stubgen import generate_pyi, render_typespec
 
@@ -36,7 +39,10 @@ __all__ = [
     "loads_model_spec",
     "model_spec_from_dict",
     "model_spec_to_dict",
+    "metadata_for_class",
+    "modelspec_from_attrs_class",
     "modelspec_from_dataclass",
+    "modelspec_from_pydantic_model",
     "modelspec_from_typed_dict",
     "typespec_from_object",
     "normalize_typespec",

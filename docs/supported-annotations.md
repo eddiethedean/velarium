@@ -1,6 +1,6 @@
 # Supported annotations (Phase 0.2)
 
-This document lists how Python typing constructs map to **ModelSpec IR** (`TypeSpec` / `TypeKind`) in **`velarium`**. It is the **support matrix** referenced by the [roadmap](ROADMAP.md) Phase **0.2.\*** exit criteria. For schema details see [modelspec-ir.md](modelspec-ir.md).
+This document lists how Python typing constructs map to **ModelSpec IR** (`TypeSpec` / `TypeKind`) in **`velarium`**. It is the **support matrix** referenced by the [roadmap](ROADMAP.md) Phase **0.2.\*** exit criteria. For schema details see [modelspec-ir.md](modelspec-ir.md). For **which Python class kinds** can be turned into `ModelSpec` (dataclass, `TypedDict`, Pydantic, attrs) and install extras, see [model-sources.md](model-sources.md).
 
 ## Conventions
 

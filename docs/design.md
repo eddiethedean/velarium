@@ -4,7 +4,7 @@
 
 This document explains **why** that IR exists and how we think about typing tooling—not as “another type checker,” but as a **thin compilation layer** between annotations and portable outputs.
 
-For the concrete schema (`ModelSpec`, `TypeSpec`, `TypeKind`, …), see [ModelSpec IR](modelspec-ir.md). For package roles and the target pipeline, see [Velarium ecosystem spec](valarium.md). For the annotation → IR support matrix (Phase **0.2**), see [Supported annotations](supported-annotations.md).
+For the concrete schema (`ModelSpec`, `TypeSpec`, `TypeKind`, …), see [ModelSpec IR](modelspec-ir.md). For package roles and the target pipeline, see [Velarium ecosystem spec](valarium.md). For the annotation → IR support matrix (Phase **0.2**), see [Supported annotations](supported-annotations.md). For class-based builders and optional extras (Phase **0.3**), see [Model sources](model-sources.md).
 
 ---
 
@@ -12,7 +12,7 @@ For the concrete schema (`ModelSpec`, `TypeSpec`, `TypeKind`, …), see [ModelSp
 
 | Piece | PyPI / import | Role today |
 |-------|----------------|------------|
-| **velarium** | `velarium` | Core IR: types, normalization, JSON codec, builders (e.g. dataclass → `ModelSpec`) |
+| **velarium** | `velarium` | Core IR: types, normalization, JSON codec, builders (dataclass, `TypedDict`, optional Pydantic / attrs → `ModelSpec`; see [model-sources](model-sources.md)) |
 | **velotype** | `velotype` | Backend: IR → `.pyi`; ships the **`velotype`** CLI (`ir`, `stub`). Depends on **velarium**. |
 | **viperis** | `viperis` | Planned frontend: Python source → IR (scaffold) |
 | **morphra** | `morphra` | Planned backend: IR → Pydantic (scaffold) |
@@ -40,7 +40,7 @@ The same source can **behave differently** depending on which tool is active. Th
 
 Velarium is **not** a replacement for mypy or Pyright.
 
-It is a **portable IR and compilation layer**: normalize annotations into **ModelSpec**, then transform that IR deterministically into artifacts such as **`.pyi` stubs**, JSON for tooling, or (eventually) Pydantic models and Spark schemas.
+It is a **portable IR and compilation layer**: normalize annotations into **ModelSpec**, then transform that IR deterministically into artifacts such as **`.pyi` stubs**, JSON for tooling, **generated** Pydantic model code or Spark-like schemas (planned backends: **morphra**, **granitus**), or consume hand-written Pydantic/attrs via **`velarium`** builders ([model-sources](model-sources.md)).
 
 Goals:
 

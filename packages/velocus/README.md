@@ -11,7 +11,7 @@
 
 Use the [**velotype**](../velotype/README.md) CLI for:
 
-- `velotype ir` — print ModelSpec JSON for a dataclass  
+- `velotype ir` — print ModelSpec JSON for a class the builders support (see [docs/model-sources.md](../../docs/model-sources.md))  
 - `velotype stub` — emit `.pyi` body  
 
 ## Planned behavior

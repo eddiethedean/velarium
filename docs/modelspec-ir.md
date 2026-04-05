@@ -13,10 +13,10 @@ It is designed to:
 - Normalize Python type annotations into a single semantic shape
 - Stay **backend-agnostic** (no reliance on a specific type checker or runtime)
 - Remain **fully JSON-serializable** for caching, tooling, and future non-Python backends
-- **Loss-minimize** information from type hints, dataclass-like models, and (eventually) other sources such as raw source via **viperis**
+- **Loss-minimize** information from type hints, dataclass-like models, Pydantic/attrs (optional extras), and (eventually) raw source via **viperis**
 - Stay **deterministic**: same logical input produces the same IR
 
-The **`velarium`** Python package maps this spec to dataclasses and helpers; the IR contract itself is not tied to any single package’s layout.
+The **`velarium`** Python package maps this spec from dataclasses, `TypedDict`, Pydantic v2, attrs, and related helpers (see [model-sources.md](model-sources.md)); the IR contract itself is not tied to any single package’s layout.
 
 ---
 
@@ -35,8 +35,8 @@ All structures are intended to be JSON-serializable (with explicit handling for 
 Capture as much typing information as practical from:
 
 - Python `typing` annotations
-- Dataclass / `TypedDict` definitions (via **`velarium.modelspec_build`**)
-- Future sources (e.g. **viperis** from source files, Pydantic models, other ASTs)
+- Dataclass / `TypedDict` (via **`velarium.modelspec_build`**), Pydantic v2 / attrs (via **`velarium.modelspec_pydantic`** / **`velarium.modelspec_attrs`**, optional extras; see [model-sources.md](model-sources.md))
+- Future sources (e.g. **viperis** from source files, other ASTs)
 
 ### 4. Deterministic
 

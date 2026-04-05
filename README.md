@@ -2,10 +2,10 @@
 
 [![CI](https://github.com/eddiethedean/velarium/actions/workflows/ci.yml/badge.svg)](https://github.com/eddiethedean/velarium/actions/workflows/ci.yml)
 
-**Velarium** is a Python monorepo built around a shared **ModelSpec IR**: a normalized representation of models and types, with a JSON codec and pluggable backends. Today the main backend is **stub** generation (`.pyi`); Pydantic, Spark-like schemas, and a unified CLI are on the [roadmap](docs/ROADMAP.md).
+**Velarium** is a Python monorepo built around a shared **ModelSpec IR**: a normalized representation of models and types, with a JSON codec and pluggable backends. The supported backend today is **stub** generation (`.pyi`) via **velotype**. IR can be built from dataclasses, `TypedDict`, Pydantic v2, and attrs (see [Model sources](docs/model-sources.md)). **Spark-like** schemas, **IR → Pydantic codegen** (morphra), and a unified umbrella CLI are on the [roadmap](docs/ROADMAP.md).
 
 - **Single IR** — One structure for tooling to agree on, instead of re-parsing Python differently in every consumer.
-- **Core library** — [`velarium`](packages/velarium/README.md) on PyPI: types, normalization, JSON, and builders (e.g. dataclass → `ModelSpec`). Annotation → `TypeSpec` behavior is documented in [Supported annotations](docs/supported-annotations.md) (Phase **0.2** fidelity).
+- **Core library** — [`velarium`](packages/velarium/README.md) on PyPI: types, normalization, JSON, and builders (dataclass, `TypedDict`, Pydantic, attrs → `ModelSpec`). Annotation → `TypeSpec` behavior is in [Supported annotations](docs/supported-annotations.md) (Phase **0.2**); builders and extras are in [Model sources](docs/model-sources.md) (Phase **0.3**).
 - **Stubs + CLI** — [`velotype`](packages/velotype/README.md): IR → `.pyi` and the `velotype` CLI (`ir`, `stub`).
 
 Requires **Python 3.10+**. Coordinated library releases are tagged in [CHANGELOG.md](CHANGELOG.md); **0.2.0** is the current line for all six `packages/*` PyPI names.
@@ -14,7 +14,7 @@ Requires **Python 3.10+**. Coordinated library releases are tagged in [CHANGELOG
 
 | Package | Role |
 |--------|------|
-| [**velarium**](packages/velarium/README.md) | Core IR: `TypeSpec`, `ModelSpec`, normalization, JSON, dataclass / `TypedDict` → IR |
+| [**velarium**](packages/velarium/README.md) | Core IR: `TypeSpec`, `ModelSpec`, normalization, JSON; builders for dataclass, `TypedDict`, Pydantic, attrs ([Model sources](docs/model-sources.md)) |
 | [**velotype**](packages/velotype/README.md) | IR → `.pyi`; **`velotype`** CLI |
 | [**viperis**](packages/viperis/README.md) | Python source → IR *(scaffold)* |
 | [**morphra**](packages/morphra/README.md) | IR → Pydantic *(scaffold)* |
@@ -108,6 +108,7 @@ CI runs **pytest**, **ty**, and wheel builds for all packages on Python 3.10–3
 | [Design & philosophy](docs/design.md) | Why the IR exists |
 | [ModelSpec IR specification](docs/modelspec-ir.md) | Schema and normalization |
 | [Supported annotations](docs/supported-annotations.md) | Annotation → IR matrix, gaps, stub behavior |
+| [Model sources](docs/model-sources.md) | Builders (dataclass, TypedDict, Pydantic, attrs), extras, policies |
 | [Roadmap](docs/ROADMAP.md) | Planned work |
 | [Installing & releasing](docs/releasing.md) | Builds and PyPI |
 | [Changelog](CHANGELOG.md) | Release notes |

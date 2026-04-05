@@ -5,7 +5,7 @@
 | | |
 |---|---|
 | **PyPI** | `viperis` (scaffold) |
-| **Status** | **Scaffold** — no parser implementation yet; use **`velarium.modelspec_build`** from dataclasses / `TypedDict` today |
+| **Status** | **Scaffold** — no parser implementation yet; use **`velarium`** class-based builders ([docs/model-sources.md](../../docs/model-sources.md)) today |
 
 ## Planned responsibilities
 

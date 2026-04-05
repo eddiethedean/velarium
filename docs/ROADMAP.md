@@ -243,15 +243,15 @@ The numbered phases below (**0.2**–**0.9**) are **monorepo-wide**; this sectio
 
 **Deliverables:**
 
-- **Pydantic v2:** `modelspec_from_pydantic_model` (name TBD) — fields, defaults, field constraints mapped into `TypeSpec` / metadata as far as the IR allows.
-- **Optional extras:** e.g. `pip install velotype[attrs]` (or an extra on **`velarium`** if IR-only) for **attrs** / **msgspec** with parallel tests.
-- **Unified metadata:** `ModelMetadata` populated consistently (module, file, line where feasible).
-- **Conflict policy:** If multiple sources disagree, document error vs last-wins behavior.
+- **Pydantic v2:** `modelspec_from_pydantic_model` — fields, defaults; `model_config` partially mapped (`frozen`, `extra`); constraints are lossy (see [model-sources.md](model-sources.md)).
+- **Optional extras:** `pip install velarium[pydantic]`, `velarium[attrs]`, or `velarium[sources]` (both).
+- **Unified metadata:** `metadata_for_class` / `ModelMetadata` (module, file, line where feasible).
+- **Conflict policy:** Documented in [model-sources.md](model-sources.md) (annotations vs runtime defaults).
 
 **Exit criteria:**
 
-- [ ] At least **one** non-dataclass source is **tier-1** (tested in default CI job).
-- [ ] User-facing doc: how to choose a builder and limitations per source.
+- [x] At least **one** non-dataclass source is **tier-1** (tested in default CI job).
+- [x] User-facing doc: how to choose a builder and limitations per source.
 
 ---
 

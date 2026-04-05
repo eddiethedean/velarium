@@ -17,6 +17,8 @@ dev = [
   "ty>=0.0.29",
   "build>=1",
   "twine>=6",
+  "pydantic>=2.4.0",
+  "attrs>=23.1.0",
 ]
 
 [tool.uv.workspace]
@@ -43,6 +45,10 @@ exclude_lines = [
 
 [tool.ty.environment]
 python-version = "3.10"
+
+[tool.ty.analysis]
+# Optional velarium extras may be absent from some environments; imports are runtime-guarded
+allowed-unresolved-imports = ["pydantic.**", "pydantic_core.**", "attrs.**"]
 
 [tool.ty.src]
 include = [
