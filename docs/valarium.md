@@ -10,7 +10,7 @@ The intended pipeline:
 Python source → Viperis → Velarium IR → Backend generators → Outputs
 ```
 
-An umbrella CLI (**Velocus**) will orchestrate the ecosystem; today **`stubber`** provides the supported CLI for IR export and stub generation.
+An umbrella CLI (**Velocus**) will orchestrate the ecosystem; today **`velotype`** provides the supported CLI for IR export and stub generation.
 
 ---
 
@@ -54,15 +54,15 @@ An umbrella CLI (**Velocus**) will orchestrate the ecosystem; today **`stubber`*
 
 ---
 
-### 3. `stubber` (IR → `.pyi`)
+### 3. `velotype` (IR → `.pyi`)
 
 **Role:** Generate Python stub files from Velarium IR.
 
 **Responsibilities:** Render IR as `.pyi` syntax, preserve type fidelity where possible, emit minimal stubs.
 
-**Output:** `.pyi` files. **CLI:** `stubber ir`, `stubber stub`.
+**Output:** `.pyi` files. **CLI:** `velotype ir`, `velotype stub`.
 
-**Monorepo:** [`packages/stubber`](../packages/stubber/README.md) · PyPI: **`stubber`** · depends on **`velarium`**
+**Monorepo:** [`packages/velotype`](../packages/velotype/README.md) · PyPI: **`velotype`** · depends on **`velarium`**
 
 ---
 
@@ -103,7 +103,7 @@ velocus emit pydantic User
 velocus graph module.py
 ```
 
-**Status:** Scaffold — use **`stubber`** for IR and stub commands until **velocus** ships.
+**Status:** Scaffold — use **`velotype`** for IR and stub commands until **velocus** ships.
 
 **Monorepo:** [`packages/velocus`](../packages/velocus/README.md)
 
@@ -121,7 +121,7 @@ Python Source
  Velarium IR  ← implemented in package `velarium`
     ↓
 ┌──────────────┬──────────────┬──────────────┐
-│ stubber      │ morphra      │ granitus     │
+│ velotype      │ morphra      │ granitus     │
 │ (.pyi)       │ (Pydantic)   │ (Spark)      │
 └──────────────┴──────────────┴──────────────┘
 ```
@@ -132,7 +132,7 @@ Python Source
 User → Velocus → ecosystem APIs → backends → output
 ```
 
-Today: **User → `stubber` CLI → velarium + stubber**.
+Today: **User → `velotype` CLI → velarium + velotype**.
 
 ---
 
@@ -177,7 +177,7 @@ A **universal intermediate representation** for Python types and downstream sche
 |-----------|------|
 | **velarium** | Core IR (truth layer) |
 | **viperis**  | Python → IR |
-| **stubber**  | IR → stubs + current CLI |
+| **velotype**  | IR → stubs + current CLI |
 | **morphra**  | IR → Pydantic |
 | **granitus** | IR → Spark-like schemas |
 | **velocus**  | Ecosystem CLI (planned) |
@@ -191,10 +191,10 @@ The Git repository is a **[uv](https://docs.astral.sh/uv/) workspace** (see root
 | Directory | PyPI name | Status |
 |-----------|-----------|--------|
 | `packages/velarium` | `velarium` | **Core IR** — JSON, normalization, dataclass/TypedDict builders |
-| `packages/stubber` | `stubber` | **IR → `.pyi`** — `stubber` CLI (`ir`, `stub`) |
+| `packages/velotype` | `velotype` | **IR → `.pyi`** — `velotype` CLI (`ir`, `stub`) |
 | `packages/viperis` | `viperis` | Scaffold — Python → IR |
 | `packages/morphra` | `morphra` | Scaffold — IR → Pydantic |
 | `packages/granitus` | `granitus` | Scaffold — IR → Spark-like schemas |
-| `packages/velocus` | `velocus` | Scaffold — umbrella CLI (use **`stubber`** until implemented) |
+| `packages/velocus` | `velocus` | Scaffold — umbrella CLI (use **`velotype`** until implemented) |
 
 See also [Installing & releasing](releasing.md) and [Design & philosophy](design.md).

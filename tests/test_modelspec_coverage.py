@@ -1,4 +1,4 @@
-"""Tests for stubber.modelspec_build edge cases."""
+"""Tests for velotype.modelspec_build edge cases."""
 
 from __future__ import annotations
 
@@ -8,7 +8,7 @@ from typing import TypedDict
 
 import pytest
 
-from stubber.modelspec_build import (
+from velotype.modelspec_build import (
     _module_globals,
     modelspec_from_dataclass,
     modelspec_from_typed_dict,
@@ -18,9 +18,9 @@ from stubber.modelspec_build import (
 
 def test_module_globals_when_module_not_loaded(monkeypatch: pytest.MonkeyPatch) -> None:
     class C:
-        __module__ = "___stubber_fake_module___"
+        __module__ = "___velotype_fake_module___"
 
-    monkeypatch.delitem(sys.modules, "___stubber_fake_module___", raising=False)
+    monkeypatch.delitem(sys.modules, "___velotype_fake_module___", raising=False)
     g = _module_globals(C)
     assert isinstance(g, dict)
 

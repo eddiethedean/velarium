@@ -13,13 +13,13 @@ For the concrete schema (`ModelSpec`, `TypeSpec`, `TypeKind`, …), see [ModelSp
 | Piece | PyPI / import | Role today |
 |-------|----------------|------------|
 | **velarium** | `velarium` | Core IR: types, normalization, JSON codec, builders (e.g. dataclass → `ModelSpec`) |
-| **stubber** | `stubber` | Backend: IR → `.pyi`; ships the **`stubber`** CLI (`ir`, `stub`). Depends on **velarium**. |
+| **velotype** | `velotype` | Backend: IR → `.pyi`; ships the **`velotype`** CLI (`ir`, `stub`). Depends on **velarium**. |
 | **viperis** | `viperis` | Planned frontend: Python source → IR (scaffold) |
 | **morphra** | `morphra` | Planned backend: IR → Pydantic (scaffold) |
 | **granitus** | `granitus` | Planned backend: IR → Spark-like schemas (scaffold) |
-| **velocus** | `velocus` | Planned umbrella CLI (scaffold); **`stubber`** is the supported CLI until then |
+| **velocus** | `velocus` | Planned umbrella CLI (scaffold); **`velotype`** is the supported CLI until then |
 
-The **`stubber`** package **re-exports** most IR symbols for backward compatibility; new code may import from **`velarium`** directly.
+The **`velotype`** package **re-exports** most IR symbols for backward compatibility; new code may import from **`velarium`** directly.
 
 ---
 
@@ -49,7 +49,7 @@ Goals:
 - Keep room for **non-Python backends** (e.g. high-performance IR passes) **without** changing the IR’s public meaning.
 - Evolve the IR **safely** behind explicit versioning and normalization rules.
 
-The **velarium** package implements that IR in Python; **stubber** is one **backend** on top of it.
+The **velarium** package implements that IR in Python; **velotype** is one **backend** on top of it.
 
 ---
 
@@ -96,7 +96,7 @@ Velarium borrows from compiler architecture:
 |-----------------|----------------|
 | AST / surface   | Python source and annotations (today: builders; future: **viperis**) |
 | IR              | **ModelSpec** + **TypeSpec** ( **`velarium`** ) |
-| Backends        | **stubber** (`.pyi`), future **morphra**, **granitus**, JSON, etc. |
+| Backends        | **velotype** (`.pyi`), future **morphra**, **granitus**, JSON, etc. |
 | Passes          | Normalization, optional encoding, inference hooks |
 
 The design is **IR-first**, not decorator-first or runtime-first. The point is not to “decorate Python,” but to **compile typing intent into a stable intermediate form** that downstream tools can share.
@@ -109,7 +109,7 @@ The design is **IR-first**, not decorator-first or runtime-first. The point is n
 
 **mypy / Pyright** excel at checking but do not expose a **stable, reusable IR** for codegen pipelines.
 
-Velarium’s role is **above** both in the stack: it does not replace them—it **coordinates** them through a **shared representation** when you need portable IR and generated artifacts. **stubber** and future backends sit **around** the IR—not inside the type checkers.
+Velarium’s role is **above** both in the stack: it does not replace them—it **coordinates** them through a **shared representation** when you need portable IR and generated artifacts. **velotype** and future backends sit **around** the IR—not inside the type checkers.
 
 ---
 
@@ -148,7 +148,7 @@ The aim is not to pretend Python is a different language, but to capture **inten
 
 ## 11. CLI and developer experience
 
-Today, the **`stubber`** CLI is intentionally **thin** and built with **Typer**: commands call into **velarium** + **stubber** library code. A future **velocus** CLI would orchestrate multiple backends without duplicating IR logic—see [valarium.md](valarium.md).
+Today, the **`velotype`** CLI is intentionally **thin** and built with **Typer**: commands call into **velarium** + **velotype** library code. A future **velocus** CLI would orchestrate multiple backends without duplicating IR logic—see [valarium.md](valarium.md).
 
 ---
 
@@ -181,4 +181,4 @@ Aspirational framing: what the AST is to execution, a stable IR could be to **ty
 
 > If we define a solid intermediate representation for Python types, everything else becomes a translation problem.
 
-**ModelSpec** is that representation. The **`velarium`** package implements it in Python; **`stubber`** implements stub emission and the current CLI; other packages will add parsers and backends—see [valarium.md](valarium.md). Checkers, IDEs, and future runtimes sit **around** that core—not inside it.
+**ModelSpec** is that representation. The **`velarium`** package implements it in Python; **`velotype`** implements stub emission and the current CLI; other packages will add parsers and backends—see [valarium.md](valarium.md). Checkers, IDEs, and future runtimes sit **around** that core—not inside it.

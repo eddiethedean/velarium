@@ -1,9 +1,9 @@
-"""Tests for stubber.normalize edge cases."""
+"""Tests for velotype.normalize edge cases."""
 
 from __future__ import annotations
 
-from stubber.ir import TypeKind, TypeSpec
-from stubber.normalize import normalize_typespec, normalize_union, optional_to_union
+from velotype.ir import TypeKind, TypeSpec
+from velotype.normalize import normalize_typespec, normalize_union, optional_to_union
 
 
 def test_normalize_union_not_union_returns_unchanged() -> None:

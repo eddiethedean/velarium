@@ -1,11 +1,11 @@
-"""Tests for stubber.json_codec."""
+"""Tests for velotype.json_codec."""
 
 from __future__ import annotations
 
 import json
 from enum import Enum
 
-from stubber.ir import (
+from velotype.ir import (
     FieldSpec,
     ModelConfig,
     ModelMetadata,
@@ -13,7 +13,7 @@ from stubber.ir import (
     TypeKind,
     TypeSpec,
 )
-from stubber.json_codec import (
+from velotype.json_codec import (
     dumps_model_spec,
     field_spec_from_dict,
     field_spec_to_dict,

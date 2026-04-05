@@ -1,4 +1,4 @@
-"""Stubber: deterministic .pyi stub generation from Velarium (ModelSpec) IR."""
+"""Velotype: deterministic .pyi stub generation from Velarium (ModelSpec) IR."""
 
 from velarium.annotations import annotation_to_typespec, type_to_typespec
 from velarium.ir import (
@@ -21,7 +21,7 @@ from velarium.modelspec_build import (
     typespec_from_object,
 )
 from velarium.normalize import normalize_typespec, normalize_union, optional_to_union
-from stubber.stubgen import generate_pyi, render_typespec
+from velotype.stubgen import generate_pyi, render_typespec
 
 __all__ = [
     "annotation_to_typespec",

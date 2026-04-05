@@ -6,7 +6,7 @@ readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
   "velarium",
-  "stubber",
+  "velotype",
 ]
 
 [dependency-groups]
@@ -24,15 +24,15 @@ members = ["packages/*"]
 
 [tool.uv.sources]
 velarium = { workspace = true }
-stubber = { workspace = true }
+velotype = { workspace = true }
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-addopts = ["--cov=stubber", "--cov=velarium", "--cov-report=term-missing", "--cov-fail-under=100"]
+addopts = ["--cov=velotype", "--cov=velarium", "--cov-report=term-missing", "--cov-fail-under=100"]
 
 [tool.coverage.run]
 branch = false
-source = ["packages/stubber/stubber", "packages/velarium/velarium"]
+source = ["packages/velotype/velotype", "packages/velarium/velarium"]
 omit = ["*/__main__.py"]
 
 [tool.coverage.report]
@@ -47,7 +47,7 @@ python-version = "3.10"
 [tool.ty.src]
 include = [
   "packages/velarium/velarium/**/*.py",
-  "packages/stubber/stubber/**/*.py",
+  "packages/velotype/velotype/**/*.py",
   "packages/viperis/viperis/**/*.py",
   "packages/morphra/morphra/**/*.py",
   "packages/granitus/granitus/**/*.py",

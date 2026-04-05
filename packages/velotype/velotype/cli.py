@@ -9,7 +9,7 @@ import typer
 
 from velarium.json_codec import dumps_model_spec
 from velarium.modelspec_build import modelspec_from_dataclass
-from stubber.stubgen import generate_pyi
+from velotype.stubgen import generate_pyi
 
 app = typer.Typer(no_args_is_help=True, add_completion=False)
 

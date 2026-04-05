@@ -1,8 +1,8 @@
 from __future__ import annotations
 
-from stubber.ir import ModelSpec, TypeKind, TypeSpec
-from stubber.json_codec import dumps_model_spec, loads_model_spec
-from stubber.normalize import normalize_union
+from velotype.ir import ModelSpec, TypeKind, TypeSpec
+from velotype.json_codec import dumps_model_spec, loads_model_spec
+from velotype.normalize import normalize_union
 
 
 def test_typespec_roundtrip_json() -> None:

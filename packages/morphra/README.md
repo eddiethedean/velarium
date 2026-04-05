@@ -10,7 +10,7 @@
 ## Planned use cases
 
 - FastAPI / service layers that want models aligned with the same IR as stubs  
-- Shared typing story between static stubs (**stubber**) and runtime validation  
+- Shared typing story between static stubs (**velotype**) and runtime validation  
 
 ## See also
 

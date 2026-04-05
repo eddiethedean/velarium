@@ -4,12 +4,12 @@ from __future__ import annotations
 
 import importlib.metadata
 
-import stubber
+import velotype
 import velarium
 
 
-def test_stubber_version_matches_distribution_metadata() -> None:
-    assert stubber.__version__ == importlib.metadata.version("stubber")
+def test_velotype_version_matches_distribution_metadata() -> None:
+    assert velotype.__version__ == importlib.metadata.version("velotype")
 
 
 def test_velarium_version_matches_distribution_metadata() -> None:

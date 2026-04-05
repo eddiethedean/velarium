@@ -4,11 +4,11 @@ import dataclasses
 from enum import Enum
 from typing import Literal, Optional
 
-from stubber.annotations import type_to_typespec
-from stubber.ir import TypeKind
-from stubber.json_codec import dumps_model_spec, loads_model_spec
-from stubber.modelspec_build import modelspec_from_dataclass
-from stubber.stubgen import generate_pyi, render_typespec
+from velotype.annotations import type_to_typespec
+from velotype.ir import TypeKind
+from velotype.json_codec import dumps_model_spec, loads_model_spec
+from velotype.modelspec_build import modelspec_from_dataclass
+from velotype.stubgen import generate_pyi, render_typespec
 
 
 class Color(Enum):

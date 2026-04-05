@@ -1,11 +1,11 @@
-"""Coverage for stubber.stubgen render_typespec and generate_pyi."""
+"""Coverage for velotype.stubgen render_typespec and generate_pyi."""
 
 from __future__ import annotations
 
 import pytest
 
-from stubber.ir import ModelConfig, ModelSpec, TypeKind, TypeSpec
-from stubber.stubgen import generate_pyi, render_typespec
+from velotype.ir import ModelConfig, ModelSpec, TypeKind, TypeSpec
+from velotype.stubgen import generate_pyi, render_typespec
 
 
 @pytest.mark.parametrize(

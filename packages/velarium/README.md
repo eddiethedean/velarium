@@ -8,7 +8,7 @@
 | **Import** | `import velarium` / `from velarium.ir import ModelSpec, TypeSpec` |
 | **Dependencies** | `typing_extensions` only |
 
-Downstream packages (e.g. [**stubber**](../stubber/README.md)) consume this IR to emit `.pyi` stubs and other artifacts. The IR contract is specified in [docs/modelspec-ir.md](../../docs/modelspec-ir.md); ecosystem context is in [docs/valarium.md](../../docs/valarium.md) and [docs/design.md](../../docs/design.md).
+Downstream packages (e.g. [**velotype**](../velotype/README.md)) consume this IR to emit `.pyi` stubs and other artifacts. The IR contract is specified in [docs/modelspec-ir.md](../../docs/modelspec-ir.md); ecosystem context is in [docs/valarium.md](../../docs/valarium.md) and [docs/design.md](../../docs/design.md).
 
 ## Install
 

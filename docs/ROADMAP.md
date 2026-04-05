@@ -1,6 +1,6 @@
 # Roadmap to 1.0.0
 
-This document is the **release plan** for the **Velarium** monorepo (notably **`velarium`** IR and **`stubber`** stubs/CLI): what we ship in each **0.X.*** line, how phases depend on each other, and what **1.0.0** commits to. It complements [design.md](design.md) (why the IR exists) and [modelspec-ir.md](modelspec-ir.md) (schema details).
+This document is the **release plan** for the **Velarium** monorepo (notably **`velarium`** IR and **`velotype`** stubs/CLI): what we ship in each **0.X.*** line, how phases depend on each other, and what **1.0.0** commits to. It complements [design.md](design.md) (why the IR exists) and [modelspec-ir.md](modelspec-ir.md) (schema details).
 
 **Conventions**
 
@@ -82,18 +82,18 @@ You can parallelize **some** work (e.g. docs vs code) within a phase, but **do n
 
 | Area | Status |
 |------|--------|
-| IR types | `ModelSpec`, `TypeSpec`, `TypeKind`, `ModelConfig`, `FieldSpec`, `ModelMetadata` in `velarium.ir` (also re-exported as `stubber.ir`) |
+| IR types | `ModelSpec`, `TypeSpec`, `TypeKind`, `ModelConfig`, `FieldSpec`, `ModelMetadata` in `velarium.ir` (also re-exported as `velotype.ir`) |
 | Serialization | `dumps_model_spec` / `loads_model_spec`, dict helpers |
-| Normalization | Union flatten/dedupe, optional encoding in `velarium.normalize` (also `stubber.normalize`) |
+| Normalization | Union flatten/dedupe, optional encoding in `velarium.normalize` (also `velotype.normalize`) |
 | Builders | `modelspec_from_dataclass`, `modelspec_from_typed_dict` |
 | Annotations | `type_to_typespec`, `annotation_to_typespec` (MVP coverage) |
 | Stubs | `generate_pyi`, `render_typespec` (dataclass-oriented) |
-| CLI | Typer: `stubber ir`, `stubber stub`; `python -m stubber` |
+| CLI | Typer: `velotype ir`, `velotype stub`; `python -m velotype` |
 | Docs | `docs/design.md`, `docs/modelspec-ir.md`, README |
 
 **Refinements that closed 0.1.*:**
 
-- [x] Version from `stubber.__version__` / `velarium.__version__` via Hatch per package; aligned with distribution metadata.
+- [x] Version from `velotype.__version__` / `velarium.__version__` via Hatch per package; aligned with distribution metadata.
 - [x] **CI** on GitHub Actions: Python 3.10–3.13, `pytest`, `ty check`, `python -m build`.
 - [x] **[CHANGELOG.md](../CHANGELOG.md)** (Keep a Changelog).
 - [x] Optional **PyPI publish** workflow on GitHub Release; manual **twine** documented in [releasing.md](releasing.md).
@@ -101,7 +101,7 @@ You can parallelize **some** work (e.g. docs vs code) within a phase, but **do n
 **Exit criteria (0.1 complete):**
 
 - [x] Installable artifact from PyPI *or* documented install from Git with reproducible `python -m build` ([releasing.md](releasing.md)).
-- [x] Green CI on the supported Python line with tests + `ty` on **velarium** / **stubber** sources.
+- [x] Green CI on the supported Python line with tests + `ty` on **velarium** / **velotype** sources.
 - [x] Roadmap, IR spec, and changelog linked from README; [modelspec_ir.md](../modelspec_ir.md) pointer retained.
 
 ---
@@ -137,7 +137,7 @@ You can parallelize **some** work (e.g. docs vs code) within a phase, but **do n
 **Deliverables:**
 
 - **Pydantic v2:** `modelspec_from_pydantic_model` (name TBD) — fields, defaults, field constraints mapped into `TypeSpec` / metadata as far as the IR allows.
-- **Optional extras:** e.g. `pip install stubber[attrs]` (or an extra on **`velarium`** if IR-only) for **attrs** / **msgspec** with parallel tests.
+- **Optional extras:** e.g. `pip install velotype[attrs]` (or an extra on **`velarium`** if IR-only) for **attrs** / **msgspec** with parallel tests.
 - **Unified metadata:** `ModelMetadata` populated consistently (module, file, line where feasible).
 - **Conflict policy:** If multiple sources disagree, document error vs last-wins behavior.
 
@@ -169,7 +169,7 @@ You can parallelize **some** work (e.g. docs vs code) within a phase, but **do n
 
 ## Phase 0.5.* — Tooling and integrations
 
-**Theme:** stubber fits **repos** and **pipelines**, not only one-off CLI invocations.
+**Theme:** velotype fits **repos** and **pipelines**, not only one-off CLI invocations.
 
 **Deliverables:**
 
@@ -195,7 +195,7 @@ You can parallelize **some** work (e.g. docs vs code) within a phase, but **do n
 - **Profiling:** Identify hotspots (normalization, JSON, stub string build).
 - **Pure Python wins:** Caching, lazy resolution, fewer intermediate copies where safe.
 - **Optional native backend:** Same JSON golden tests; feature flag to enable accelerated normalization (e.g. Rust extension). **No semantic drift.**
-- **Incremental mode:** Cache IR keyed by file hash + **velarium** / **stubber** versions + relevant config.
+- **Incremental mode:** Cache IR keyed by file hash + **velarium** / **velotype** versions + relevant config.
 
 **Exit criteria:**
 
@@ -211,7 +211,7 @@ You can parallelize **some** work (e.g. docs vs code) within a phase, but **do n
 **Deliverables:**
 
 - **Fuzzing / property tests:** JSON round-trip, normalization idempotence where applicable.
-- **CLI threat model:** Document what `stubber ir` / `stubber stub` load and execute; minimize `eval`; sandbox recommendations for untrusted code **never** assumed safe.
+- **CLI threat model:** Document what `velotype ir` / `velotype stub` load and execute; minimize `eval`; sandbox recommendations for untrusted code **never** assumed safe.
 - **Resource limits:** Optional caps on input size / recursion for hostile inputs.
 - **Bug triage:** No open **critical** crashes or security issues on the 1.0 milestone.
 

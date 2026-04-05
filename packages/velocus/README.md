@@ -1,6 +1,6 @@
 # velocus
 
-**Role in Velarium:** **Ecosystem CLI** — single entry point to inspect IR, drive builds, and dispatch to backends (**stubber**, **morphra**, **granitus**, future tools) without each package exposing a separate UX.
+**Role in Velarium:** **Ecosystem CLI** — single entry point to inspect IR, drive builds, and dispatch to backends (**velotype**, **morphra**, **granitus**, future tools) without each package exposing a separate UX.
 
 | | |
 |---|---|
@@ -9,10 +9,10 @@
 
 ## Today
 
-Use the [**stubber**](../stubber/README.md) CLI for:
+Use the [**velotype**](../velotype/README.md) CLI for:
 
-- `stubber ir` — print ModelSpec JSON for a dataclass  
-- `stubber stub` — emit `.pyi` body  
+- `velotype ir` — print ModelSpec JSON for a dataclass  
+- `velotype stub` — emit `.pyi` body  
 
 ## Planned behavior
 

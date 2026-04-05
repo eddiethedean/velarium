@@ -1,4 +1,4 @@
-"""Typer CliRunner tests for stubber.cli (full line coverage)."""
+"""Typer CliRunner tests for velotype.cli (full line coverage)."""
 
 from __future__ import annotations
 
@@ -10,7 +10,7 @@ from pathlib import Path
 import pytest
 from typer.testing import CliRunner
 
-from stubber.cli import app
+from velotype.cli import app
 
 _REPO_ROOT = Path(__file__).resolve().parent.parent
 _runner = CliRunner()
@@ -18,7 +18,7 @@ _runner = CliRunner()
 
 def _pkg_paths() -> str:
     return (
-        f"{_REPO_ROOT / 'packages' / 'stubber'}:{_REPO_ROOT / 'packages' / 'velarium'}"
+        f"{_REPO_ROOT / 'packages' / 'velotype'}:{_REPO_ROOT / 'packages' / 'velarium'}"
     )
 
 
@@ -114,9 +114,9 @@ def test_cli_stub_stdout_without_out() -> None:
 
 
 def test___main___exec_help(monkeypatch: pytest.MonkeyPatch) -> None:
-    monkeypatch.setattr(sys, "argv", ["stubber", "--help"])
-    main_path = _REPO_ROOT / "packages" / "stubber" / "stubber" / "__main__.py"
-    spec = importlib.util.spec_from_file_location("__stubber_main__", main_path)
+    monkeypatch.setattr(sys, "argv", ["velotype", "--help"])
+    main_path = _REPO_ROOT / "packages" / "velotype" / "velotype" / "__main__.py"
+    spec = importlib.util.spec_from_file_location("__velotype_main__", main_path)
     assert spec and spec.loader
     mod = importlib.util.module_from_spec(spec)
     with pytest.raises(SystemExit) as ei:

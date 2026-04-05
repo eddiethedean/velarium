@@ -1,4 +1,4 @@
-"""Broad coverage for stubber.annotations.type_to_typespec and annotation_to_typespec."""
+"""Broad coverage for velotype.annotations.type_to_typespec and annotation_to_typespec."""
 
 from __future__ import annotations
 
@@ -10,8 +10,8 @@ from typing import Any, Literal, Optional, TypeVar, Union
 
 import pytest
 
-from stubber.annotations import annotation_to_typespec, type_to_typespec
-from stubber.ir import TypeKind
+from velotype.annotations import annotation_to_typespec, type_to_typespec
+from velotype.ir import TypeKind
 
 
 class Color(Enum):

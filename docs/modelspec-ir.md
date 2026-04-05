@@ -1,8 +1,8 @@
 # ModelSpec IR (intermediate representation)
 
-This document describes the **ModelSpec IR** implemented by the **`velarium`** package (`velarium.ir` and related modules). The same types are also re-exported from **`stubber`** for compatibility (`stubber.ir`, etc.).
+This document describes the **ModelSpec IR** implemented by the **`velarium`** package (`velarium.ir` and related modules). The same types are also re-exported from **`velotype`** for compatibility (`velotype.ir`, etc.).
 
-ModelSpec is the **language-agnostic layer** used to normalize Python annotations, serialize typing structure to JSON, and drive backends (notably **stubber** for `.pyi` generation).
+ModelSpec is the **language-agnostic layer** used to normalize Python annotations, serialize typing structure to JSON, and drive backends (notably **velotype** for `.pyi` generation).
 
 ## Overview
 
@@ -172,7 +172,7 @@ TypeSpec(
 )
 ```
 
-Normalization rules (see `velarium.normalize`, also exposed as `stubber.normalize`):
+Normalization rules (see `velarium.normalize`, also exposed as `velotype.normalize`):
 
 - Flatten nested unions
 - Remove duplicate members (by structure)
@@ -291,4 +291,4 @@ Possible additions:
 
 > ModelSpec IR is a **deterministic, backend-agnostic, serializable** model of Python types.
 
-**Implementation:** [`velarium`](https://pypi.org/project/velarium/) — normalization, JSON codec, builders. **Consumers:** **`stubber`** (`.pyi`), and future packages (**morphra**, **granitus**, …) per [valarium.md](valarium.md). Other tools can consume the same JSON shape without depending on every package in the monorepo.
+**Implementation:** [`velarium`](https://pypi.org/project/velarium/) — normalization, JSON codec, builders. **Consumers:** **`velotype`** (`.pyi`), and future packages (**morphra**, **granitus**, …) per [valarium.md](valarium.md). Other tools can consume the same JSON shape without depending on every package in the monorepo.

@@ -24,7 +24,7 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Sync workspace (velarium + stubber)
+      - name: Sync workspace (velarium + velotype)
         run: uv sync --group dev
 
       - name: Install build
@@ -33,7 +33,7 @@ jobs:
       - name: Build all packages into dist/
         run: |
           mkdir -p dist
-          for pkg in velarium stubber viperis morphra granitus velocus; do
+          for pkg in velarium velotype viperis morphra granitus velocus; do
             (cd "packages/$pkg" && uv run python -m build --outdir "$GITHUB_WORKSPACE/dist")
           done
 

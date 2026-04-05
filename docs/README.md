@@ -1,6 +1,6 @@
 # Velarium documentation
 
-Welcome to the **Velarium** monorepo docs: a shared **ModelSpec IR** (`velarium`), backends like **`stubber`** (`.pyi`), and scaffold packages for the full pipeline in [valarium.md](valarium.md).
+Welcome to the **Velarium** monorepo docs: a shared **ModelSpec IR** (`velarium`), backends like **`velotype`** (`.pyi`), and scaffold packages for the full pipeline in [valarium.md](valarium.md).
 
 ## Start here
 
@@ -15,11 +15,11 @@ Welcome to the **Velarium** monorepo docs: a shared **ModelSpec IR** (`velarium`
 ## Repository map
 
 - **Root [README](../README.md)** — Quick install, CLI examples, package table.
-- **Source:** `packages/velarium` (IR), `packages/stubber` (stubs + CLI), `packages/viperis`, `packages/morphra`, `packages/granitus`, `packages/velocus` (scaffolds).
+- **Source:** `packages/velarium` (IR), `packages/velotype` (stubs + CLI), `packages/viperis`, `packages/morphra`, `packages/granitus`, `packages/velocus` (scaffolds).
 - **Changelog:** [CHANGELOG.md](../CHANGELOG.md).
 
 ## Naming
 
 - **Velarium** — Ecosystem and conceptual IR (“Velarium IR” = ModelSpec IR).
 - **`velarium`** — PyPI package with the core types and builders.
-- **`stubber`** — PyPI package for stub generation; re-exports IR symbols for compatibility.
+- **`velotype`** — PyPI package for stub generation; re-exports IR symbols for compatibility.

@@ -1,4 +1,4 @@
-"""Smoke tests for the stubber CLI entry points."""
+"""Smoke tests for the velotype CLI entry points."""
 
 from __future__ import annotations
 
@@ -12,7 +12,7 @@ import pytest
 _REPO_ROOT = Path(__file__).resolve().parent.parent
 
 
-@pytest.mark.parametrize("argv", [["-m", "stubber", "ir"], ["-m", "stubber", "stub"]])
+@pytest.mark.parametrize("argv", [["-m", "velotype", "ir"], ["-m", "velotype", "stub"]])
 def test_cli_help_exits_zero(argv: list[str]) -> None:
     r = subprocess.run(
         [sys.executable, *argv, "--help"],
@@ -29,7 +29,7 @@ def test_cli_ir_json_sample_dataclass() -> None:
         [
             sys.executable,
             "-m",
-            "stubber",
+            "velotype",
             "ir",
             "tests.fixtures.sample_pkg:Sample",
         ],
@@ -39,7 +39,7 @@ def test_cli_ir_json_sample_dataclass() -> None:
         check=False,
         env={
             **os.environ,
-            "PYTHONPATH": f"{_REPO_ROOT / 'packages' / 'stubber'}:{_REPO_ROOT / 'packages' / 'velarium'}",
+            "PYTHONPATH": f"{_REPO_ROOT / 'packages' / 'velotype'}:{_REPO_ROOT / 'packages' / 'velarium'}",
         },
     )
     assert r.returncode == 0, r.stderr
