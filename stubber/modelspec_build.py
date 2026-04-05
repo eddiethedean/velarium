@@ -7,6 +7,8 @@ import inspect
 import sys
 from typing import Any, get_type_hints
 
+from typing_extensions import is_typeddict
+
 from stubber.annotations import annotation_to_typespec, type_to_typespec
 from stubber.ir import ModelConfig, ModelMetadata, ModelSpec, TypeSpec
 from stubber.normalize import normalize_typespec
@@ -74,11 +76,6 @@ def modelspec_from_dataclass(cls: type, *, include_extras: bool = False) -> Mode
 
 def modelspec_from_typed_dict(cls: type) -> ModelSpec:
     """Extract ModelSpec from typing.TypedDict (total fields only for MVP)."""
-    try:
-        from typing import is_typeddict
-    except ImportError:
-        from typing_extensions import is_typeddict
-
     if not is_typeddict(cls):
         raise TypeError(f"{cls!r} is not a TypedDict")
 

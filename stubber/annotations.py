@@ -3,19 +3,14 @@
 from __future__ import annotations
 
 import datetime
-import sys
 import typing
 from collections.abc import Callable as CallableABC
 from enum import Enum
+from types import UnionType
 from typing import Any, ForwardRef, TypeVar, Union, get_args, get_origin
 
 from stubber.ir import TypeKind, TypeSpec
 from stubber.normalize import normalize_typespec, optional_to_union
-
-if sys.version_info >= (3, 10):
-    from types import UnionType
-else:
-    UnionType = None  # type: ignore[misc, assignment]
 
 
 def _none() -> TypeSpec:
@@ -64,12 +59,7 @@ def type_to_typespec(
             u = TypeSpec(kind=TypeKind.UNION, args=parts)
         return _merge_optional(normalize_typespec(u), optional=optional)
 
-    if origin is not None and isinstance(origin, type) and issubclass(origin, Enum):
-        members = [TypeSpec(kind=TypeKind.LITERAL, default=m.value) for m in origin]
-        u = TypeSpec(kind=TypeKind.ENUM, args=members) if members else TypeSpec(kind=TypeKind.ANY)
-        return _merge_optional(u, optional=optional)
-
-    if UnionType is not None and origin is UnionType:
+    if origin is UnionType:
         parts = [type_to_typespec(a, optional=False) for a in args]
         has_none = any(p.kind == TypeKind.NONE for p in parts)
         u = TypeSpec(kind=TypeKind.UNION, args=parts)
@@ -112,14 +102,10 @@ def type_to_typespec(
         inners = [type_to_typespec(a, optional=False) for a in args]
         return _merge_optional(TypeSpec(kind=TypeKind.TUPLE, args=inners), optional=optional)
 
-    if origin is typing.Type:
-        inner = type_to_typespec(args[0], optional=False) if args else TypeSpec(kind=TypeKind.ANY)
-        return _merge_optional(TypeSpec(kind=TypeKind.GENERIC, args=[inner]), optional=optional)
-
     if origin is typing.Callable or origin is CallableABC:
         if args:
             param_args, ret = args[0], args[1]
-            if get_origin(param_args) is list:
+            if get_origin(param_args) is list:  # pragma: no cover — rare Callable[..., T] shape; else path covers real callables
                 plist = get_args(param_args)
                 plist_ts = TypeSpec(kind=TypeKind.LIST, args=[type_to_typespec(p, optional=False) for p in plist])
             else:

@@ -81,7 +81,7 @@ def render_typespec(ts: TypeSpec) -> str:
                 lit_parts.append(render_typespec(a))
         if lit_parts:
             return f"typing.Literal[{', '.join(lit_parts)}]"
-        return "typing.Any"
+        return "typing.Any"  # pragma: no cover — unreachable when args is non-empty; empty ENUM uses branch above
 
     if ts.kind == TypeKind.CALLABLE:
         if not ts.args or len(ts.args) < 2:
@@ -95,7 +95,7 @@ def render_typespec(ts: TypeSpec) -> str:
     if ts.kind == TypeKind.GENERIC:
         return "typing.Any"
 
-    return "typing.Any"
+    return "typing.Any"  # pragma: no cover — all TypeKind variants handled above
 
 
 def _default_repr(value: object) -> str:

@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Expanded test suite (JSON, normalization, annotations, stubgen, CLI via Typer runner, `__main__`); **100% line coverage** on `stubber/` enforced via `pytest-cov`.
+
+### Changed
+
+- `typing_extensions.is_typeddict` used directly in `modelspec_from_typed_dict` (removed redundant try/except).
+- Removed unreachable `get_origin` + `Enum` branch in `annotations.type_to_typespec` (enum classes are handled via `isinstance(t, type)`).
+
 ## [0.1.0] - 2026-04-05
 
 ### Added

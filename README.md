@@ -64,7 +64,7 @@ print(generate_pyi(spec))
 Release version is set in **`stubber/__init__.py`** as `__version__` (Hatch reads it for packages—do not duplicate in `pyproject.toml`).
 
 ```bash
-pytest
+pytest                    # runs with coverage; stubber must stay at 100% line coverage
 mypy stubber
 python -m build   # sdist + wheel (requires `pip install build` or `.[dev]`)
 ```
