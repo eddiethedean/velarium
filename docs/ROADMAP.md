@@ -1,22 +1,23 @@
 # Roadmap to 1.0.0
 
-This document is the **release plan** for the **Velarium** monorepo and its **six** installable Python packages: what we ship in each **0.X.*** line, how phases depend on each other, and what **1.0.0** commits to. It complements [design.md](design.md) (why the IR exists) and [modelspec-ir.md](modelspec-ir.md) (schema details).
+This document is the **release plan** for the **Velarium** monorepo and its **six** installable Python packages: what we ship in each **0.X.*** line, how phases depend on each other, what **1.0.0** commits to, and how the **planned backend packages** advance on **1.x phases** ([Scaffold packages: 1.x phase plan](#scaffold-packages-1x-phase-plan)). A **tier‑1 × 0.x phase** matrix is in [Release alignment by phase and package](#release-alignment-by-phase-and-package). It complements [design.md](design.md) (why the IR exists) and [modelspec-ir.md](modelspec-ir.md) (schema details).
 
 | Package | PyPI | Role today | Plan (see [Plans by package](#plans-by-package)) |
 |---------|------|------------|-----------------------------------------------------|
 | [**velarium**](../packages/velarium/README.md) | `velarium` | **Tier 1** — ModelSpec IR, JSON, normalization, builders | Phases **0.2–0.8**; owns IR contract and stability |
 | [**velotype**](../packages/velotype/README.md) | `velotype` | **Tier 1** — IR → `.pyi`, **`velotype`** CLI | Phases **0.1–0.7**; stubs, CLI, tooling, hardening |
-| [**viperis**](../packages/viperis/README.md) | `viperis` | **Scaffold** — Python source → IR | After **0.2** IR fidelity; AST → `TypeSpec` / `ModelSpec` |
-| [**morphra**](../packages/morphra/README.md) | `morphra` | **Scaffold** — IR → Pydantic | With **0.3** model sources; codegen / runtime models |
-| [**granitus**](../packages/granitus/README.md) | `granitus` | **Scaffold** — IR → Spark-like schemas | Parallel to morphra; pipeline / schema emit |
-| [**velocus**](../packages/velocus/README.md) | `velocus` | **Scaffold** — umbrella ecosystem CLI | After **velotype** + at least one other backend are usable |
+| [**viperis**](../packages/viperis/README.md) | `viperis` | **Scaffold** — Python source → IR | [Phases **1.1–1.3**](#viperis--1x-roadmap) (after stable **velarium** IR); groundwork in **0.2+** |
+| [**morphra**](../packages/morphra/README.md) | `morphra` | **Scaffold** — IR → Pydantic | [Phases **1.1–1.3**](#morphra--1x-roadmap); groundwork in **0.3+** |
+| [**granitus**](../packages/granitus/README.md) | `granitus` | **Scaffold** — IR → Spark-like schemas | [Phases **1.1–1.3**](#granitus--1x-roadmap); parallel **morphra** |
+| [**velocus**](../packages/velocus/README.md) | `velocus` | **Scaffold** — umbrella ecosystem CLI | [Phases **1.1–1.3**](#velocus--1x-roadmap); after **velotype** **1.0** + a backend **1.1** |
 
 **Conventions**
 
 | Term | Meaning |
 |------|--------|
-| **Phase** | A **minor** series **0.X.*** (ongoing work until exit criteria are met). |
-| **Patch** | **0.X.Y** — bugfixes, docs, and *small* additive changes that do not change the phase’s scope. |
+| **0.x phase** | Monorepo **minor** series **0.X.*** until **1.0.0** — primarily **velarium** + **velotype** ([Phase dependency overview](#phase-dependency-overview)). |
+| **1.x phase (scaffold)** | **Per-package** milestones **1.1**, **1.2**, **1.3** for **viperis**, **morphra**, **granitus**, **velocus** ([Scaffold packages: 1.x phase plan](#scaffold-packages-1x-phase-plan)). These track *feature maturity*; the monorepo **semver** tag still bumps all wheels together ([RELEASING.md](RELEASING.md)). |
+| **Patch** | **0.X.Y** or **1.X.Y** — bugfixes, docs, and *small* additive changes that do not change the phase’s scope. |
 | **Breaking change** | Removes or incompatibly changes a **documented public API** or **documented JSON IR** shape. Breaking changes are avoided in patch releases; before 1.0 they are allowed in minors with changelog notes. |
 
 Dates are not promised; **order and dependencies** drive sequencing.
@@ -107,9 +108,30 @@ You can parallelize **some** work (e.g. docs vs code) within a phase, but **do n
 
 ---
 
+## Release alignment by phase and package
+
+**Versioning:** Every tag bumps **all** `packages/*` to the same **`__version__`** (see [RELEASING.md](RELEASING.md)). Phases are **monorepo-wide**: tier‑1 exit criteria are what gate calling a line (e.g. **0.5.0**) “done” for the release notes—**scaffold** packages may still be placeholders on PyPI until their [exit criteria](#plans-by-package) are met, even though their version number moves in lockstep.
+
+| Phase | **velarium** | **velotype** | **viperis** | **morphra** | **granitus** | **velocus** |
+|-------|--------------|--------------|-------------|-------------|--------------|-------------|
+| **0.1** | IR, JSON, dataclass/TypedDict builders, annotation MVP | Stubs + `velotype` CLI MVP | Placeholder | Placeholder | Placeholder | Placeholder |
+| **0.2** | Annotation → IR fidelity, golden IR tests | Stubs track IR shapes | **Start** Python source → IR (depends on stable IR semantics) | — | — | — |
+| **0.3** | Pydantic v2 + attrs sources, unified metadata | — | Continue | **Start** IR → Pydantic | **Start** IR → Spark-like | — |
+| **0.4** | — | Checker‑validated `.pyi`, import/style, **stub-check** CI | Continue | Continue | Continue | — |
+| **0.5** | — | Batch / pre-commit / repo workflows ([Phase 0.5](#phase-05--tooling-and-integrations)) | **Target** first “usable” slice (optional) | **Target** first “usable” path (optional) | **Target** first “usable” path (optional) | **Start** only if **velotype** + ≥1 other backend are worth orchestrating |
+| **0.6** | Performance hooks, optional native acceleration ([Phase 0.6](#phase-06--performance-and-scale)) | Performance, incremental cache | Optional | Optional | Optional | Optional |
+| **0.7** | — | Security / fuzzing / CLI limits ([Phase 0.7](#phase-07--hardening)) | — | — | — | Harden if already shipping |
+| **0.8** | Public API audit + IR versioning ([Phase 0.8](#phase-08--api-and-ir-stability-prep)) | Track tier‑1 freeze | Docs vs IR spec; no contradiction | Stable emit API surface | Stable emit API surface | Subcommand freeze if shipped |
+| **0.9** | RC ([Phase 0.9](#phase-09--release-candidate)) | RC | RC if feature-complete | RC if feature-complete | RC if feature-complete | RC if feature-complete |
+| **1.0** | Core **1.0** | **1.x** stubs/CLI ([summary](#package-summary-toward-100)) | [Independent bar](#package-summary-toward-100) | [Independent bar](#package-summary-toward-100) | [Independent bar](#package-summary-toward-100) | Optional orchestrator |
+
+**Legend:** **Start** = meaningful implementation work toward that package’s [plan](#plans-by-package) and [1.x roadmap](#scaffold-packages-1x-phase-plan). **—** = no dedicated phase milestone for that package (it still gets the same version bump). **Target** = stretch goal for a first “usable” scaffold in that window; may slip with roadmap edits. **Placeholder** = installable stub on PyPI, no user-facing pipeline yet.
+
+---
+
 ## Plans by package
 
-The numbered phases below (**0.2**–**0.9**) are **monorepo-wide**; this section ties each **package** to those phases and to **scaffold-specific** outcomes.
+The numbered phases below (**0.2**–**0.9**) are **monorepo-wide** for **velarium** and **velotype**. **viperis**, **morphra**, **granitus**, and **velocus** follow **[1.x phases](#scaffold-packages-1x-phase-plan)** after core **1.0.0** (with groundwork during **0.2+** as in [Release alignment](#release-alignment-by-phase-and-package)).
 
 ### velarium (core IR)
 
@@ -129,55 +151,19 @@ The numbered phases below (**0.2**–**0.9**) are **monorepo-wide**; this sectio
 
 ### viperis (Python → IR)
 
-**Goal:** Parse Python **source** (AST) into the same **ModelSpec IR** that `velarium` uses, generalizing beyond dataclass/TypedDict builders.
-
-- **Depends on:** Stable `TypeSpec` / field semantics from **0.2**; alignment with **0.3** “model sources” where overlap exists.
-- **Planned deliverables:**
-  - Module and class discovery from files/packages; configurable import paths.
-  - Map AST type nodes to `TypeSpec` with documented gaps vs `annotation_to_typespec`.
-  - Golden tests: `*.py` fixtures → IR JSON (or diff against builder IR where equivalent).
-- **Exit criteria (viperis 0.x “usable”):**
-  - [ ] At least one **non-dataclass** path (e.g. module-level TypedDict or functions) covered in CI.
-  - [ ] Doc: **viperis** vs **`velarium`** builders — when to use which.
+**Goal:** Parse Python **source** (AST) into the same **ModelSpec IR** that `velarium` uses. Groundwork can track **0.2+** IR fidelity; **product** milestones are **[Phases 1.1–1.3](#viperis--1x-roadmap)** (first “usable” slice ≈ **Phase 1.1** exit column).
 
 ### morphra (IR → Pydantic)
 
-**Goal:** Emit **Pydantic v2** models (or factories) from `ModelSpec`, for FastAPI and runtime validation.
-
-- **Depends on:** **`velarium`** IR; **0.3** Pydantic-oriented metadata helps; may consume **`velotype`** only for cross-checking generated `.pyi` vs Pydantic models.
-- **Planned deliverables:**
-  - `models_from_model_spec` (name TBD): `ModelSpec` → generated `BaseModel` subclasses or a documented codegen API.
-  - Map IR constraints to Pydantic `Field` where possible; document lossy cases.
-  - Tests: round-trip **IR → morphra → IR** where feasible, or golden Pydantic class snapshots.
-- **Exit criteria (morphra 0.x “usable”):**
-  - [ ] One **tier-1** path (e.g. simple `ModelSpec` with primitives + nested models) in default CI.
-  - [ ] User doc: limitations vs hand-written Pydantic.
+**Goal:** Emit **Pydantic v2** from `ModelSpec`. **velarium** **0.3** metadata helps; optional **`velotype`** cross-check for `.pyi` vs models. Roadmap: **[Phases 1.1–1.3](#morphra--1x-roadmap)**.
 
 ### granitus (IR → Spark-like schemas)
 
-**Goal:** Emit **Spark**-style struct/column schemas (or similar) from `ModelSpec` for data pipelines.
-
-- **Depends on:** **`velarium`** IR; coordinate with **morphra** on shared “scalar vs struct” conventions where useful.
-- **Planned deliverables:**
-  - `schema_from_model_spec` (name TBD): map `TypeSpec` / `TypeKind` to a documented schema representation (e.g. Spark SQL types or JSON schema for columns).
-  - Policy for unions, optionals, and nested structs; explicit fallbacks for unsupported kinds.
-  - Fixture tests: IR JSON → expected schema snapshots.
-- **Exit criteria (granitus 0.x “usable”):**
-  - [ ] Documented **support matrix** (Spark version or schema format).
-  - [ ] CI coverage for a **minimal** corpus (primitives + struct + list).
+**Goal:** Emit pipeline schemas from `ModelSpec`; coordinate with **morphra** on shared conventions. Roadmap: **[Phases 1.1–1.3](#granitus--1x-roadmap)**.
 
 ### velocus (umbrella CLI)
 
-**Goal:** Single **user-facing** CLI that dispatches to **`velotype`**, **viperis**, **morphra**, **granitus** without duplicating IR logic ([valarium.md](valarium.md)).
-
-- **Depends on:** Stable subcommand surfaces from **velotype** and at least **one** additional backend worth orchestrating (often **viperis** or **morphra** first).
-- **Planned deliverables:**
-  - Commands such as: `inspect` (IR dump), `stub`, `emit pydantic`, `emit spark` (exact names TBD); shared config file (optional).
-  - Thin **Typer** layer: import and call **`velarium`** + backend packages; no copy-paste IR code.
-  - Documentation: threat model inherits from **`velotype`** (dynamic imports); single entry for enterprise adoption.
-- **Exit criteria (velocus 0.x “usable”):**
-  - [ ] **Two** backends addressable from **velocus** (e.g. velotype + morphra) behind subcommands.
-  - [ ] README and `--help` document scope vs calling **`velotype`** alone.
+**Goal:** One **Typer** CLI over **`velotype`** + backends ([valarium.md](valarium.md)). Roadmap: **[Phases 1.1–1.3](#velocus--1x-roadmap)**; **Phase 1.1** matches the historical “two backends” bar.
 
 ---
 
@@ -382,12 +368,68 @@ The numbered phases below (**0.2**–**0.9**) are **monorepo-wide**; this sectio
 
 ---
 
+## Scaffold packages: 1.x phase plan
+
+**Scope:** **viperis**, **morphra**, **granitus**, and **velocus** only. **velarium** and **velotype** follow **[0.1–0.9](#phase-dependency-overview)** and **[1.0.0](#100--stable-release)**; their post-1.0 work is ordinary **1.y.0** semver, not broken out as named “1.x phases” here.
+
+**Versioning:** **Phase 1.1**, **1.2**, **1.3** are **maturity milestones** per package. The monorepo still ships **one version** on every tag ([RELEASING.md](RELEASING.md)); a phase may complete in a **patch** or land alongside unrelated package bumps—changelog and per-package READMEs record what finished.
+
+**Cross-dependencies**
+
+| When | Blocker or prerequisite |
+|------|-------------------------|
+| **viperis 1.1** | **velarium** IR contract stable enough to promise golden tests (target: **[1.0.0](#what-100-means)**). |
+| **morphra 1.1** / **granitus 1.1** | **velarium** **1.0.0**; shared emit conventions where both touch the same `TypeSpec` shapes. |
+| **velocus 1.1** | **velotype** at **1.0**-quality stubs/CLI; at least **viperis** or **morphra** at **1.1**. |
+
+### viperis — 1.x roadmap
+
+**Role:** Python **source** (AST) → **ModelSpec** IR, beyond `velarium`’s live-class builders.
+
+| Phase | Theme | Deliverables | Exit criteria |
+|-------|--------|--------------|---------------|
+| **1.1** | MVP | Discover modules/classes from files; map AST types to `TypeSpec` for common typing; golden `*.py` → IR JSON; documented public API or CLI entry | At least one **non-dataclass** path in default CI; doc: **viperis** vs **`velarium`** builders |
+| **1.2** | Parity | Package layouts and import paths; shrink gaps vs `annotation_to_typespec`; configurable roots/excludes | Support matrix + regression tests for listed constructs |
+| **1.3** | Scale + safety | Optional incremental/cache; structured diagnostics; threat model for imports/exec ([valarium.md](valarium.md)) | Performance expectations doc; security section cross-linked |
+
+### morphra — 1.x roadmap
+
+**Role:** **ModelSpec** → **Pydantic v2** models / codegen for runtime validation.
+
+| Phase | Theme | Deliverables | Exit criteria |
+|-------|--------|--------------|---------------|
+| **1.1** | MVP | `ModelSpec` → `BaseModel` (or documented codegen) for primitives + nested models; tests in default CI | One **tier-1** path documented; user-facing limitations vs hand-written Pydantic |
+| **1.2** | Expressiveness | Map IR constraints to `Field()` where possible; `model_config` hooks; lossy cases explicit in docs | Golden snapshots or round-trip **IR → morphra → IR** where feasible |
+| **1.3** | Ergonomics | Import layout, `__all__`, optional multi-file output; optional cross-check with **`velotype`**-generated `.pyi` | Stable public API for emit; changelog semver notes |
+
+### granitus — 1.x roadmap
+
+**Role:** **ModelSpec** → **Spark**-like (or documented) schemas for pipelines.
+
+| Phase | Theme | Deliverables | Exit criteria |
+|-------|--------|--------------|---------------|
+| **1.1** | MVP | `schema_from_model_spec` (name TBD); primitives + struct + list in CI fixtures | Documented **support matrix** (format and/or Spark version) |
+| **1.2** | Real-world shapes | Policy for unions, optionals, nested structs; explicit fallbacks for unsupported `TypeKind`s | Expanded corpus; no silent widening |
+| **1.3** | Interop | Optional alternate emit (e.g. JSON Schema for columns); pipeline docs | Versioned schema output if format evolves |
+
+### velocus — 1.x roadmap
+
+**Role:** Single **Typer** CLI over **`velarium`** + backends—no forked IR ([valarium.md](valarium.md)).
+
+| Phase | Theme | Deliverables | Exit criteria |
+|-------|--------|--------------|---------------|
+| **1.1** | MVP | Subcommands delegating to **`velotype`** and one of **viperis** / **morphra**; `--help` parity with scope statement | **Two** backends behind **velocus**; README vs **`velotype`** alone |
+| **1.2** | Workflow | Shared config file (optional); consistent exit codes and errors across backends | Troubleshooting doc; pre-commit / CI recipe (optional) |
+| **1.3** | Full stack | **granitus** (and **viperis** if not already) behind subcommands; threat model inherits **`velotype`** | All planned backends reachable; enterprise-facing doc |
+
+---
+
 ## Cross-cutting work (all phases)
 
 | Track | Ongoing expectations |
 |-------|----------------------|
 | **Tests** | Increase coverage on new code paths; regression tests for every fixed IR/stub bug. |
-| **Docs** | Update `modelspec-ir.md` when IR meaning changes; link new user-facing features from the root [README](../README.md) and [docs/README](README.md). Per-package READMEs (**velarium**, **velotype**, **viperis**, **morphra**, **granitus**, **velocus**) should reflect status vs [Plans by package](#plans-by-package). |
+| **Docs** | Update `modelspec-ir.md` when IR meaning changes; link new user-facing features from the root [README](../README.md) and [docs/README](README.md). Per-package READMEs should reflect status vs [Plans by package](#plans-by-package) and, for scaffolds, [Scaffold packages: 1.x phase plan](#scaffold-packages-1x-phase-plan). |
 | **Dependencies** | Conservative bounds; security updates for Typer, typing_extensions, etc. |
 | **Contributing** | `CONTRIBUTING.md` when external contributors appear: code style, PR checklist, CoC optional. |
 
@@ -395,9 +437,9 @@ The numbered phases below (**0.2**–**0.9**) are **monorepo-wide**; this sectio
 
 ## How to change this roadmap
 
-- Propose edits via PR; significant scope changes should update **phase exit criteria** and **dependency overview**.
+- Propose edits via PR; significant scope changes should update **phase exit criteria** and **dependency overview** (both **0.x** and **scaffold 1.x** tables).
 - **Slipping** work to a later phase is normal; **removing** exit criteria without maintainer agreement is not.
-- When a phase’s exit criteria are met, tag a **minor** release and note it in CHANGELOG.
+- When a phase’s exit criteria are met, tag a **minor** release and note it in CHANGELOG; record **scaffold 1.x** completions in changelog/README when they land.
 
 ---
 
@@ -407,14 +449,16 @@ The numbered phases below (**0.2**–**0.9**) are **monorepo-wide**; this sectio
 |---------|----------------------------------------|
 | **velarium** | IR + JSON semantics and Python API match Phase **0.8** freeze; [What “1.0.0” means](#what-100-means) applies to core types. |
 | **velotype** | Stub + CLI quality and security commitments from Phases **0.4**–**0.7**; published as **1.x** in step with or shortly after **velarium** 1.0. |
-| **viperis** | Documented **Python → IR** coverage; does not block **velarium** / **velotype** 1.0 but must not contradict the IR spec. |
-| **morphra** | At least one **supported** IR → Pydantic path with tests and docs; semver independent unless re-exporting **velarium** APIs. |
-| **granitus** | At least one **supported** IR → schema path with tests and docs; same independence note as **morphra**. |
-| **velocus** | Optional for ecosystem **1.0**; when shipped, remains a thin orchestrator over **velotype** and backends (no forked IR). |
+| **viperis** | **[Phase 1.1](#viperis--1x-roadmap)** exit criteria met (Python → IR docs + CI); does not block **velarium** / **velotype** 1.0 but must not contradict the IR spec. |
+| **morphra** | **[Phase 1.1](#morphra--1x-roadmap)** exit criteria (supported IR → Pydantic path); semver independent unless re-exporting **velarium** APIs. |
+| **granitus** | **[Phase 1.1](#granitus--1x-roadmap)** exit criteria (supported schema path + matrix); same independence note as **morphra**. |
+| **velocus** | Optional for ecosystem **1.0**; **[Phase 1.1](#velocus--1x-roadmap)** when orchestration ships—thin layer over **velotype** and backends (no forked IR). |
 
 ---
 
 ## Summary table
+
+Phase themes for the repo as a whole; **which packages move in each 0.x phase** is in [Release alignment by phase and package](#release-alignment-by-phase-and-package). **viperis**, **morphra**, **granitus**, and **velocus** use **[1.1–1.3 milestones](#scaffold-packages-1x-phase-plan)** after core **1.0.0**.
 
 | Phase | Focus | Main outcome |
 |-------|--------|----------------|
