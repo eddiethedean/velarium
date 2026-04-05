@@ -76,9 +76,15 @@ def test_batch_ir_merge_json(tmp_path: Path) -> None:
 
 
 def test_cli_batch_stub_help() -> None:
-    r = _runner.invoke(app, ["batch", "stub", "--help"])
+    # Rich uses os.environ COLUMNS for layout; GHA sets a narrow width and truncates
+    # help text. Force width (and CliRunner.terminal_width) plus NO_COLOR for stable output.
+    r = _runner.invoke(
+        app,
+        ["batch", "stub", "--help"],
+        terminal_width=120,
+        env={**os.environ, "NO_COLOR": "1", "COLUMNS": "120", "LINES": "40"},
+    )
     assert r.exit_code == 0
-    # Typer/Rich may split help across stdout/stderr depending on TTY width (Linux CI).
     out = (r.stdout or "") + (r.stderr or "")
     assert "--out-dir" in out
 
