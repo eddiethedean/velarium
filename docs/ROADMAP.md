@@ -237,7 +237,7 @@ The numbered phases below (**0.2**–**0.9**) are **monorepo-wide**; this sectio
 
 ---
 
-## Phase 0.3.* — Model sources
+## Phase 0.3.* — Model sources *(completed — shipped in **0.3.0**)*
 
 **Theme:** Same IR from more than `@dataclass` / `TypedDict`.
 

@@ -8,7 +8,7 @@
 - **Core library** — [`velarium`](packages/velarium/README.md) on PyPI: types, normalization, JSON, and builders (dataclass, `TypedDict`, Pydantic, attrs → `ModelSpec`). Annotation → `TypeSpec` behavior is in [Supported annotations](docs/supported-annotations.md) (Phase **0.2**); builders and extras are in [Model sources](docs/model-sources.md) (Phase **0.3**).
 - **Stubs + CLI** — [`velotype`](packages/velotype/README.md): IR → `.pyi` and the `velotype` CLI (`ir`, `stub`).
 
-Requires **Python 3.10+**. Coordinated library releases are tagged in [CHANGELOG.md](CHANGELOG.md); **0.2.0** is the current line for all six `packages/*` PyPI names.
+Requires **Python 3.10+**. Coordinated library releases are tagged in [CHANGELOG.md](CHANGELOG.md); **0.3.0** is the current line for all six `packages/*` PyPI names.
 
 ## Packages
 

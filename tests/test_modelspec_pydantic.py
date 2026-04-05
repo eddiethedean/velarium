@@ -8,7 +8,10 @@ from typing import Annotated
 import pytest
 from pydantic import BaseModel, ConfigDict, Field
 
-from velarium.modelspec_pydantic import _model_config_from_pydantic, modelspec_from_pydantic_model
+from velarium.modelspec_pydantic import (
+    _model_config_from_pydantic,
+    modelspec_from_pydantic_model,
+)
 from velotype.ir import ModelConfig, TypeKind
 from velotype.json_codec import dumps_model_spec, loads_model_spec
 

@@ -35,6 +35,9 @@ def modelspec_from_attrs_class(
     if not attrs_mod.has(cls):
         raise TypeError(f"{cls!r} is not an attrs class")
 
+    # `attrs.Factory` is typed as overloads; use concrete class for isinstance (ty-safe).
+    _attrs_factory_cls = type(attrs_mod.Factory(list))
+
     globalns = module_globals_for_class(cls)
     try:
         attrs_mod.resolve_types(cls, globalns=globalns, localns=None)
@@ -50,7 +53,7 @@ def modelspec_from_attrs_class(
         ts = normalize_typespec(ts)
         static_default = a.default
         if static_default is not attrs_mod.NOTHING and not isinstance(
-            static_default, attrs_mod.Factory
+            static_default, _attrs_factory_cls
         ):
             ts = TypeSpec(
                 kind=ts.kind,

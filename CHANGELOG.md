@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.0] - 2026-04-05
+
+Monorepo packages (**`velarium`**, **`velotype`**, **`viperis`**, **`morphra`**, **`granitus`**, **`velocus`**) are aligned at **0.3.0**. **`velotype`** depends on **`velarium>=0.3.0`**.
+
 ### Added
 
 - **Phase 0.3 — model sources** — `modelspec_from_pydantic_model` (Pydantic v2 `BaseModel`) and `modelspec_from_attrs_class` (attrs `@define`), optional extras `velarium[pydantic]`, `velarium[attrs]`, `velarium[sources]`; shared `metadata_for_class` for consistent `ModelMetadata`; [model-sources.md](docs/model-sources.md) (builders table, install, conflict policy).
@@ -15,6 +19,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - **`modelspec_from_attrs_class`** — `attrs.Factory` / `field(factory=…)` no longer placed on `TypeSpec.default` (aligned with Pydantic `default_factory` policy and JSON-safe defaults).
+
+### Packages
+
+| Package   | Version | Notes |
+|-----------|---------|--------|
+| velarium  | 0.3.0   | ModelSpec IR core (`typing_extensions` + optional `pydantic` / `attrs` extras). |
+| velotype  | 0.3.0   | Depends on `velarium>=0.3.0`; IR → `.pyi` + CLI. |
+| viperis, morphra, granitus, velocus | 0.3.0 | Pre-alpha scaffolds; no runtime dependencies. |
 
 ## [0.2.0] - 2026-04-06
 
@@ -77,6 +89,7 @@ Coordinated **0.1.0** line for the monorepo: **`velarium`** and **`velotype`** a
 - [docs/ROADMAP.md](docs/ROADMAP.md) and [docs/releasing.md](docs/releasing.md) for workspace layout and releases.
 - Per-package [packages/*/README.md](packages/) (`velarium`, `velotype`, `viperis`, `morphra`, `granitus`, `velocus`).
 
-[Unreleased]: https://github.com/eddiethedean/velarium/compare/v0.2.0...HEAD
+[Unreleased]: https://github.com/eddiethedean/velarium/compare/v0.3.0...HEAD
+[0.3.0]: https://github.com/eddiethedean/velarium/releases/tag/v0.3.0
 [0.2.0]: https://github.com/eddiethedean/velarium/releases/tag/v0.2.0
 [0.1.0]: https://github.com/eddiethedean/velarium/releases/tag/v0.1.0
