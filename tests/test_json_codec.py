@@ -120,3 +120,16 @@ def test_typespec_optional_nullable_flags() -> None:
 def test_model_spec_from_dict_empty_fields_key() -> None:
     m = model_spec_from_dict({"name": "Z", "fields": None})
     assert m.fields == {}
+
+
+def test_typespec_roundtrip_name_qualname_module() -> None:
+    ts = TypeSpec(
+        kind=TypeKind.NOMINAL,
+        name="x",
+        qualname="pkg.C",
+        module="pkg.mod",
+    )
+    d = typespec_to_dict(ts)
+    assert d["name"] == "x" and d["qualname"] == "pkg.C" and d["module"] == "pkg.mod"
+    ts2 = typespec_from_dict(d)
+    assert ts2.name == ts.name and ts2.qualname == ts.qualname and ts2.module == ts.module

@@ -40,6 +40,9 @@ def normalize_union(ts: TypeSpec) -> TypeSpec:
             optional=ts.optional or u.optional,
             nullable=ts.nullable or u.nullable,
             default=ts.default if ts.default is not None else u.default,
+            name=u.name,
+            qualname=u.qualname,
+            module=u.module,
         )
     return TypeSpec(
         kind=TypeKind.UNION,
@@ -47,6 +50,9 @@ def normalize_union(ts: TypeSpec) -> TypeSpec:
         optional=ts.optional,
         nullable=ts.nullable,
         default=ts.default,
+        name=ts.name,
+        qualname=ts.qualname,
+        module=ts.module,
     )
 
 
@@ -61,6 +67,9 @@ def normalize_typespec(ts: TypeSpec) -> TypeSpec:
         optional=ts.optional,
         nullable=ts.nullable,
         default=ts.default,
+        name=ts.name,
+        qualname=ts.qualname,
+        module=ts.module,
     )
     if out.kind == TypeKind.UNION:
         return normalize_union(out)
@@ -86,6 +95,9 @@ def optional_to_union(ts: TypeSpec) -> TypeSpec:
             optional=True,
             nullable=ts.nullable,
             default=ts.default,
+            name=ts.name,
+            qualname=ts.qualname,
+            module=ts.module,
         )
         return normalize_union(u)
     u = TypeSpec(
@@ -94,5 +106,8 @@ def optional_to_union(ts: TypeSpec) -> TypeSpec:
         optional=True,
         nullable=ts.nullable,
         default=ts.default,
+        name=ts.name,
+        qualname=ts.qualname,
+        module=ts.module,
     )
     return normalize_union(u)

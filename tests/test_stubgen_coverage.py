@@ -23,11 +23,23 @@ from velotype.stubgen import generate_pyi, render_typespec
         TypeKind.TIME,
         TypeKind.TIMESTAMP,
         TypeKind.TYPE_VAR,
+        TypeKind.PARAM_SPEC,
+        TypeKind.TYPE_VAR_TUPLE,
+        TypeKind.PROTOCOL,
+        TypeKind.NOMINAL,
     ],
 )
 def test_render_primitives_and_time(kind: TypeKind) -> None:
     s = render_typespec(TypeSpec(kind=kind))
     assert isinstance(s, str) and len(s) > 0
+    if kind in (
+        TypeKind.TYPE_VAR,
+        TypeKind.PARAM_SPEC,
+        TypeKind.TYPE_VAR_TUPLE,
+        TypeKind.PROTOCOL,
+        TypeKind.NOMINAL,
+    ):
+        assert s == "typing.Any"
 
 
 def test_render_literal_with_and_without_default() -> None:

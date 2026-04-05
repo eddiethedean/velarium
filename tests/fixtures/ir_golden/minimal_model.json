@@ -1,0 +1,15 @@
+{
+  "fields": {
+    "x": {
+      "kind": "int"
+    }
+  },
+  "metadata": {
+    "generated_by": "golden-test",
+    "line_number": null,
+    "source_file": null,
+    "source_module": null,
+    "version": null
+  },
+  "name": "Golden"
+}

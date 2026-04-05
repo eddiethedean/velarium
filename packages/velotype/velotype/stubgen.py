@@ -38,7 +38,17 @@ def render_typespec(ts: TypeSpec) -> str:
     if ts.kind == TypeKind.TIMESTAMP:
         return "datetime.datetime"
     if ts.kind == TypeKind.TYPE_VAR:
-        return "typing.TypeVar"
+        # Stubs do not emit TypeVar declarations; field types fall back to Any.
+        return "typing.Any"
+
+    if ts.kind in (
+        TypeKind.PARAM_SPEC,
+        TypeKind.TYPE_VAR_TUPLE,
+        TypeKind.PROTOCOL,
+        TypeKind.NOMINAL,
+    ):
+        # IR preserves names for tooling; generated stubs stay simple and import-safe.
+        return "typing.Any"
 
     if ts.kind == TypeKind.LITERAL:
         if ts.default is not None:

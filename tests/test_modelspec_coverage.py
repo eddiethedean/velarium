@@ -7,6 +7,7 @@ import sys
 from typing import TypedDict
 
 import pytest
+from typing_extensions import NotRequired
 
 from velotype.modelspec_build import (
     _module_globals,
@@ -53,7 +54,7 @@ def test_modelspec_get_type_hints_failure_uses_empty(
     def boom(*_a: object, **_k: object) -> dict[str, object]:
         raise RuntimeError("nope")
 
-    monkeypatch.setattr("velarium.modelspec_build.get_type_hints", boom)
+    monkeypatch.setattr("velarium.typing_resolve.get_type_hints", boom)
     spec = modelspec_from_dataclass(Bad)
     assert "x" in spec.fields
 
@@ -66,6 +67,29 @@ def test_modelspec_from_typed_dict() -> None:
     spec = modelspec_from_typed_dict(TD)
     assert spec.name == "TD"
     assert "a" in spec.fields
+
+
+class TDWithOptional(TypedDict):
+    req: int
+    opt: NotRequired[str]
+
+
+def test_modelspec_from_typed_dict_optional_keys() -> None:
+    spec = modelspec_from_typed_dict(TDWithOptional)
+    assert spec.fields["req"].optional is False
+    assert spec.fields["opt"].optional is True
+
+
+class TDTotalFalse(TypedDict, total=False):
+    """Keys optional via total=False; annotations are plain types."""
+
+    only: int
+
+
+def test_modelspec_from_typed_dict_total_false_sets_optional_without_not_required() -> None:
+    spec = modelspec_from_typed_dict(TDTotalFalse)
+    assert spec.fields["only"].optional is True
+    assert spec.fields["only"].kind.value == "int"
 
 
 def test_modelspec_from_typed_dict_rejects_non_typed_dict() -> None:
@@ -82,7 +106,7 @@ def test_modelspec_from_typed_dict_hints_failure(
     def boom(*_a: object, **_k: object) -> dict[str, object]:
         raise RuntimeError("nope")
 
-    monkeypatch.setattr("velarium.modelspec_build.get_type_hints", boom)
+    monkeypatch.setattr("velarium.typing_resolve.get_type_hints", boom)
     spec = modelspec_from_typed_dict(TD)
     assert "a" in spec.fields
 

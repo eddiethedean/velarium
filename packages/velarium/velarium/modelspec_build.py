@@ -4,37 +4,28 @@ from __future__ import annotations
 
 import dataclasses
 import inspect
-import sys
-from typing import Any, get_type_hints
+from typing import Any
 
 from typing_extensions import is_typeddict
 
 from velarium.annotations import annotation_to_typespec, type_to_typespec
 from velarium.ir import ModelConfig, ModelMetadata, ModelSpec, TypeSpec
 from velarium.normalize import normalize_typespec
+from velarium.typing_resolve import get_resolved_hints, module_globals_for_class
 
 
 def _module_globals(cls: type) -> dict[str, Any]:
-    mod = sys.modules.get(cls.__module__)
-    if mod is None:
-        return dict(vars(cls))
-    g = dict(vars(mod))
-    g.setdefault(cls.__name__, cls)
-    return g
+    """Backward-compatible alias for :func:`module_globals_for_class`."""
+    return module_globals_for_class(cls)
 
 
-def modelspec_from_dataclass(cls: type, *, include_extras: bool = False) -> ModelSpec:
+def modelspec_from_dataclass(cls: type, *, include_extras: bool = True) -> ModelSpec:
     """Extract ModelSpec from a dataclass type."""
     if not dataclasses.is_dataclass(cls):
         raise TypeError(f"{cls!r} is not a dataclass")
 
-    globalns = _module_globals(cls)
-    try:
-        hints = get_type_hints(
-            cls, globalns=globalns, localns=None, include_extras=include_extras
-        )
-    except Exception:
-        hints = {}
+    globalns = module_globals_for_class(cls)
+    hints = get_resolved_hints(cls, include_extras=include_extras)
 
     fields: dict[str, TypeSpec] = {}
     for f in dataclasses.fields(cls):
@@ -50,6 +41,9 @@ def modelspec_from_dataclass(cls: type, *, include_extras: bool = False) -> Mode
                 optional=ts.optional,
                 nullable=ts.nullable,
                 default=f.default,
+                name=ts.name,
+                qualname=ts.qualname,
+                module=ts.module,
             )
         fields[f.name] = ts
 
@@ -76,21 +70,34 @@ def modelspec_from_dataclass(cls: type, *, include_extras: bool = False) -> Mode
     return ModelSpec(name=cls.__name__, fields=fields, config=cfg, metadata=meta)
 
 
-def modelspec_from_typed_dict(cls: type) -> ModelSpec:
-    """Extract ModelSpec from typing.TypedDict (total fields only for MVP)."""
+def modelspec_from_typed_dict(cls: type, *, include_extras: bool = True) -> ModelSpec:
+    """Extract ModelSpec from typing.TypedDict (required / optional keys per PEP 589)."""
     if not is_typeddict(cls):
         raise TypeError(f"{cls!r} is not a TypedDict")
 
-    globalns = _module_globals(cls)
-    try:
-        hints = get_type_hints(cls, globalns=globalns)
-    except Exception:
-        hints = {}
+    hints = get_resolved_hints(cls, include_extras=include_extras)
+    opt_keys = getattr(cls, "__optional_keys__", None)
 
     fields: dict[str, TypeSpec] = {}
     for name, typ in getattr(cls, "__annotations__", {}).items():
-        ts = annotation_to_typespec(hints.get(name, typ), globalns=globalns)
-        fields[name] = normalize_typespec(ts)
+        raw = hints.get(name, typ)
+        ts = annotation_to_typespec(
+            raw, globalns=module_globals_for_class(cls)
+        )
+        ts = normalize_typespec(ts)
+        if opt_keys is not None and name in opt_keys:
+            ts = TypeSpec(
+                kind=ts.kind,
+                args=ts.args,
+                optional=True,
+                nullable=ts.nullable,
+                default=ts.default,
+                name=ts.name,
+                qualname=ts.qualname,
+                module=ts.module,
+            )
+            ts = normalize_typespec(ts)
+        fields[name] = ts
 
     meta = ModelMetadata(source_module=cls.__module__, generated_by="velarium")
     return ModelSpec(name=cls.__name__, fields=fields, config=None, metadata=meta)

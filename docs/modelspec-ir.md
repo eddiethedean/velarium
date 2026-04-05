@@ -67,7 +67,13 @@ class TypeSpec:
     optional: bool = False
     nullable: bool = False
     default: Any | None = None
+    # Optional metadata (Phase 0.2): JSON-serializable strings for type vars and nominal refs
+    name: str | None = None  # TypeVar / ParamSpec / TypeVarTuple name
+    qualname: str | None = None  # class or Protocol
+    module: str | None = None  # declaring module
 ```
+
+See [supported-annotations.md](supported-annotations.md) for how Python typing maps onto these fields.
 
 ---
 
@@ -107,6 +113,10 @@ class TypeKind(str, Enum):
     GENERIC = "generic"
     CALLABLE = "callable"
     TYPE_VAR = "typevar"
+    PARAM_SPEC = "paramspec"
+    TYPE_VAR_TUPLE = "typevartuple"
+    PROTOCOL = "protocol"
+    NOMINAL = "nominal"
 ```
 
 ---

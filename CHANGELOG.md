@@ -7,8 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- **Phase 0.2 — type surface and IR fidelity** — `TypeKind` extensions (`paramspec`, `typevartuple`, `protocol`, `nominal`) and optional `TypeSpec` metadata (`name`, `qualname`, `module`); JSON codec round-trips; centralized `get_resolved_hints` / `evaluate_forward_ref` in `velarium.typing_resolve`; richer `annotation_to_typespec` / `type_to_typespec` (e.g. `Annotated`, `Final`, `ClassVar`, `NotRequired`/`Required`, `TypeVar` name/bound, `Protocol`, nominal classes); `modelspec_from_typed_dict` respects `__optional_keys__` / `total=False` optional fields; [supported-annotations.md](docs/supported-annotations.md) documents the matrix and stub fallback (`velotype` renders `typing.Any` for kinds that lack stub declarations). Golden IR fixture under `tests/fixtures/ir_golden/`.
+
 ### Changed
 
+- **`Callable[[...], R]`** parameter lists now use `isinstance(param_args, list)` so `list`/`get_origin` mismatch no longer drops the multi-parameter branch.
 - Renamed PyPI package **`stubber`** → **`velotype`** (import `velotype`, CLI **`velotype`**). The **`stubber`** 0.1.0 release on PyPI is the previous name; new releases use **`velotype`**.
 - Renamed scaffold package **`clarion`** → **`velocus`** — the PyPI project name **`clarion`** is not available for this maintainer ([PyPI project name policy](https://pypi.org/help/#project-name)).
 

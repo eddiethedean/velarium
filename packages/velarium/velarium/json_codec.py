@@ -26,6 +26,9 @@ def _typespec_from_dict(d: dict[str, Any]) -> TypeSpec:
         optional=d.get("optional", False),
         nullable=d.get("nullable", False),
         default=d.get("default", None),
+        name=d.get("name"),
+        qualname=d.get("qualname"),
+        module=d.get("module"),
     )
 
 
@@ -49,6 +52,12 @@ def typespec_to_dict(ts: TypeSpec) -> dict[str, Any]:
         out["nullable"] = True
     if ts.default is not None:
         out["default"] = _json_default_value(ts.default)
+    if ts.name is not None:
+        out["name"] = ts.name
+    if ts.qualname is not None:
+        out["qualname"] = ts.qualname
+    if ts.module is not None:
+        out["module"] = ts.module
     return out
 
 

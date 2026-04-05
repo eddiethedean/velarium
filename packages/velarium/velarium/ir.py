@@ -38,6 +38,10 @@ class TypeKind(str, Enum):
     GENERIC = "generic"
     CALLABLE = "callable"
     TYPE_VAR = "typevar"
+    PARAM_SPEC = "paramspec"
+    TYPE_VAR_TUPLE = "typevartuple"
+    PROTOCOL = "protocol"
+    NOMINAL = "nominal"
 
 
 @dataclass
@@ -47,6 +51,10 @@ class TypeSpec:
     optional: bool = False
     nullable: bool = False
     default: Any | None = None
+    # Phase 0.2: optional metadata (JSON-serializable strings)
+    name: str | None = None  # TypeVar / ParamSpec / TypeVarTuple name
+    qualname: str | None = None  # nominal class or Protocol
+    module: str | None = None  # __module__ for nominal / protocol
 
 
 @dataclass

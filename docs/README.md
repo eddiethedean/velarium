@@ -9,6 +9,7 @@ Welcome to the **Velarium** monorepo docs: a shared **ModelSpec IR** (`velarium`
 | **[Velarium ecosystem spec](valarium.md)** | Components, pipeline, architecture, **monorepo `packages/`** layout |
 | **[Design & philosophy](design.md)** | Why the IR exists, how we relate to mypy/Pyright/Pydantic, compiler-style framing |
 | **[ModelSpec IR specification](modelspec-ir.md)** | `ModelSpec`, `TypeSpec`, `TypeKind`, normalization, JSON — **implemented in `velarium`** |
+| **[Supported annotations (Phase 0.2)](supported-annotations.md)** | Annotation → IR matrix, PEP 563 / forward refs, TypedDict keys, known gaps |
 | **[Roadmap to 1.0.0](ROADMAP.md)** | Phased **0.x** work through stable **1.0.0** |
 | **[Installing & releasing](releasing.md)** | uv workspace, editable installs, builds, PyPI |
 
