@@ -203,11 +203,11 @@ The numbered phases below (**0.2**–**0.9**) are **monorepo-wide**; this sectio
 - [x] Version from `velotype.__version__` / `velarium.__version__` via Hatch per package; aligned with distribution metadata.
 - [x] **CI** on GitHub Actions: Python 3.10–3.13, `pytest`, `ty check`, `python -m build`.
 - [x] **[CHANGELOG.md](../CHANGELOG.md)** (Keep a Changelog).
-- [x] Optional **PyPI publish** workflow on GitHub Release; manual **twine** documented in [releasing.md](releasing.md).
+- [x] Optional **PyPI publish** workflow on GitHub Release; manual **twine** documented in [RELEASING.md](RELEASING.md).
 
 **Exit criteria (0.1 complete):**
 
-- [x] Installable artifact from PyPI *or* documented install from Git with reproducible `python -m build` ([releasing.md](releasing.md)).
+- [x] Installable artifact from PyPI *or* documented install from Git with reproducible `python -m build` ([RELEASING.md](RELEASING.md)).
 - [x] Green CI on the supported Python line with tests + `ty` on **velarium** / **velotype** sources.
 - [x] Roadmap, IR spec, and changelog linked from README; [modelspec_ir.md](../modelspec_ir.md) pointer retained.
 

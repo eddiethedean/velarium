@@ -121,7 +121,7 @@ CI runs **pytest**, **ty**, and wheel builds for all packages on Python 3.10–3
 | [Model sources](https://github.com/eddiethedean/velarium/blob/main/docs/model-sources.md) | Builders (dataclass, TypedDict, Pydantic, attrs), extras, policies |
 | [Stub compatibility](https://github.com/eddiethedean/velarium/blob/main/docs/stub-compatibility.md) | Generated `.pyi` guarantees, **`generate_pyi`** options, CI **mypy** / **Pyright** |
 | [Roadmap](https://github.com/eddiethedean/velarium/blob/main/docs/ROADMAP.md) | Planned work |
-| [Installing & releasing](https://github.com/eddiethedean/velarium/blob/main/docs/releasing.md) | Builds and PyPI |
+| [Installing & releasing](https://github.com/eddiethedean/velarium/blob/main/docs/RELEASING.md) | Builds and PyPI |
 | [Changelog](https://github.com/eddiethedean/velarium/blob/main/CHANGELOG.md) | Release notes |
 
 ## License

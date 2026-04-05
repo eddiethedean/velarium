@@ -44,7 +44,7 @@ Monorepo packages (**`velarium`**, **`velotype`**, **`viperis`**, **`morphra`**,
 
 - **Phase 0.2 — type surface and IR fidelity** — `TypeKind` extensions (`paramspec`, `typevartuple`, `protocol`, `nominal`) and optional `TypeSpec` metadata (`name`, `qualname`, `module`); JSON codec round-trips; centralized `get_resolved_hints` / `evaluate_forward_ref` in `velarium.typing_resolve`; richer `annotation_to_typespec` / `type_to_typespec` (e.g. `Annotated`, `Final`, `ClassVar`, `NotRequired`/`Required`, `TypeVar` name/bound, `Protocol`, nominal classes); `modelspec_from_typed_dict` respects `__optional_keys__` / `total=False` optional fields; [supported-annotations.md](docs/supported-annotations.md) documents the matrix and stub fallback (`velotype` renders `typing.Any` for kinds that lack stub declarations). Golden IR fixtures under `tests/fixtures/ir_golden/` (`minimal_model`, `complex_model`).
 - **Tests** — `tests/test_ir_integration.py` (PEP 563 dataclass via `exec`, `TypedDict` keys, nested `Literal`, JSON determinism, `generate_pyi` smoke); `tests/td_fixtures.py` for `TypedDict` samples without PEP 563 string annotations so `__required_keys__` / `__optional_keys__` are reliable.
-- **Docs** — README, package READMEs, [ROADMAP.md](docs/ROADMAP.md) Phase 0.2 exit criteria, [design.md](docs/design.md), [valarium.md](docs/valarium.md), [releasing.md](docs/releasing.md), [modelspec-ir.md](docs/modelspec-ir.md), and scaffold packages cross-link [supported-annotations.md](docs/supported-annotations.md) / IR spec where helpful.
+- **Docs** — README, package READMEs, [ROADMAP.md](docs/ROADMAP.md) Phase 0.2 exit criteria, [design.md](docs/design.md), [valarium.md](docs/valarium.md), [RELEASING.md](docs/RELEASING.md), [modelspec-ir.md](docs/modelspec-ir.md), and scaffold packages cross-link [supported-annotations.md](docs/supported-annotations.md) / IR spec where helpful.
 
 ### Changed
 
@@ -94,7 +94,7 @@ Coordinated **0.1.0** line for the monorepo: **`velarium`** and **`velotype`** a
 ### Documentation
 
 - [docs/design.md](docs/design.md), [docs/modelspec-ir.md](docs/modelspec-ir.md), [docs/valarium.md](docs/valarium.md), [docs/README.md](docs/README.md) for the Velarium ecosystem.
-- [docs/ROADMAP.md](docs/ROADMAP.md) and [docs/releasing.md](docs/releasing.md) for workspace layout and releases.
+- [docs/ROADMAP.md](docs/ROADMAP.md) and [docs/RELEASING.md](docs/RELEASING.md) for workspace layout and releases.
 - Per-package [packages/*/README.md](packages/) (`velarium`, `velotype`, `viperis`, `morphra`, `granitus`, `velocus`).
 
 [Unreleased]: https://github.com/eddiethedean/velarium/compare/v0.3.0...HEAD

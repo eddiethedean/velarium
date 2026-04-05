@@ -19,7 +19,7 @@ Welcome to the **Velarium** monorepo docs: a shared **ModelSpec IR** ([**velariu
 | **[Model sources (Phase 0.3)](https://github.com/eddiethedean/velarium/blob/main/docs/model-sources.md)** | Builders: dataclass, TypedDict, Pydantic, attrs — install extras, policies |
 | **[Stub compatibility (Phase 0.4)](https://github.com/eddiethedean/velarium/blob/main/docs/stub-compatibility.md)** | Guarantees vs best-effort for generated `.pyi`, imports, CI **mypy** / **Pyright** |
 | **[Roadmap to 1.0.0](https://github.com/eddiethedean/velarium/blob/main/docs/ROADMAP.md)** | Phased **0.x** work through stable **1.0.0** |
-| **[Installing & releasing](https://github.com/eddiethedean/velarium/blob/main/docs/releasing.md)** | uv workspace, editable installs, builds, PyPI |
+| **[Installing & releasing](https://github.com/eddiethedean/velarium/blob/main/docs/RELEASING.md)** | uv workspace, editable installs, builds, PyPI |
 
 ## Package READMEs (source)
 

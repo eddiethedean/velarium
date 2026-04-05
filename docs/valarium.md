@@ -198,4 +198,4 @@ The Git repository is a **[uv](https://docs.astral.sh/uv/) workspace** (see root
 | `packages/granitus` | `granitus` | Scaffold — IR → Spark-like schemas |
 | `packages/velocus` | `velocus` | Scaffold — umbrella CLI (use **`velotype`** until implemented) |
 
-See also [Installing & releasing](releasing.md) and [Design & philosophy](design.md).
+See also [Installing & releasing](RELEASING.md) and [Design & philosophy](design.md).
