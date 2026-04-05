@@ -1,6 +1,8 @@
 # stubber
 
-**stubber** implements the **ModelSpec IR** (intermediate representation) for portable typing: normalize annotations, serialize to JSON, and emit minimal `.pyi` stubs. Background and schema live in the **[documentation](docs/README.md)** (`docs/design.md`, `docs/modelspec-ir.md`).
+[![CI](https://github.com/eddiethedean/stubber/actions/workflows/ci.yml/badge.svg)](https://github.com/eddiethedean/stubber/actions/workflows/ci.yml)
+
+**stubber** implements the **ModelSpec IR** (intermediate representation) for portable typing: normalize annotations, serialize to JSON, and emit minimal `.pyi` stubs. Background and schema live in the **[documentation](docs/README.md)** (`docs/design.md`, `docs/modelspec-ir.md`, **[roadmap](docs/ROADMAP.md)**).
 
 Requires **Python 3.10+**.
 
@@ -10,7 +12,13 @@ Requires **Python 3.10+**.
 pip install stubber
 ```
 
-From a clone:
+Once [published to PyPI](https://pypi.org/project/stubber/), the above works. Until then, install from Git:
+
+```bash
+pip install git+https://github.com/eddiethedean/stubber.git
+```
+
+From a clone (editable, with dev tools):
 
 ```bash
 pip install -e ".[dev]"
@@ -53,16 +61,21 @@ print(generate_pyi(spec))
 
 ## Development
 
+Release version is set in **`stubber/__init__.py`** as `__version__` (Hatch reads it for packages—do not duplicate in `pyproject.toml`).
+
 ```bash
 pytest
 mypy stubber
-python -m build   # sdist + wheel
+python -m build   # sdist + wheel (requires `pip install build` or `.[dev]`)
 ```
 
 ## Documentation
 
 - [Design & philosophy](docs/design.md)
 - [ModelSpec IR specification](docs/modelspec-ir.md)
+- [Roadmap to 1.0.0](docs/ROADMAP.md)
+- [Changelog](CHANGELOG.md)
+- [Installing & releasing](docs/releasing.md)
 
 ## Implementation notes
 

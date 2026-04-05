@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "stubber"
-version = "0.1.0"
+dynamic = ["version"]
 description = "ModelSpec IR and deterministic .pyi stub generation (stubber)"
 readme = "README.md"
 requires-python = ">=3.10"
@@ -25,13 +25,16 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-dev = ["pytest>=7.0", "mypy>=1.0"]
+dev = ["pytest>=7.0", "mypy>=1.0", "build>=1.0"]
 
 [project.scripts]
 stubber = "stubber.cli:app"
 
+[tool.hatch.version]
+path = "stubber/__init__.py"
+
 [tool.hatch.build.targets.sdist]
-include = ["stubber", "README.md", "LICENSE", "docs", "modelspec_ir.md"]
+include = ["stubber", "README.md", "LICENSE", "CHANGELOG.md", "docs", "modelspec_ir.md"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
