@@ -105,6 +105,7 @@ def test_protocol_and_plain_nominal() -> None:
     p = type_to_typespec(_Proto, optional=False)
     assert p.kind == TypeKind.PROTOCOL
     assert p.qualname == "_Proto"
+
     class Plain:
         pass
 
@@ -132,15 +133,23 @@ def test_annotation_to_typespec_eval_when_evaluate_forward_ref_raises(
 def test_type_to_typespec_forward_ref_exception_is_any(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
-    monkeypatch.setattr("velarium.annotations.evaluate_forward_ref", lambda *_a, **_k: (_ for _ in ()).throw(RuntimeError()))
-    ts = type_to_typespec(typing.ForwardRef("int"), optional=False, globalns={"int": int})
+    monkeypatch.setattr(
+        "velarium.annotations.evaluate_forward_ref",
+        lambda *_a, **_k: (_ for _ in ()).throw(RuntimeError()),
+    )
+    ts = type_to_typespec(
+        typing.ForwardRef("int"), optional=False, globalns={"int": int}
+    )
     assert ts.kind == TypeKind.ANY
 
 
 def test_type_to_typespec_str_annotation_exception_is_any(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
-    monkeypatch.setattr("velarium.annotations.evaluate_forward_ref", lambda *_a, **_k: (_ for _ in ()).throw(RuntimeError()))
+    monkeypatch.setattr(
+        "velarium.annotations.evaluate_forward_ref",
+        lambda *_a, **_k: (_ for _ in ()).throw(RuntimeError()),
+    )
     ts = type_to_typespec("int", optional=False, globalns={"int": int})
     assert ts.kind == TypeKind.ANY
 

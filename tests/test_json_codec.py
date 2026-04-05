@@ -132,4 +132,6 @@ def test_typespec_roundtrip_name_qualname_module() -> None:
     d = typespec_to_dict(ts)
     assert d["name"] == "x" and d["qualname"] == "pkg.C" and d["module"] == "pkg.mod"
     ts2 = typespec_from_dict(d)
-    assert ts2.name == ts.name and ts2.qualname == ts.qualname and ts2.module == ts.module
+    assert (
+        ts2.name == ts.name and ts2.qualname == ts.qualname and ts2.module == ts.module
+    )

@@ -18,9 +18,14 @@ def test_module_globals_for_class_when_module_not_loaded(
     class C:
         __module__ = "___velarium_fake_mod_for_resolve___"
 
-    monkeypatch.delitem(sys.modules, "___velarium_fake_mod_for_resolve___", raising=False)
+    monkeypatch.delitem(
+        sys.modules, "___velarium_fake_mod_for_resolve___", raising=False
+    )
     g = module_globals_for_class(C)
-    assert isinstance(g, dict) and g.get("__module__") == "___velarium_fake_mod_for_resolve___"
+    assert (
+        isinstance(g, dict)
+        and g.get("__module__") == "___velarium_fake_mod_for_resolve___"
+    )
 
 
 def test_evaluate_forward_ref_legacy_positional_recursive_guard(

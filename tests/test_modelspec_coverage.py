@@ -86,7 +86,9 @@ class TDTotalFalse(TypedDict, total=False):
     only: int
 
 
-def test_modelspec_from_typed_dict_total_false_sets_optional_without_not_required() -> None:
+def test_modelspec_from_typed_dict_total_false_sets_optional_without_not_required() -> (
+    None
+):
     spec = modelspec_from_typed_dict(TDTotalFalse)
     assert spec.fields["only"].optional is True
     assert spec.fields["only"].kind.value == "int"

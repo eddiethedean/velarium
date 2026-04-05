@@ -81,9 +81,7 @@ def modelspec_from_typed_dict(cls: type, *, include_extras: bool = True) -> Mode
     fields: dict[str, TypeSpec] = {}
     for name, typ in getattr(cls, "__annotations__", {}).items():
         raw = hints.get(name, typ)
-        ts = annotation_to_typespec(
-            raw, globalns=module_globals_for_class(cls)
-        )
+        ts = annotation_to_typespec(raw, globalns=module_globals_for_class(cls))
         ts = normalize_typespec(ts)
         if opt_keys is not None and name in opt_keys:
             ts = TypeSpec(

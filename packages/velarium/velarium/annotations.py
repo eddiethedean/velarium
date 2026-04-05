@@ -19,7 +19,7 @@ from typing import (
     get_origin,
 )
 
-from typing_extensions import Annotated, NotRequired, ParamSpec, Required, TypeVarTuple
+from typing_extensions import Annotated, NotRequired, Required
 
 from velarium.ir import TypeKind, TypeSpec
 from velarium.normalize import normalize_typespec, optional_to_union
@@ -96,7 +96,9 @@ def type_to_typespec(
             return _merge_optional(TypeSpec(kind=TypeKind.ANY), optional=optional)
         try:
             ev = evaluate_forward_ref(t, globalns, localns)
-            return type_to_typespec(ev, optional=optional, globalns=globalns, localns=localns)
+            return type_to_typespec(
+                ev, optional=optional, globalns=globalns, localns=localns
+            )
         except Exception:
             return _merge_optional(TypeSpec(kind=TypeKind.ANY), optional=optional)
 
@@ -106,7 +108,9 @@ def type_to_typespec(
         try:
             fr = ForwardRef(t, module=globalns.get("__name__"))
             ev = evaluate_forward_ref(fr, globalns, localns)
-            return type_to_typespec(ev, optional=optional, globalns=globalns, localns=localns)
+            return type_to_typespec(
+                ev, optional=optional, globalns=globalns, localns=localns
+            )
         except Exception:
             return _merge_optional(TypeSpec(kind=TypeKind.ANY), optional=optional)
 
@@ -135,7 +139,9 @@ def type_to_typespec(
 
     if origin is list or origin is typing.List:
         inner = (
-            type_to_typespec(args[0], optional=False, globalns=globalns, localns=localns)
+            type_to_typespec(
+                args[0], optional=False, globalns=globalns, localns=localns
+            )
             if args
             else TypeSpec(kind=TypeKind.ANY)
         )
@@ -145,12 +151,16 @@ def type_to_typespec(
 
     if origin is dict or origin is typing.Dict:
         k = (
-            type_to_typespec(args[0], optional=False, globalns=globalns, localns=localns)
+            type_to_typespec(
+                args[0], optional=False, globalns=globalns, localns=localns
+            )
             if len(args) > 0
             else TypeSpec(kind=TypeKind.ANY)
         )
         v = (
-            type_to_typespec(args[1], optional=False, globalns=globalns, localns=localns)
+            type_to_typespec(
+                args[1], optional=False, globalns=globalns, localns=localns
+            )
             if len(args) > 1
             else TypeSpec(kind=TypeKind.ANY)
         )
@@ -160,7 +170,9 @@ def type_to_typespec(
 
     if origin is set or origin is typing.Set:
         inner = (
-            type_to_typespec(args[0], optional=False, globalns=globalns, localns=localns)
+            type_to_typespec(
+                args[0], optional=False, globalns=globalns, localns=localns
+            )
             if args
             else TypeSpec(kind=TypeKind.ANY)
         )
@@ -198,7 +210,9 @@ def type_to_typespec(
                 plist_ts = TypeSpec(
                     kind=TypeKind.LIST,
                     args=[
-                        type_to_typespec(p, optional=False, globalns=globalns, localns=localns)
+                        type_to_typespec(
+                            p, optional=False, globalns=globalns, localns=localns
+                        )
                         for p in plist
                     ],
                 )
@@ -277,9 +291,7 @@ def type_to_typespec(
         if t is bytes:
             return _merge_optional(TypeSpec(kind=TypeKind.BYTES), optional=optional)
         if t is datetime.datetime:
-            return _merge_optional(
-                TypeSpec(kind=TypeKind.DATETIME), optional=optional
-            )
+            return _merge_optional(TypeSpec(kind=TypeKind.DATETIME), optional=optional)
         if t is datetime.date:
             return _merge_optional(TypeSpec(kind=TypeKind.DATE), optional=optional)
         if t is datetime.time:
@@ -340,7 +352,5 @@ def annotation_to_typespec(
             except Exception:
                 return TypeSpec(kind=TypeKind.ANY)
     return normalize_typespec(
-        type_to_typespec(
-            annotation, optional=False, globalns=globalns, localns=localns
-        )
+        type_to_typespec(annotation, optional=False, globalns=globalns, localns=localns)
     )
