@@ -21,6 +21,12 @@ dev = [
   "attrs>=23.1.0",
 ]
 
+# Phase 0.4 — mypy + pyright on generated stub corpus (CI: uv sync --group stubcheck)
+stubcheck = [
+  "mypy>=1.11.0",
+  "pyright>=1.1.400",
+]
+
 [tool.uv.workspace]
 members = ["packages/*"]
 

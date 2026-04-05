@@ -1,0 +1,43 @@
+{
+  "config": {
+    "extra": "forbid",
+    "from_attributes": true,
+    "frozen": true,
+    "strict": false,
+    "validate_assignment": true
+  },
+  "fields": {
+    "cb": {
+      "args": [
+        {
+          "args": [
+            {
+              "kind": "int"
+            }
+          ],
+          "kind": "list"
+        },
+        {
+          "kind": "bool"
+        }
+      ],
+      "kind": "callable"
+    },
+    "choice": {
+      "args": [
+        {
+          "kind": "str"
+        },
+        {
+          "kind": "none"
+        }
+      ],
+      "kind": "union"
+    },
+    "tag": {
+      "default": "a",
+      "kind": "literal"
+    }
+  },
+  "name": "Mixed"
+}

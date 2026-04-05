@@ -24,7 +24,7 @@ from velarium.modelspec_build import (
 )
 from velarium.modelspec_pydantic import modelspec_from_pydantic_model
 from velarium.normalize import normalize_typespec, normalize_union, optional_to_union
-from velotype.stubgen import generate_pyi, render_typespec
+from velotype.stubgen import format_stub_text, generate_pyi, render_typespec
 
 __all__ = [
     "annotation_to_typespec",
@@ -48,6 +48,7 @@ __all__ = [
     "normalize_typespec",
     "normalize_union",
     "optional_to_union",
+    "format_stub_text",
     "generate_pyi",
     "render_typespec",
 ]

@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- **Phase 0.4 — stub generation quality** — `generate_pyi` options (`header`, `footer`, `include_all`, `style`), conditional `import datetime`, optional `format_stub_text(..., backend="ruff")`, golden corpus under `tests/fixtures/stub_corpus/` (including **`mixed_kinds`**: callable, union, literal, frozen); CI **`stub-check`** job runs pinned **mypy** + **Pyright** on the corpus; [stub-compatibility.md](docs/stub-compatibility.md); expanded **`stubgen`** tests (import minimization paths, `format_stub_text` error paths, **`__all__`** + banner).
+
 ### Fixed
 
 - **`type_to_typespec`** — resolve `ParamSpec` / `TypeVarTuple` before plain `TypeVar` so Python 3.10 does not treat `TypeVarTuple` as a `TypeVar` and access missing `__bound__` (CI on 3.10).

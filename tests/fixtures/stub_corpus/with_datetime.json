@@ -1,0 +1,16 @@
+{
+  "fields": {
+    "created": {
+      "kind": "datetime"
+    },
+    "nested": {
+      "args": [
+        {
+          "kind": "date"
+        }
+      ],
+      "kind": "list"
+    }
+  },
+  "name": "WithDt"
+}

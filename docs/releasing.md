@@ -9,7 +9,7 @@ The repo is a **[uv](https://docs.astral.sh/uv/) workspace** at the root. **Tier
 
 Do not duplicate version strings under `[project]` in those `pyproject.toml` files.
 
-Before tagging a release for **`velarium`** or **`velotype`**, run the full test suite (`pytest` with coverage) and `ty check` as in the root [README.md](../README.md#development). Any intentional **JSON IR** output change should update golden fixtures under `tests/fixtures/ir_golden/` and [CHANGELOG.md](../CHANGELOG.md).
+Before tagging a release for **`velarium`** or **`velotype`**, run the full test suite (`pytest` with coverage) and `ty check` as in the root [README.md](../README.md#development). Any intentional **JSON IR** output change should update golden fixtures under `tests/fixtures/ir_golden/`; any intentional **stub** output change should update goldens under `tests/fixtures/stub_corpus/` (and keep **`stub-check`** green — **mypy** / **Pyright** on that corpus). Record user-facing changes in [CHANGELOG.md](../CHANGELOG.md).
 
 ### Ready for **0.3.0**?
 
@@ -19,7 +19,7 @@ Before publishing the **0.3.0** tag / GitHub Release, confirm:
 |-------|--------|
 | Versions | Every package’s `__version__` is **`0.3.0`** (see each `packages/*/…/__init__.py`). **`velotype`** lists **`velarium>=0.3.0`** in [packages/velotype/pyproject.toml](../packages/velotype/pyproject.toml). |
 | Changelog | [CHANGELOG.md](../CHANGELOG.md) has a **`[0.3.0]`** section with the correct date and `[Unreleased]` compare link pointing at **`v0.3.0...HEAD`**. |
-| CI | [ci.yml](../.github/workflows/ci.yml) green on **`main`** (pytest, `ty`, wheel build for all packages). |
+| CI | [ci.yml](../.github/workflows/ci.yml) green on **`main`** (pytest, `ty`, wheel build for all packages, **`stub-check`** with **mypy** + **Pyright** on `tests/fixtures/stub_corpus/`). |
 | Local build | `python -m build` in each `packages/*/`, or the merged `dist/` loop + `twine check dist/*` below. |
 | Tag | Create **`v0.3.0`** on the commit that contains the version bump (annotated tag recommended). |
 | PyPI order | If uploading manually, ensure **`velarium`** is available before **`velotype`** (dependency). |

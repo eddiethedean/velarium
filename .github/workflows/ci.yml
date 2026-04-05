@@ -40,3 +40,27 @@ jobs:
 
       - name: Verify artifacts
         run: find packages -type d -name dist -exec ls -la {} \;
+
+  stub-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install stub checkers (pinned via uv.lock)
+        run: uv sync --group stubcheck
+
+      - name: mypy on fixture corpus
+        run: |
+          uv run mypy \
+            --config-file tests/fixtures/stub_corpus/mypy.ini \
+            tests/fixtures/stub_corpus/simple_int.pyi \
+            tests/fixtures/stub_corpus/with_datetime.pyi \
+            tests/fixtures/stub_corpus/mixed_kinds.pyi
+
+      - name: Pyright on fixture corpus
+        run: uv run pyright --project tests/fixtures/stub_corpus

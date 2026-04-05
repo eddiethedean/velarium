@@ -47,6 +47,8 @@ If a **`TypedDict`** class body is parsed with **`from __future__ import annotat
 
 `render_typespec` maps **`protocol`**, **`nominal`**, **`paramspec`**, **`typevartuple`**, and **`typevar`** field types to **`typing.Any`** in emitted `.pyi` text so stubs stay import-safe without synthesizing `TypeVar` / `ParamSpec` declarations. The IR still carries **`name`**, **`qualname`**, and **`module`** for other consumers.
 
+For guarantees vs best-effort (imports, **`__all__`**, CI checkers), see [stub-compatibility.md](stub-compatibility.md).
+
 ## Changelog
 
 IR mapping changes are **versioned** in [CHANGELOG.md](../CHANGELOG.md); compare JSON output when upgrading.

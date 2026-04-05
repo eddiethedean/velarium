@@ -269,8 +269,8 @@ The numbered phases below (**0.2**–**0.9**) are **monorepo-wide**; this sectio
 
 **Exit criteria:**
 
-- [ ] Documented **stub compatibility checklist** (what we guarantee vs best-effort).
-- [ ] CI job that fails if fixture stubs regress under pinned checker versions.
+- [x] Documented **stub compatibility checklist** (what we guarantee vs best-effort).
+- [x] CI job that fails if fixture stubs regress under pinned checker versions.
 
 ---
 
