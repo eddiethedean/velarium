@@ -87,14 +87,16 @@ Upload **`velarium`** before **`velotype`** if you step through uploads manually
 
 ### Automated (GitHub Actions)
 
-The [Publish workflow](../.github/workflows/publish.yml) runs when a **GitHub Release** is **published**. It builds **all workspace packages** into a single `dist/` folder and uploads via [pypa/gh-action-pypi-publish](https://github.com/pypa/gh-action-pypi-publish). Publish **`velarium`** before **`velotype`** on PyPI if you upload manually (velotype depends on velarium).
+The [Publish workflow](../.github/workflows/publish.yml) runs when you **push a version tag** (e.g. `v0.3.0`) **or** when you **publish a GitHub Release** (useful if you add release notes without a fresh tag push). It builds **all workspace packages** into a single `dist/` folder and uploads via [pypa/gh-action-pypi-publish](https://github.com/pypa/gh-action-pypi-publish). Publish **`velarium`** before **`velotype`** on PyPI if you upload manually (velotype depends on velarium).
+
+Pushing a tag alone **does** trigger the workflow; you do **not** have to create a GitHub Release unless you want one.
 
 **Authentication (pick one):**
 
 1. **API token (configured in-repo):** Add a repository secret named **`PYPI_API_TOKEN`** whose value is a [PyPI API token](https://pypi.org/manage/account/token/) with scope for every project this workflow uploads (`velarium`, `velotype`, and any scaffold packages you ship). The workflow uses username **`__token__`** and that secret as the password.
 2. **Trusted publishing (OIDC):** If you prefer not to store a long-lived token, configure **trusted publishing** on [pypi.org](https://pypi.org) for this GitHub repo, then adjust the workflow to use OIDC (see the action docs) and you can omit **`PYPI_API_TOKEN`**.
 
-Then create a **GitHub Release** from the tag; **publishing** the release triggers the workflow.
+To trigger a publish: **`git push origin v0.3.0`** (or any matching `v*` tag), or **publish a GitHub Release** for that tag if you use the Releases UI.
 
 Optional: add a GitHub **environment** named `pypi` with protection rules and reference it in the workflow if you want approval gates.
 

@@ -1,10 +1,14 @@
-# Publish to PyPI when a GitHub Release is published.
-# Auth: repository secret PYPI_API_TOKEN (PyPI API token), or configure trusted publishing (OIDC).
-# See docs/releasing.md
+# Publish to PyPI when:
+# - a version tag is pushed (e.g. git push origin v0.3.0), or
+# - a GitHub Release is published (for release notes without a new tag push).
+# Auth: repository secret PYPI_API_TOKEN. See docs/releasing.md
 
 name: Publish
 
 on:
+  push:
+    tags:
+      - "v*"
   release:
     types: [published]
 
@@ -15,6 +19,9 @@ jobs:
       contents: read
     steps:
       - uses: actions/checkout@v4
+        with:
+          # release events need an explicit tag; push(tag) already has refs/tags/… in github.ref
+          ref: ${{ github.event_name == 'release' && github.event.release.tag_name || github.ref }}
 
       - uses: actions/setup-python@v5
         with:
