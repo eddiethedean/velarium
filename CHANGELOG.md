@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.4.0] - 2026-04-05
+
+Monorepo packages (**`velarium`**, **`velotype`**, **`viperis`**, **`morphra`**, **`granitus`**, **`velocus`**) are aligned at **0.4.0**. **`velotype`** depends on **`velarium>=0.4.0`**.
+
 ### Added
 
 - **Phase 0.4 — stub generation quality** — `generate_pyi` options (`header`, `footer`, `include_all`, `style`), conditional `import datetime`, optional `format_stub_text(..., backend="ruff")`, golden corpus under `tests/fixtures/stub_corpus/` (including **`mixed_kinds`**: callable, union, literal, frozen); CI **`stub-check`** job runs pinned **mypy** + **Pyright** on the corpus; [stub-compatibility.md](docs/stub-compatibility.md); expanded **`stubgen`** tests (import minimization paths, `format_stub_text` error paths, **`__all__`** + banner).
@@ -14,6 +18,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - **`type_to_typespec`** — resolve `ParamSpec` / `TypeVarTuple` before plain `TypeVar` so Python 3.10 does not treat `TypeVarTuple` as a `TypeVar` and access missing `__bound__` (CI on 3.10).
+
+### Packages
+
+| Package   | Version | Notes |
+|-----------|---------|-------|
+| velarium  | 0.4.0   | ModelSpec IR core (`typing_extensions` + optional `pydantic` / `attrs` extras). |
+| velotype  | 0.4.0   | Depends on `velarium>=0.4.0`; IR → `.pyi` + CLI. |
+| viperis, morphra, granitus, velocus | 0.4.0 | Pre-alpha scaffolds; no runtime dependencies. |
 
 ## [0.3.0] - 2026-04-05
 
@@ -97,7 +109,8 @@ Coordinated **0.1.0** line for the monorepo: **`velarium`** and **`velotype`** a
 - [docs/ROADMAP.md](docs/ROADMAP.md) and [docs/RELEASING.md](docs/RELEASING.md) for workspace layout and releases.
 - Per-package [packages/*/README.md](packages/) (`velarium`, `velotype`, `viperis`, `morphra`, `granitus`, `velocus`).
 
-[Unreleased]: https://github.com/eddiethedean/velarium/compare/v0.3.0...HEAD
+[Unreleased]: https://github.com/eddiethedean/velarium/compare/v0.4.0...HEAD
+[0.4.0]: https://github.com/eddiethedean/velarium/releases/tag/v0.4.0
 [0.3.0]: https://github.com/eddiethedean/velarium/releases/tag/v0.3.0
 [0.2.0]: https://github.com/eddiethedean/velarium/releases/tag/v0.2.0
 [0.1.0]: https://github.com/eddiethedean/velarium/releases/tag/v0.1.0

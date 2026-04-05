@@ -255,7 +255,7 @@ The numbered phases below (**0.2**–**0.9**) are **monorepo-wide**; this sectio
 
 ---
 
-## Phase 0.4.* — Stub generation quality
+## Phase 0.4.* — Stub generation quality *(completed — shipped in **0.4.0**)*
 
 **Theme:** `.pyi` output is **reviewable** and **checker-usable**, not only syntactically valid.
 

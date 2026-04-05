@@ -1,3 +1,3 @@
 """Granitus: Velarium IR to Spark-like schemas (not yet implemented)."""
 
-__version__ = "0.3.0"
+__version__ = "0.4.0"

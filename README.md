@@ -14,7 +14,7 @@
 - **Core library** — [**velarium** on PyPI](https://pypi.org/project/velarium/): types, normalization, JSON, and builders (dataclass, `TypedDict`, Pydantic, attrs → `ModelSpec`). Annotation → `TypeSpec` behavior is in [Supported annotations](https://github.com/eddiethedean/velarium/blob/main/docs/supported-annotations.md) (Phase **0.2**); builders and extras are in [Model sources](https://github.com/eddiethedean/velarium/blob/main/docs/model-sources.md) (Phase **0.3**).
 - **Stubs + CLI** — [**velotype** on PyPI](https://pypi.org/project/velotype/): IR → `.pyi`, optional layout helpers, and the `velotype` CLI (`ir`, `stub`). Stub guarantees and checker CI are described in [Stub compatibility](https://github.com/eddiethedean/velarium/blob/main/docs/stub-compatibility.md) (Phase **0.4**).
 
-Requires **Python 3.10+**. Coordinated library releases are tagged in [CHANGELOG.md](https://github.com/eddiethedean/velarium/blob/main/CHANGELOG.md); **0.3.0** is the current published line for all six `packages/*` PyPI names.
+Requires **Python 3.10+**. Coordinated library releases are tagged in [CHANGELOG.md](https://github.com/eddiethedean/velarium/blob/main/CHANGELOG.md); **0.4.0** is the current published line for all six `packages/*` PyPI names.
 
 ## Packages
 

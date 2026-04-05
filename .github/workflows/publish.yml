@@ -1,5 +1,5 @@
 # Publish to PyPI when:
-# - a version tag is pushed (e.g. git push origin v0.3.0), or
+# - a version tag is pushed (e.g. git push origin v0.4.0), or
 # - a GitHub Release is published (for release notes without a new tag push).
 # Auth: repository secret PYPI_API_TOKEN. See docs/RELEASING.md
 
