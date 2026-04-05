@@ -5,6 +5,8 @@ from __future__ import annotations
 import importlib
 import json
 import os
+import subprocess
+import sys
 import types
 from pathlib import Path
 
@@ -28,6 +30,17 @@ def _env() -> dict[str, str]:
     p = f"{_REPO_ROOT / 'packages' / 'velotype'}:{_REPO_ROOT / 'packages' / 'velarium'}"
     tests_root = str(_REPO_ROOT / "tests")
     return {**os.environ, "PYTHONPATH": f"{p}:{tests_root}"}
+
+
+def _subprocess_help_env() -> dict[str, str]:
+    """Env for help subprocess tests: GHA sets FORCE_COLOR, which keeps Rich layouts tiny."""
+    e = dict(_env())
+    for k in ("FORCE_COLOR", "CLICOLOR", "CLICOLOR_FORCE"):
+        e.pop(k, None)
+    e["NO_COLOR"] = "1"
+    e["COLUMNS"] = "120"
+    e["LINES"] = "40"
+    return e
 
 
 def test_path_matches_excludes_tests_dir() -> None:
@@ -76,15 +89,17 @@ def test_batch_ir_merge_json(tmp_path: Path) -> None:
 
 
 def test_cli_batch_stub_help() -> None:
-    # Rich uses os.environ COLUMNS for layout; GHA sets a narrow width and truncates
-    # help text. Force width (and CliRunner.terminal_width) plus NO_COLOR for stable output.
-    r = _runner.invoke(
-        app,
-        ["batch", "stub", "--help"],
-        terminal_width=120,
-        env={**os.environ, "NO_COLOR": "1", "COLUMNS": "120", "LINES": "40"},
+    # CliRunner + Rich can omit option text on GitHub Actions (narrow TTY + FORCE_COLOR).
+    # Assert against a real ``python -m velotype`` help run instead.
+    r = subprocess.run(
+        [sys.executable, "-m", "velotype", "batch", "stub", "--help"],
+        cwd=_REPO_ROOT,
+        capture_output=True,
+        text=True,
+        check=False,
+        env=_subprocess_help_env(),
     )
-    assert r.exit_code == 0
+    assert r.returncode == 0, (r.stderr or "") + (r.stdout or "")
     out = (r.stdout or "") + (r.stderr or "")
     assert "--out-dir" in out
 
