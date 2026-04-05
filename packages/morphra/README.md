@@ -1,10 +1,11 @@
 # morphra
 
-**Role in Velarium:** **IR → Pydantic** — map Velarium (`ModelSpec` / `TypeSpec`) into Pydantic v2 models (generated source or runtime construction), preserving validation intent where the IR allows. This is **codegen from IR**, distinct from **ingesting** existing Pydantic models into IR (that lives in **`velarium`** — see [docs/model-sources.md](../../docs/model-sources.md)).
+**Role in Velarium:** **IR → Pydantic** — map Velarium (`ModelSpec` / `TypeSpec`) into Pydantic v2 models (generated source or runtime construction), preserving validation intent where the IR allows. This is **codegen from IR**, distinct from **ingesting** existing Pydantic models into IR (that lives in **`velarium`** — see [docs/model-sources.md](https://github.com/eddiethedean/velarium/blob/main/docs/model-sources.md)).
 
 | | |
 |---|---|
-| **PyPI** | `morphra` (scaffold) |
+| **PyPI** | [pypi.org/project/morphra](https://pypi.org/project/morphra/) (scaffold) |
+| **Repository** | [github.com/eddiethedean/velarium](https://github.com/eddiethedean/velarium) |
 | **Status** | **Scaffold** — no code generation yet |
 
 ## Planned use cases
@@ -14,8 +15,8 @@
 
 ## See also
 
-- [docs/valarium.md](../../docs/valarium.md) — backend placement in the pipeline  
-- [docs/modelspec-ir.md](../../docs/modelspec-ir.md) — `ModelSpec` / `TypeSpec` schema  
-- [docs/supported-annotations.md](../../docs/supported-annotations.md) — what the IR can represent today  
-- [docs/model-sources.md](../../docs/model-sources.md) — Pydantic → IR ingestion in **velarium** (this package is the reverse direction)  
-- [**velarium**](../velarium/README.md) — IR types morphra will consume  
+- [docs/valarium.md](https://github.com/eddiethedean/velarium/blob/main/docs/valarium.md) — backend placement in the pipeline  
+- [docs/modelspec-ir.md](https://github.com/eddiethedean/velarium/blob/main/docs/modelspec-ir.md) — `ModelSpec` / `TypeSpec` schema  
+- [docs/supported-annotations.md](https://github.com/eddiethedean/velarium/blob/main/docs/supported-annotations.md) — what the IR can represent today  
+- [docs/model-sources.md](https://github.com/eddiethedean/velarium/blob/main/docs/model-sources.md) — Pydantic → IR ingestion in **velarium** (this package is the reverse direction)  
+- [**velarium** on PyPI](https://pypi.org/project/velarium/) — IR types morphra will consume  

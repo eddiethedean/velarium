@@ -1,14 +1,15 @@
 # velarium
 
-**Role in Velarium:** core **ModelSpec IR** — normalized types (`TypeSpec`, `TypeKind`, …), **`ModelSpec`**, JSON codec, union normalization, and builders that turn dataclasses, `TypedDict`, Pydantic `BaseModel`, and attrs classes into IR (see [model-sources.md](../../docs/model-sources.md)).
+**Role in Velarium:** core **ModelSpec IR** — normalized types (`TypeSpec`, `TypeKind`, …), **`ModelSpec`**, JSON codec, union normalization, and builders that turn dataclasses, `TypedDict`, Pydantic `BaseModel`, and attrs classes into IR (see [model-sources.md](https://github.com/eddiethedean/velarium/blob/main/docs/model-sources.md)).
 
 | | |
 |---|---|
-| **PyPI** | `velarium` |
+| **PyPI** | [pypi.org/project/velarium](https://pypi.org/project/velarium/) |
+| **Repository** | [github.com/eddiethedean/velarium](https://github.com/eddiethedean/velarium) |
 | **Import** | `import velarium` / `from velarium.ir import ModelSpec, TypeSpec` |
 | **Dependencies** | `typing_extensions` only; optional `velarium[pydantic]`, `velarium[attrs]`, or `velarium[sources]` |
 
-Downstream packages (e.g. [**velotype**](../velotype/README.md)) consume this IR to emit `.pyi` stubs and other artifacts. The IR contract is specified in [docs/modelspec-ir.md](../../docs/modelspec-ir.md); how Python annotations map to the IR is in [docs/supported-annotations.md](../../docs/supported-annotations.md); builders and optional extras are in [docs/model-sources.md](../../docs/model-sources.md). Ecosystem context is in [docs/valarium.md](../../docs/valarium.md) and [docs/design.md](../../docs/design.md).
+Downstream packages (e.g. [**velotype** on PyPI](https://pypi.org/project/velotype/)) consume this IR to emit `.pyi` stubs and other artifacts. The IR contract is specified in [docs/modelspec-ir.md](https://github.com/eddiethedean/velarium/blob/main/docs/modelspec-ir.md); how Python annotations map to the IR is in [docs/supported-annotations.md](https://github.com/eddiethedean/velarium/blob/main/docs/supported-annotations.md); builders and optional extras are in [docs/model-sources.md](https://github.com/eddiethedean/velarium/blob/main/docs/model-sources.md). Ecosystem context is in [docs/valarium.md](https://github.com/eddiethedean/velarium/blob/main/docs/valarium.md) and [docs/design.md](https://github.com/eddiethedean/velarium/blob/main/docs/design.md).
 
 **Public API (high level)**
 
@@ -29,7 +30,7 @@ pip install velarium
 pip install velarium[pydantic]   # or velarium[attrs] / velarium[sources]
 ```
 
-From the monorepo root (with [uv](https://docs.astral.sh/uv/)):
+From the monorepo root (with [uv](https://github.com/astral-sh/uv)):
 
 ```bash
 uv sync --group dev
@@ -41,5 +42,5 @@ uv sync --group dev
 
 ## See also
 
-- [Repository README](../../README.md) — full package table and workspace setup  
-- [Documentation index](../../docs/README.md)
+- [Repository README](https://github.com/eddiethedean/velarium/blob/main/README.md) — full package table and workspace setup  
+- [Documentation index](https://github.com/eddiethedean/velarium/blob/main/docs/README.md)

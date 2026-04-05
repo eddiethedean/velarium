@@ -4,7 +4,8 @@
 
 | | |
 |---|---|
-| **PyPI** | `granitus` (scaffold) |
+| **PyPI** | [pypi.org/project/granitus](https://pypi.org/project/granitus/) (scaffold) |
+| **Repository** | [github.com/eddiethedean/velarium](https://github.com/eddiethedean/velarium) |
 | **Status** | **Scaffold** — no emitter yet |
 
 ## Planned use cases
@@ -14,8 +15,8 @@
 
 ## See also
 
-- [docs/valarium.md](../../docs/valarium.md) — backend overview  
-- [docs/modelspec-ir.md](../../docs/modelspec-ir.md) — IR schema  
-- [docs/supported-annotations.md](../../docs/supported-annotations.md) — type coverage in IR  
-- [docs/model-sources.md](../../docs/model-sources.md) — how models become IR today  
-- [**velarium**](../velarium/README.md) — IR contract  
+- [docs/valarium.md](https://github.com/eddiethedean/velarium/blob/main/docs/valarium.md) — backend overview  
+- [docs/modelspec-ir.md](https://github.com/eddiethedean/velarium/blob/main/docs/modelspec-ir.md) — IR schema  
+- [docs/supported-annotations.md](https://github.com/eddiethedean/velarium/blob/main/docs/supported-annotations.md) — type coverage in IR  
+- [docs/model-sources.md](https://github.com/eddiethedean/velarium/blob/main/docs/model-sources.md) — how models become IR today  
+- [**velarium** on PyPI](https://pypi.org/project/velarium/) — IR contract  

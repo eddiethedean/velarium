@@ -4,13 +4,14 @@
 
 | | |
 |---|---|
-| **PyPI** | `velotype` |
-| **Depends on** | [**velarium**](../velarium/README.md) (required) |
+| **PyPI** | [pypi.org/project/velotype](https://pypi.org/project/velotype/) |
+| **Repository** | [github.com/eddiethedean/velarium](https://github.com/eddiethedean/velarium) |
+| **Depends on** | [**velarium** on PyPI](https://pypi.org/project/velarium/) (required) |
 | **CLI** | `velotype ir`, `velotype stub` (also `python -m velotype`) |
 
-The IR types and builders live in **`velarium`**. **`velotype`** re-exports the same public IR symbols and builder entry points as **`velarium`** (including `modelspec_from_pydantic_model` and `modelspec_from_attrs_class` when extras are installed); prefer `from velarium import …` in new code when you only need IR. See [docs/model-sources.md](../../docs/model-sources.md) for optional dependencies.
+The IR types and builders live in **`velarium`**. **`velotype`** re-exports the same public IR symbols and builder entry points as **`velarium`** (including `modelspec_from_pydantic_model` and `modelspec_from_attrs_class` when extras are installed); prefer `from velarium import …` in new code when you only need IR. See [docs/model-sources.md](https://github.com/eddiethedean/velarium/blob/main/docs/model-sources.md) for optional dependencies.
 
-**Stub output:** `generate_pyi` / `render_typespec` aim for valid, checker-friendly `.pyi` text. Advanced `TypeKind` values (`protocol`, `nominal`, `paramspec`, `typevartuple`, and bare `typevar` in fields) are rendered as **`typing.Any`** in stubs so generated files do not invent `TypeVar`/`ParamSpec` declarations; the JSON IR still carries `name` / `qualname` / `module` for tooling. See [docs/supported-annotations.md](../../docs/supported-annotations.md) § Stub generation.
+**Stub output:** `generate_pyi` / `render_typespec` aim for valid, checker-friendly `.pyi` text. Advanced `TypeKind` values (`protocol`, `nominal`, `paramspec`, `typevartuple`, and bare `typevar` in fields) are rendered as **`typing.Any`** in stubs so generated files do not invent `TypeVar`/`ParamSpec` declarations; the JSON IR still carries `name` / `qualname` / `module` for tooling. See [docs/supported-annotations.md](https://github.com/eddiethedean/velarium/blob/main/docs/supported-annotations.md) § Stub generation.
 
 ## Install
 
@@ -50,7 +51,7 @@ print(generate_pyi(spec))
 
 ## See also
 
-- [docs/modelspec-ir.md](../../docs/modelspec-ir.md) — IR schema  
-- [docs/model-sources.md](../../docs/model-sources.md) — builders (dataclass, TypedDict, Pydantic, attrs) and `velarium` extras  
-- [docs/valarium.md](../../docs/valarium.md) — ecosystem and backends  
-- [Documentation index](../../docs/README.md)
+- [docs/modelspec-ir.md](https://github.com/eddiethedean/velarium/blob/main/docs/modelspec-ir.md) — IR schema  
+- [docs/model-sources.md](https://github.com/eddiethedean/velarium/blob/main/docs/model-sources.md) — builders (dataclass, TypedDict, Pydantic, attrs) and `velarium` extras  
+- [docs/valarium.md](https://github.com/eddiethedean/velarium/blob/main/docs/valarium.md) — ecosystem and backends  
+- [Documentation index](https://github.com/eddiethedean/velarium/blob/main/docs/README.md)

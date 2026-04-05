@@ -2,24 +2,24 @@
 
 [![CI](https://github.com/eddiethedean/velarium/actions/workflows/ci.yml/badge.svg)](https://github.com/eddiethedean/velarium/actions/workflows/ci.yml)
 
-**Velarium** is a Python monorepo built around a shared **ModelSpec IR**: a normalized representation of models and types, with a JSON codec and pluggable backends. The supported backend today is **stub** generation (`.pyi`) via **velotype**. IR can be built from dataclasses, `TypedDict`, Pydantic v2, and attrs (see [Model sources](docs/model-sources.md)). **Spark-like** schemas, **IR → Pydantic codegen** (morphra), and a unified umbrella CLI are on the [roadmap](docs/ROADMAP.md).
+**Velarium** is a Python monorepo built around a shared **ModelSpec IR**: a normalized representation of models and types, with a JSON codec and pluggable backends. The supported backend today is **stub** generation (`.pyi`) via **velotype**. IR can be built from dataclasses, `TypedDict`, Pydantic v2, and attrs (see [Model sources](https://github.com/eddiethedean/velarium/blob/main/docs/model-sources.md)). **Spark-like** schemas, **IR → Pydantic codegen** (morphra), and a unified umbrella CLI are on the [roadmap](https://github.com/eddiethedean/velarium/blob/main/docs/ROADMAP.md).
 
 - **Single IR** — One structure for tooling to agree on, instead of re-parsing Python differently in every consumer.
-- **Core library** — [`velarium`](packages/velarium/README.md) on PyPI: types, normalization, JSON, and builders (dataclass, `TypedDict`, Pydantic, attrs → `ModelSpec`). Annotation → `TypeSpec` behavior is in [Supported annotations](docs/supported-annotations.md) (Phase **0.2**); builders and extras are in [Model sources](docs/model-sources.md) (Phase **0.3**).
-- **Stubs + CLI** — [`velotype`](packages/velotype/README.md): IR → `.pyi` and the `velotype` CLI (`ir`, `stub`).
+- **Core library** — [velarium on PyPI](https://pypi.org/project/velarium/): types, normalization, JSON, and builders (dataclass, `TypedDict`, Pydantic, attrs → `ModelSpec`). Annotation → `TypeSpec` behavior is in [Supported annotations](https://github.com/eddiethedean/velarium/blob/main/docs/supported-annotations.md) (Phase **0.2**); builders and extras are in [Model sources](https://github.com/eddiethedean/velarium/blob/main/docs/model-sources.md) (Phase **0.3**).
+- **Stubs + CLI** — [velotype on PyPI](https://pypi.org/project/velotype/): IR → `.pyi` and the `velotype` CLI (`ir`, `stub`).
 
-Requires **Python 3.10+**. Coordinated library releases are tagged in [CHANGELOG.md](CHANGELOG.md); **0.3.0** is the current line for all six `packages/*` PyPI names.
+Requires **Python 3.10+**. Coordinated library releases are tagged in [CHANGELOG.md](https://github.com/eddiethedean/velarium/blob/main/CHANGELOG.md); **0.3.0** is the current line for all six `packages/*` PyPI names.
 
 ## Packages
 
 | Package | Role |
 |--------|------|
-| [**velarium**](packages/velarium/README.md) | Core IR: `TypeSpec`, `ModelSpec`, normalization, JSON; builders for dataclass, `TypedDict`, Pydantic, attrs ([Model sources](docs/model-sources.md)) |
-| [**velotype**](packages/velotype/README.md) | IR → `.pyi`; **`velotype`** CLI |
-| [**viperis**](packages/viperis/README.md) | Python source → IR *(scaffold)* |
-| [**morphra**](packages/morphra/README.md) | IR → Pydantic *(scaffold)* |
-| [**granitus**](packages/granitus/README.md) | IR → Spark-like schemas *(scaffold)* |
-| [**velocus**](packages/velocus/README.md) | Ecosystem CLI *(scaffold; use **`velotype`** for now)* |
+| [**velarium**](https://pypi.org/project/velarium/) | Core IR: `TypeSpec`, `ModelSpec`, normalization, JSON; builders for dataclass, `TypedDict`, Pydantic, attrs ([Model sources](https://github.com/eddiethedean/velarium/blob/main/docs/model-sources.md)) |
+| [**velotype**](https://pypi.org/project/velotype/) | IR → `.pyi`; **`velotype`** CLI |
+| [**viperis**](https://pypi.org/project/viperis/) | Python source → IR *(scaffold)* |
+| [**morphra**](https://pypi.org/project/morphra/) | IR → Pydantic *(scaffold)* |
+| [**granitus**](https://pypi.org/project/granitus/) | IR → Spark-like schemas *(scaffold)* |
+| [**velocus**](https://pypi.org/project/velocus/) | Ecosystem CLI *(scaffold; use **`velotype`** for now)* |
 
 Scaffold packages are placeholders for the full pipeline; **velarium** and **velotype** are the supported libraries today.
 
@@ -31,7 +31,7 @@ From [PyPI](https://pypi.org/) (when you only need the libraries):
 pip install velarium velotype
 ```
 
-From a git clone, use the workspace root with [uv](https://docs.astral.sh/uv/) (recommended):
+From a git clone, use the workspace root with [uv](https://github.com/astral-sh/uv) (recommended):
 
 ```bash
 uv sync --group dev
@@ -97,22 +97,22 @@ Build wheels for every package under `packages/`:
 for d in packages/*/; do (cd "$d" && uv run python -m build); done
 ```
 
-CI runs **pytest**, **ty**, and wheel builds for all packages on Python 3.10–3.13 (see [.github/workflows/ci.yml](.github/workflows/ci.yml)).
+CI runs **pytest**, **ty**, and wheel builds for all packages on Python 3.10–3.13 (see [.github/workflows/ci.yml](https://github.com/eddiethedean/velarium/blob/main/.github/workflows/ci.yml)).
 
 ## Documentation
 
 | | |
 |---|---|
-| [Documentation index](docs/README.md) | Entry point for deeper docs |
-| [Velarium ecosystem](docs/valarium.md) | Architecture and monorepo layout |
-| [Design & philosophy](docs/design.md) | Why the IR exists |
-| [ModelSpec IR specification](docs/modelspec-ir.md) | Schema and normalization |
-| [Supported annotations](docs/supported-annotations.md) | Annotation → IR matrix, gaps, stub behavior |
-| [Model sources](docs/model-sources.md) | Builders (dataclass, TypedDict, Pydantic, attrs), extras, policies |
-| [Roadmap](docs/ROADMAP.md) | Planned work |
-| [Installing & releasing](docs/releasing.md) | Builds and PyPI |
-| [Changelog](CHANGELOG.md) | Release notes |
+| [Documentation index](https://github.com/eddiethedean/velarium/blob/main/docs/README.md) | Entry point for deeper docs |
+| [Velarium ecosystem](https://github.com/eddiethedean/velarium/blob/main/docs/valarium.md) | Architecture and monorepo layout |
+| [Design & philosophy](https://github.com/eddiethedean/velarium/blob/main/docs/design.md) | Why the IR exists |
+| [ModelSpec IR specification](https://github.com/eddiethedean/velarium/blob/main/docs/modelspec-ir.md) | Schema and normalization |
+| [Supported annotations](https://github.com/eddiethedean/velarium/blob/main/docs/supported-annotations.md) | Annotation → IR matrix, gaps, stub behavior |
+| [Model sources](https://github.com/eddiethedean/velarium/blob/main/docs/model-sources.md) | Builders (dataclass, TypedDict, Pydantic, attrs), extras, policies |
+| [Roadmap](https://github.com/eddiethedean/velarium/blob/main/docs/ROADMAP.md) | Planned work |
+| [Installing & releasing](https://github.com/eddiethedean/velarium/blob/main/docs/releasing.md) | Builds and PyPI |
+| [Changelog](https://github.com/eddiethedean/velarium/blob/main/CHANGELOG.md) | Release notes |
 
 ## License
 
-MIT — see [LICENSE](LICENSE).
+MIT — see [LICENSE](https://github.com/eddiethedean/velarium/blob/main/LICENSE).
