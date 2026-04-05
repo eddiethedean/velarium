@@ -1,6 +1,6 @@
 # Roadmap to 1.0.0
 
-This document is the **release plan** for stubber: what we ship in each **0.X.*** line, how phases depend on each other, and what **1.0.0** commits to. It complements [design.md](design.md) (why the IR exists) and [modelspec-ir.md](modelspec-ir.md) (schema details).
+This document is the **release plan** for the **Velarium** monorepo (notably **`velarium`** IR and **`stubber`** stubs/CLI): what we ship in each **0.X.*** line, how phases depend on each other, and what **1.0.0** commits to. It complements [design.md](design.md) (why the IR exists) and [modelspec-ir.md](modelspec-ir.md) (schema details).
 
 **Conventions**
 
@@ -29,7 +29,7 @@ Dates are not promised; **order and dependencies** drive sequencing.
 These are **out of scope** for the 1.0.0 milestone unless explicitly moved into a phase below:
 
 - Replacing **mypy**, **Pyright**, or **Ruff** as a type checker or linter.
-- Full **inference** of untyped code (stubber focuses on stated annotations and model structure).
+- Full **inference** of untyped code (today’s builders focus on stated annotations and model structure).
 - Guaranteeing identical behavior to every edge case in every checker—we target **practical** portability, documented where we diverge.
 - A **GUI** or language-server implementation (downstream of IR is fine; shipping one is not required for 1.0).
 
@@ -82,9 +82,9 @@ You can parallelize **some** work (e.g. docs vs code) within a phase, but **do n
 
 | Area | Status |
 |------|--------|
-| IR types | `ModelSpec`, `TypeSpec`, `TypeKind`, `ModelConfig`, `FieldSpec`, `ModelMetadata` in `stubber.ir` |
+| IR types | `ModelSpec`, `TypeSpec`, `TypeKind`, `ModelConfig`, `FieldSpec`, `ModelMetadata` in `velarium.ir` (also re-exported as `stubber.ir`) |
 | Serialization | `dumps_model_spec` / `loads_model_spec`, dict helpers |
-| Normalization | Union flatten/dedupe, optional encoding in `stubber.normalize` |
+| Normalization | Union flatten/dedupe, optional encoding in `velarium.normalize` (also `stubber.normalize`) |
 | Builders | `modelspec_from_dataclass`, `modelspec_from_typed_dict` |
 | Annotations | `type_to_typespec`, `annotation_to_typespec` (MVP coverage) |
 | Stubs | `generate_pyi`, `render_typespec` (dataclass-oriented) |
@@ -93,15 +93,15 @@ You can parallelize **some** work (e.g. docs vs code) within a phase, but **do n
 
 **Refinements that closed 0.1.*:**
 
-- [x] Version from `stubber.__version__` via Hatch (`[tool.hatch.version]`); aligned with distribution metadata.
-- [x] **CI** on GitHub Actions: Python 3.10–3.13, `pytest`, `mypy stubber`, `python -m build`.
+- [x] Version from `stubber.__version__` / `velarium.__version__` via Hatch per package; aligned with distribution metadata.
+- [x] **CI** on GitHub Actions: Python 3.10–3.13, `pytest`, `ty check`, `python -m build`.
 - [x] **[CHANGELOG.md](../CHANGELOG.md)** (Keep a Changelog).
 - [x] Optional **PyPI publish** workflow on GitHub Release; manual **twine** documented in [releasing.md](releasing.md).
 
 **Exit criteria (0.1 complete):**
 
 - [x] Installable artifact from PyPI *or* documented install from Git with reproducible `python -m build` ([releasing.md](releasing.md)).
-- [x] Green CI on the supported Python line with tests + strict mypy on the package.
+- [x] Green CI on the supported Python line with tests + `ty` on **velarium** / **stubber** sources.
 - [x] Roadmap, IR spec, and changelog linked from README; [modelspec_ir.md](../modelspec_ir.md) pointer retained.
 
 ---
@@ -137,7 +137,7 @@ You can parallelize **some** work (e.g. docs vs code) within a phase, but **do n
 **Deliverables:**
 
 - **Pydantic v2:** `modelspec_from_pydantic_model` (name TBD) — fields, defaults, field constraints mapped into `TypeSpec` / metadata as far as the IR allows.
-- **Optional extras:** `pip install stubber[attrs]` or similar for **attrs** / **msgspec** with parallel tests.
+- **Optional extras:** e.g. `pip install stubber[attrs]` (or an extra on **`velarium`** if IR-only) for **attrs** / **msgspec** with parallel tests.
 - **Unified metadata:** `ModelMetadata` populated consistently (module, file, line where feasible).
 - **Conflict policy:** If multiple sources disagree, document error vs last-wins behavior.
 
@@ -195,7 +195,7 @@ You can parallelize **some** work (e.g. docs vs code) within a phase, but **do n
 - **Profiling:** Identify hotspots (normalization, JSON, stub string build).
 - **Pure Python wins:** Caching, lazy resolution, fewer intermediate copies where safe.
 - **Optional native backend:** Same JSON golden tests; feature flag to enable accelerated normalization (e.g. Rust extension). **No semantic drift.**
-- **Incremental mode:** Cache IR keyed by file hash + stubber version + relevant config.
+- **Incremental mode:** Cache IR keyed by file hash + **velarium** / **stubber** versions + relevant config.
 
 **Exit criteria:**
 
@@ -229,7 +229,7 @@ You can parallelize **some** work (e.g. docs vs code) within a phase, but **do n
 **Deliverables:**
 
 - **Public API audit:** Final `__all__` and “public module” list; hide or underscore internal helpers.
-- **IR versioning:** `stubber_ir_version` field in JSON *or* parallel `model_spec_v2` export—pick one strategy and document migration.
+- **IR versioning:** explicit `model_spec` / IR version field in JSON *or* parallel `model_spec_v2` export—pick one strategy and document migration (owned by **`velarium`** contract).
 - **Deprecations:** `warnings.warn` with `DeprecationWarning` and docstrings for anything removed before 1.0.
 - **Migration guide:** From early 0.x snapshots to current IR JSON.
 
@@ -280,7 +280,7 @@ You can parallelize **some** work (e.g. docs vs code) within a phase, but **do n
 | Track | Ongoing expectations |
 |-------|----------------------|
 | **Tests** | Increase coverage on new code paths; regression tests for every fixed IR/stub bug. |
-| **Docs** | Update `modelspec-ir.md` when IR meaning changes; link new user-facing features from README. |
+| **Docs** | Update `modelspec-ir.md` when IR meaning changes; link new user-facing features from the root [README](../README.md) and [docs/README](README.md). |
 | **Dependencies** | Conservative bounds; security updates for Typer, typing_extensions, etc. |
 | **Contributing** | `CONTRIBUTING.md` when external contributors appear: code style, PR checklist, CoC optional. |
 

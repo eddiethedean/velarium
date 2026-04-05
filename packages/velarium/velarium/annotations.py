@@ -9,8 +9,8 @@ from enum import Enum
 from types import UnionType
 from typing import Any, ForwardRef, TypeVar, Union, get_args, get_origin
 
-from stubber.ir import TypeKind, TypeSpec
-from stubber.normalize import normalize_typespec, optional_to_union
+from velarium.ir import TypeKind, TypeSpec
+from velarium.normalize import normalize_typespec, optional_to_union
 
 
 def _none() -> TypeSpec:
@@ -59,17 +59,7 @@ def type_to_typespec(
             u = TypeSpec(kind=TypeKind.UNION, args=parts)
         return _merge_optional(normalize_typespec(u), optional=optional)
 
-    if origin is UnionType:
-        parts = [type_to_typespec(a, optional=False) for a in args]
-        has_none = any(p.kind == TypeKind.NONE for p in parts)
-        u = TypeSpec(kind=TypeKind.UNION, args=parts)
-        u = normalize_typespec(u)
-        opt = optional or has_none
-        if has_none:
-            u.optional = True
-        return _merge_optional(u, optional=opt)
-
-    if origin is Union:
+    if origin is UnionType or origin is Union:
         parts = [type_to_typespec(a, optional=False) for a in args]
         has_none = any(p.kind == TypeKind.NONE for p in parts)
         u = TypeSpec(kind=TypeKind.UNION, args=parts)

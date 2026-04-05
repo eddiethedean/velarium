@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from stubber.ir import ModelSpec, TypeKind, TypeSpec
+from velarium.ir import ModelSpec, TypeKind, TypeSpec
 
 
 def _render_literal_value(v: object) -> str:

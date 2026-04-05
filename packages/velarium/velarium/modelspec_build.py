@@ -9,9 +9,9 @@ from typing import Any, get_type_hints
 
 from typing_extensions import is_typeddict
 
-from stubber.annotations import annotation_to_typespec, type_to_typespec
-from stubber.ir import ModelConfig, ModelMetadata, ModelSpec, TypeSpec
-from stubber.normalize import normalize_typespec
+from velarium.annotations import annotation_to_typespec, type_to_typespec
+from velarium.ir import ModelConfig, ModelMetadata, ModelSpec, TypeSpec
+from velarium.normalize import normalize_typespec
 
 
 def _module_globals(cls: type) -> dict[str, Any]:
@@ -64,7 +64,7 @@ def modelspec_from_dataclass(cls: type, *, include_extras: bool = False) -> Mode
         source_module=cls.__module__,
         source_file=src_file,
         line_number=line_number,
-        generated_by="stubber",
+        generated_by="velarium",
         version=None,
     )
     params = getattr(cls, "__dataclass_params__", None)
@@ -90,7 +90,7 @@ def modelspec_from_typed_dict(cls: type) -> ModelSpec:
         ts = annotation_to_typespec(hints.get(name, typ), globalns=globalns)
         fields[name] = normalize_typespec(ts)
 
-    meta = ModelMetadata(source_module=cls.__module__, generated_by="stubber")
+    meta = ModelMetadata(source_module=cls.__module__, generated_by="velarium")
     return ModelSpec(name=cls.__name__, fields=fields, config=None, metadata=meta)
 
 

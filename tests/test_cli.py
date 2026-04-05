@@ -37,7 +37,10 @@ def test_cli_ir_json_sample_dataclass() -> None:
         capture_output=True,
         text=True,
         check=False,
-        env={**os.environ, "PYTHONPATH": str(_REPO_ROOT)},
+        env={
+            **os.environ,
+            "PYTHONPATH": f"{_REPO_ROOT / 'packages' / 'stubber'}:{_REPO_ROOT / 'packages' / 'velarium'}",
+        },
     )
     assert r.returncode == 0, r.stderr
     assert '"name": "Sample"' in r.stdout

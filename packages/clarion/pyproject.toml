@@ -1,0 +1,19 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "clarion"
+dynamic = ["version"]
+description = "Velarium ecosystem CLI — scaffold"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "Velarium contributors" }]
+dependencies = []
+
+[tool.hatch.version]
+path = "clarion/__init__.py"
+
+[tool.hatch.build.targets.wheel]
+packages = ["clarion"]

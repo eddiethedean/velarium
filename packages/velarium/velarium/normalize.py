@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from stubber.ir import TypeKind, TypeSpec
+from velarium.ir import TypeKind, TypeSpec
 
 
 def normalize_union(ts: TypeSpec) -> TypeSpec:
@@ -18,7 +18,7 @@ def normalize_union(ts: TypeSpec) -> TypeSpec:
         return json.dumps(d, sort_keys=True)
 
     def key(x: TypeSpec) -> str:
-        from stubber.json_codec import typespec_to_dict
+        from velarium.json_codec import typespec_to_dict
 
         return json_key_obj(typespec_to_dict(x))
 

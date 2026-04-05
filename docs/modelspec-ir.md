@@ -1,20 +1,22 @@
 # ModelSpec IR (intermediate representation)
 
-This document describes the **ModelSpec IR** implemented by **stubber** (`stubber.ir`). It is the language-agnostic layer used to normalize Python annotations, serialize typing structure to JSON, and drive stub generation.
+This document describes the **ModelSpec IR** implemented by the **`velarium`** package (`velarium.ir` and related modules). The same types are also re-exported from **`stubber`** for compatibility (`stubber.ir`, etc.).
+
+ModelSpec is the **language-agnostic layer** used to normalize Python annotations, serialize typing structure to JSON, and drive backends (notably **stubber** for `.pyi` generation).
 
 ## Overview
 
-ModelSpec is the **intermediate representation (IR)** at the heart of stubber.
+ModelSpec is the **intermediate representation (IR)** at the heart of the **Velarium** ecosystem.
 
 It is designed to:
 
 - Normalize Python type annotations into a single semantic shape
 - Stay **backend-agnostic** (no reliance on a specific type checker or runtime)
 - Remain **fully JSON-serializable** for caching, tooling, and future non-Python backends
-- **Loss-minimize** information from type hints, dataclass-like models, and (eventually) other sources
+- **Loss-minimize** information from type hints, dataclass-like models, and (eventually) other sources such as raw source via **viperis**
 - Stay **deterministic**: same logical input produces the same IR
 
-stubber’s Python package maps this spec to dataclasses and CLI entry points; the IR itself is not tied to stubber’s implementation details.
+The **`velarium`** Python package maps this spec to dataclasses and helpers; the IR contract itself is not tied to any single package’s layout.
 
 ---
 
@@ -33,8 +35,8 @@ All structures are intended to be JSON-serializable (with explicit handling for 
 Capture as much typing information as practical from:
 
 - Python `typing` annotations
-- Dataclass / model-like definitions
-- Future sources (e.g. other ASTs or compiled backends)
+- Dataclass / `TypedDict` definitions (via **`velarium.modelspec_build`**)
+- Future sources (e.g. **viperis** from source files, Pydantic models, other ASTs)
 
 ### 4. Deterministic
 
@@ -153,7 +155,7 @@ class ModelMetadata:
     source_module: str | None = None
     source_file: str | None = None
     line_number: int | None = None
-    generated_by: str = "stubber"
+    generated_by: str = "velarium"
     version: str | None = None
 ```
 
@@ -170,7 +172,7 @@ TypeSpec(
 )
 ```
 
-Normalization rules (see `stubber.normalize`):
+Normalization rules (see `velarium.normalize`, also exposed as `stubber.normalize`):
 
 - Flatten nested unions
 - Remove duplicate members (by structure)
@@ -287,4 +289,6 @@ Possible additions:
 
 ## Summary
 
-> ModelSpec IR is a **deterministic, backend-agnostic, serializable** model of Python types. **stubber** implements it in Python for normalization, JSON interchange, and `.pyi` generation; other backends can consume the same structure without sharing stubber’s codebase.
+> ModelSpec IR is a **deterministic, backend-agnostic, serializable** model of Python types.
+
+**Implementation:** [`velarium`](https://pypi.org/project/velarium/) — normalization, JSON codec, builders. **Consumers:** **`stubber`** (`.pyi`), and future packages (**morphra**, **granitus**, …) per [valarium.md](valarium.md). Other tools can consume the same JSON shape without depending on every package in the monorepo.

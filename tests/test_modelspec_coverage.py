@@ -52,7 +52,7 @@ def test_modelspec_get_type_hints_failure_uses_empty(monkeypatch: pytest.MonkeyP
     def boom(*_a: object, **_k: object) -> dict[str, object]:
         raise RuntimeError("nope")
 
-    monkeypatch.setattr("stubber.modelspec_build.get_type_hints", boom)
+    monkeypatch.setattr("velarium.modelspec_build.get_type_hints", boom)
     spec = modelspec_from_dataclass(Bad)
     assert "x" in spec.fields
 
@@ -79,7 +79,7 @@ def test_modelspec_from_typed_dict_hints_failure(monkeypatch: pytest.MonkeyPatch
     def boom(*_a: object, **_k: object) -> dict[str, object]:
         raise RuntimeError("nope")
 
-    monkeypatch.setattr("stubber.modelspec_build.get_type_hints", boom)
+    monkeypatch.setattr("velarium.modelspec_build.get_type_hints", boom)
     spec = modelspec_from_typed_dict(TD)
     assert "a" in spec.fields
 
@@ -90,7 +90,7 @@ def test_typespec_from_object() -> None:
 
 
 def test_modelspec_inspect_source_fails_gracefully(monkeypatch: pytest.MonkeyPatch) -> None:
-    import stubber.modelspec_build as mb
+    import velarium.modelspec_build as mb
 
     def bad_getsourcefile(_obj: object) -> str | None:
         raise OSError("no source")

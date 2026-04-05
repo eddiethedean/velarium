@@ -1,47 +1,71 @@
-# Installing and releasing stubber
+# Installing and releasing Velarium packages
 
-## Version number
+The repo is a **[uv](https://docs.astral.sh/uv/) workspace** at the root. **Tier-1** publish targets are **`velarium`** (core IR) and **`stubber`** (stubs + CLI). Scaffold packages (**`viperis`**, **`morphra`**, **`granitus`**, **`clarion`**) can be versioned and published independently when they gain real implementations.
 
-The release version is defined in **one place**: `__version__` in [`stubber/__init__.py`](../stubber/__init__.py). [`pyproject.toml`](../pyproject.toml) uses Hatch dynamic metadata (`[tool.hatch.version]`) so `pip` and `importlib.metadata` stay aligned—do not duplicate the version string under `[project]`.
+## Version numbers
+
+- **velarium:** `__version__` in [`packages/velarium/velarium/__init__.py`](../packages/velarium/velarium/__init__.py) (Hatch dynamic metadata in that package’s `pyproject.toml`).
+- **stubber:** `__version__` in [`packages/stubber/stubber/__init__.py`](../packages/stubber/stubber/__init__.py).
+
+Do not duplicate version strings under `[project]` in those `pyproject.toml` files.
 
 ## Install from a Git checkout
 
 ```bash
-pip install /path/to/stubber
-# or
-pip install git+https://github.com/eddiethedean/stubber.git@v0.1.0
+git clone https://github.com/eddiethedean/valarium.git
+cd valarium
+uv sync --group dev
 ```
 
-Use a tag (e.g. `v0.1.0`) for reproducible installs.
+Or with **pip** (editable):
+
+```bash
+pip install -e packages/velarium -e "packages/stubber[dev]"
+```
+
+Tagged installs:
+
+```bash
+pip install git+https://github.com/eddiethedean/valarium.git@v0.2.0#subdirectory=packages/stubber
+```
+
+(Adjust tag and subdirectory for **`velarium`** as needed.)
 
 ## Build wheels locally
 
+From the repo root:
+
 ```bash
-pip install build
-python -m build
+uv sync --group dev
+for d in packages/*/; do (cd "$d" && uv run python -m build); done
 ```
 
-Artifacts appear under `dist/` (`*.whl` and `*.tar.gz`).
+Artifacts appear under each package’s `dist/` directory. To merge into a single `dist/` at the root (e.g. for **twine**):
+
+```bash
+mkdir -p dist
+(cd packages/velarium && uv run python -m build --outdir "$PWD/../../dist")
+(cd packages/stubber && uv run python -m build --outdir "$PWD/../../dist")
+```
+
+(Run from repo root; adjust paths if your shell resolves `$PWD` differently.)
 
 ## Publish to PyPI
 
 ### Manual (API token)
 
-1. Bump `__version__` in `stubber/__init__.py` and update [CHANGELOG.md](../CHANGELOG.md).
-2. Tag: `git tag -a v0.1.0 -m "Release 0.1.0"` and `git push origin v0.1.0`.
-3. `python -m build` then upload with [twine](https://twine.readthedocs.io/):
-
-   ```bash
-   pip install twine
-   twine upload dist/*
-   ```
+1. Bump `__version__` in the package(s) you release and update [CHANGELOG.md](../CHANGELOG.md).
+2. Tag (e.g. `git tag -a v0.2.0 -m "Release 0.2.0"`) and `git push origin v0.2.0`.
+3. Build as above, then upload with [twine](https://twine.readthedocs.io/) (publish **`velarium`** before **`stubber`** if you rely on the new dependency on PyPI).
 
 ### Automated (GitHub Actions)
 
-The [Publish workflow](../.github/workflows/publish.yml) runs when a **GitHub Release** is **published**, building with `python -m build` and uploading via [pypa/gh-action-pypi-publish](https://github.com/pypa/gh-action-pypi-publish).
+The [Publish workflow](../.github/workflows/publish.yml) runs when a **GitHub Release** is **published**. It builds **`velarium`** and **`stubber`** into a single `dist/` folder and uploads via [pypa/gh-action-pypi-publish](https://github.com/pypa/gh-action-pypi-publish).
 
-1. Configure **trusted publishing** on [pypi.org](https://pypi.org) for this repository (see PyPI docs for “OIDC” / GitHub).
+1. Configure **trusted publishing** on [pypi.org](https://pypi.org) for this repository (OIDC / GitHub).
 2. Add a GitHub **environment** named `pypi` if you use environment protection rules.
 3. Create a release from the tag; publishing the release triggers the workflow.
+
+Configure **two** trusted publishers if you publish both **`velarium`** and **`stubber`** as separate projects, or use one workflow job per package.
 
 If automated publish is not configured, use the manual steps above.

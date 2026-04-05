@@ -1,7 +1,7 @@
-"""Stubber: ModelSpec IR, normalization, and stub generation."""
+"""Stubber: deterministic .pyi stub generation from Velarium (ModelSpec) IR."""
 
-from stubber.annotations import annotation_to_typespec, type_to_typespec
-from stubber.ir import (
+from velarium.annotations import annotation_to_typespec, type_to_typespec
+from velarium.ir import (
     FieldSpec,
     ModelConfig,
     ModelMetadata,
@@ -9,9 +9,9 @@ from stubber.ir import (
     TypeKind,
     TypeSpec,
 )
-from stubber.json_codec import dumps_model_spec, loads_model_spec, model_spec_from_dict, model_spec_to_dict
-from stubber.modelspec_build import modelspec_from_dataclass, modelspec_from_typed_dict, typespec_from_object
-from stubber.normalize import normalize_typespec, normalize_union, optional_to_union
+from velarium.json_codec import dumps_model_spec, loads_model_spec, model_spec_from_dict, model_spec_to_dict
+from velarium.modelspec_build import modelspec_from_dataclass, modelspec_from_typed_dict, typespec_from_object
+from velarium.normalize import normalize_typespec, normalize_union, optional_to_union
 from stubber.stubgen import generate_pyi, render_typespec
 
 __all__ = [
@@ -37,4 +37,4 @@ __all__ = [
     "render_typespec",
 ]
 
-__version__ = "0.1.0"
+__version__ = "0.2.0"

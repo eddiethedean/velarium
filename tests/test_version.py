@@ -1,4 +1,4 @@
-"""Ensure package version matches distribution metadata (single source: stubber.__version__)."""
+"""Ensure stubber version matches distribution metadata (single source: stubber.__version__)."""
 
 from __future__ import annotations
 

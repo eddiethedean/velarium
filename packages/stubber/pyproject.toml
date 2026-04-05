@@ -1,0 +1,49 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "stubber"
+dynamic = ["version"]
+description = "IR to .pyi stub generation (Velarium stubber backend)"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "Velarium contributors" }]
+keywords = ["typing", "stubs", "pyi", "static-analysis", "ir"]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Typing :: Typed",
+]
+dependencies = [
+  "typer>=0.9.0",
+  "velarium",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=7.0", "ty>=0.0.29", "build>=1.0", "pytest-cov>=4.0"]
+
+[project.scripts]
+stubber = "stubber.cli:app"
+
+[tool.hatch.version]
+path = "stubber/__init__.py"
+
+[tool.hatch.build.targets.sdist]
+include = ["stubber", "README.md"]
+
+[tool.hatch.build.targets.sdist.force-include]
+"../../LICENSE" = "LICENSE"
+"../../CHANGELOG.md" = "CHANGELOG.md"
+"../../docs" = "docs"
+"../../modelspec_ir.md" = "modelspec_ir.md"
+
+[tool.hatch.build.targets.wheel]
+packages = ["stubber"]
+
+[tool.uv.sources]
+velarium = { workspace = true }

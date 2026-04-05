@@ -1,48 +1,37 @@
-[build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
-
 [project]
-name = "stubber"
-dynamic = ["version"]
-description = "ModelSpec IR and deterministic .pyi stub generation (stubber)"
+name = "velarium-workspace"
+version = "0.0.0"
+description = "Velarium monorepo (workspace root; not published to PyPI)"
 readme = "README.md"
 requires-python = ">=3.10"
-license = { text = "MIT" }
-authors = [{ name = "stubber contributors" }]
-keywords = ["typing", "stubs", "pyi", "static-analysis", "ir"]
-classifiers = [
-  "Programming Language :: Python :: 3",
-  "Programming Language :: Python :: 3.10",
-  "Programming Language :: Python :: 3.11",
-  "Programming Language :: Python :: 3.12",
-  "Programming Language :: Python :: 3.13",
-  "Typing :: Typed",
-]
 dependencies = [
-  "typer>=0.9.0",
-  "typing_extensions>=4.2.0",
+  "velarium",
+  "stubber",
 ]
 
-[project.optional-dependencies]
-dev = ["pytest>=7.0", "mypy>=1.0", "build>=1.0", "pytest-cov>=4.0"]
+[dependency-groups]
+dev = [
+  "pytest>=7",
+  "pytest-cov>=4",
+  "ty>=0.0.29",
+  "build>=1",
+]
 
-[project.scripts]
-stubber = "stubber.cli:app"
+[tool.uv.workspace]
+members = ["packages/*"]
 
-[tool.hatch.version]
-path = "stubber/__init__.py"
-
-[tool.hatch.build.targets.sdist]
-include = ["stubber", "README.md", "LICENSE", "CHANGELOG.md", "docs", "modelspec_ir.md"]
+[tool.uv.sources]
+velarium = { workspace = true }
+stubber = { workspace = true }
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-addopts = ["--cov=stubber", "--cov-report=term-missing", "--cov-fail-under=100"]
+addopts = ["--cov=stubber", "--cov=velarium", "--cov-report=term-missing", "--cov-fail-under=100"]
 
 [tool.coverage.run]
 branch = false
-source = ["stubber"]
+source = ["packages/stubber/stubber", "packages/velarium/velarium"]
+omit = ["*/__main__.py"]
 
 [tool.coverage.report]
 exclude_lines = [
@@ -50,7 +39,15 @@ exclude_lines = [
   "if TYPE_CHECKING:",
 ]
 
-[tool.mypy]
-python_version = "3.10"
-strict = true
-packages = ["stubber"]
+[tool.ty.environment]
+python-version = "3.10"
+
+[tool.ty.src]
+include = [
+  "packages/velarium/velarium/**/*.py",
+  "packages/stubber/stubber/**/*.py",
+  "packages/viperis/viperis/**/*.py",
+  "packages/morphra/morphra/**/*.py",
+  "packages/granitus/granitus/**/*.py",
+  "packages/clarion/clarion/**/*.py",
+]

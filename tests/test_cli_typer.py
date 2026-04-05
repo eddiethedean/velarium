@@ -16,8 +16,12 @@ _REPO_ROOT = Path(__file__).resolve().parent.parent
 _runner = CliRunner()
 
 
+def _pkg_paths() -> str:
+    return f"{_REPO_ROOT / 'packages' / 'stubber'}:{_REPO_ROOT / 'packages' / 'velarium'}"
+
+
 def _env() -> dict[str, str]:
-    return {**os.environ, "PYTHONPATH": str(_REPO_ROOT)}
+    return {**os.environ, "PYTHONPATH": _pkg_paths()}
 
 
 def test_cli_no_colon_exits_2() -> None:
@@ -109,7 +113,7 @@ def test_cli_stub_stdout_without_out() -> None:
 
 def test___main___exec_help(monkeypatch: pytest.MonkeyPatch) -> None:
     monkeypatch.setattr(sys, "argv", ["stubber", "--help"])
-    main_path = _REPO_ROOT / "stubber" / "__main__.py"
+    main_path = _REPO_ROOT / "packages" / "stubber" / "stubber" / "__main__.py"
     spec = importlib.util.spec_from_file_location("__stubber_main__", main_path)
     assert spec and spec.loader
     mod = importlib.util.module_from_spec(spec)

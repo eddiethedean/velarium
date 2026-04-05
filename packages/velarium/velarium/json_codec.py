@@ -6,7 +6,7 @@ import json
 from enum import Enum
 from typing import Any
 
-from stubber.ir import (
+from velarium.ir import (
     FieldSpec,
     ModelConfig,
     ModelMetadata,
@@ -35,7 +35,7 @@ def _json_default_value(value: Any) -> Any:
     try:
         json.dumps(value)
     except TypeError:
-        return {"_stubber_repr": repr(value)}
+        return {"_velarium_repr": repr(value)}
     return value
 
 
@@ -102,7 +102,7 @@ def model_spec_from_dict(d: dict[str, Any]) -> ModelSpec:
             source_module=md.get("source_module"),
             source_file=md.get("source_file"),
             line_number=md.get("line_number"),
-            generated_by=md.get("generated_by", "stubber"),
+            generated_by=md.get("generated_by", "velarium"),
             version=md.get("version"),
         )
     return ModelSpec(

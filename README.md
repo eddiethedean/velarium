@@ -1,86 +1,83 @@
-# stubber
+# Velarium
 
-[![CI](https://github.com/eddiethedean/stubber/actions/workflows/ci.yml/badge.svg)](https://github.com/eddiethedean/stubber/actions/workflows/ci.yml)
+[![CI](https://github.com/eddiethedean/valarium/actions/workflows/ci.yml/badge.svg)](https://github.com/eddiethedean/valarium/actions/workflows/ci.yml)
 
-**stubber** implements the **ModelSpec IR** (intermediate representation) for portable typing: normalize annotations, serialize to JSON, and emit minimal `.pyi` stubs. Background and schema live in the **[documentation](docs/README.md)** (`docs/design.md`, `docs/modelspec-ir.md`, **[roadmap](docs/ROADMAP.md)**).
+**Velarium** is a monorepo of Python packages around a shared **ModelSpec IR** (Velarium): normalized types, JSON codec, and pluggable backends (stubs today; Pydantic, Spark, and a unified CLI are planned).
+
+| Package | Role |
+|--------|------|
+| [**velarium**](packages/velarium/README.md) | Core IR (`velarium` on PyPI): types, normalization, JSON, dataclass/TypedDict → IR |
+| [**stubber**](packages/stubber/README.md) | IR → `.pyi`; **`stubber`** CLI (`ir`, `stub`) |
+| [**viperis**](packages/viperis/README.md) | Python source → IR (scaffold) |
+| [**morphra**](packages/morphra/README.md) | IR → Pydantic (scaffold) |
+| [**granitus**](packages/granitus/README.md) | IR → Spark-like schemas (scaffold) |
+| [**clarion**](packages/clarion/README.md) | Ecosystem CLI (scaffold; use **`stubber`** for now) |
+
+**Documentation index:** [docs/README.md](docs/README.md). Ecosystem architecture: [docs/valarium.md](docs/valarium.md). IR schema: [docs/modelspec-ir.md](docs/modelspec-ir.md). Design: [docs/design.md](docs/design.md). Roadmap: [docs/ROADMAP.md](docs/ROADMAP.md).
 
 Requires **Python 3.10+**.
 
 ## Install
 
+Published wheels (when available):
+
 ```bash
-pip install stubber
+pip install velarium stubber
 ```
 
-Once [published to PyPI](https://pypi.org/project/stubber/), the above works. Until then, install from Git:
+From a Git clone (recommended: [uv](https://docs.astral.sh/uv/)):
 
 ```bash
-pip install git+https://github.com/eddiethedean/stubber.git
+uv sync --group dev
 ```
 
-From a clone (editable, with dev tools):
+Or editable installs without uv:
 
 ```bash
-pip install -e ".[dev]"
+pip install -e packages/velarium -e "packages/stubber[dev]"
 ```
 
-## CLI
-
-Commands use Typer. Import paths look like `package.module:Class` (nested classes use `Outer.Inner`).
+## CLI (`stubber`)
 
 ```bash
-# Print ModelSpec IR as JSON for a dataclass
 stubber ir myapp.models:User
-
-stubber ir myapp.models:User -o user.ir.json
-
-# Emit a stub module body (dataclass-oriented)
 stubber stub myapp.models:User -o user.pyi
-
 python -m stubber ir myapp.models:User
 ```
 
 ## Library
 
+IR and JSON live in **`velarium`**; stub emission in **`stubber`**. For compatibility, **`stubber`** still re-exports the same public symbols as before (import `stubber` or import from `velarium` directly).
+
 ```python
-from stubber import (
-    dumps_model_spec,
-    generate_pyi,
-    loads_model_spec,
-    modelspec_from_dataclass,
-    type_to_typespec,
-)
+from velarium import dumps_model_spec, modelspec_from_dataclass, type_to_typespec
+from stubber import generate_pyi
 
 spec = modelspec_from_dataclass(MyModel)
 print(dumps_model_spec(spec))
 print(generate_pyi(spec))
 ```
 
-- **`modelspec_from_typed_dict`** is available for `TypedDict` classes.
-- **`normalize_typespec`** / **`optional_to_union`** apply IR normalization rules (unions, optional encoding).
-
 ## Development
 
-Release version is set in **`stubber/__init__.py`** as `__version__` (Hatch reads it for packages—do not duplicate in `pyproject.toml`).
+- **stubber** version: `packages/stubber/stubber/__init__.py` (`__version__`).
+- **velarium** version: `packages/velarium/velarium/__init__.py`.
 
 ```bash
-pytest                    # runs with coverage; stubber must stay at 100% line coverage
-mypy stubber
-python -m build   # sdist + wheel (requires `pip install build` or `.[dev]`)
+uv sync --group dev
+uv run pytest
+uv run python -m ty check
+# Build wheels for each package:
+for d in packages/*/; do (cd "$d" && python -m build); done
 ```
 
 ## Documentation
 
-- [Design & philosophy](docs/design.md)
+- [Velarium ecosystem spec](docs/valarium.md)
 - [ModelSpec IR specification](docs/modelspec-ir.md)
-- [Roadmap to 1.0.0](docs/ROADMAP.md)
+- [Roadmap](docs/ROADMAP.md)
 - [Changelog](CHANGELOG.md)
 - [Installing & releasing](docs/releasing.md)
-
-## Implementation notes
-
-- IR types live in `stubber.ir`; JSON helpers in `stubber.json_codec`.
-- The MVP focuses on dataclasses and common `typing` shapes; unresolved or exotic annotations may map to `any` in the IR.
 
 ## License
 

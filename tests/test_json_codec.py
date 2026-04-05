@@ -41,7 +41,7 @@ def test_json_default_value_non_serializable_enum_and_object() -> None:
 
     ts2 = TypeSpec(kind=TypeKind.INT, default=O())
     out2 = typespec_to_dict(ts2)
-    assert "_stubber_repr" in out2["default"]
+    assert "_velarium_repr" in out2["default"]
 
 
 def test_model_spec_full_roundtrip_with_config_and_metadata() -> None:

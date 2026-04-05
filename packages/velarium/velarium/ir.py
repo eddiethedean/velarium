@@ -74,7 +74,7 @@ class ModelMetadata:
     source_module: str | None = None
     source_file: str | None = None
     line_number: int | None = None
-    generated_by: str = "stubber"
+    generated_by: str = "velarium"
     version: str | None = None
 
 
