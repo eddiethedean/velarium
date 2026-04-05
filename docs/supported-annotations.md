@@ -8,6 +8,10 @@ This document lists how Python typing constructs map to **ModelSpec IR** (`TypeS
 - **PEP 563** (`from __future__ import annotations`): string annotations are resolved via `get_type_hints` with the declaring class’s module namespace where possible.
 - **Forward references**: Unresolvable forward refs become `kind: "any"` (not an error at IR extraction time).
 
+### TypedDict and PEP 563
+
+If a **`TypedDict`** class body is parsed with **`from __future__ import annotations`** enabled, member annotations are stored as **strings**. Runtime `TypedDict` machinery may then compute empty or incorrect **`__required_keys__` / `__optional_keys__`** for `Required[...]` / `NotRequired[...]`. For reliable key optionality, define `TypedDict` subclasses in a module **without** that future import, or use `get_type_hints`-compatible runtime forms. The **`velarium`** tests use a dedicated `tests/td_fixtures.py` module for this reason.
+
 ## Summary table
 
 | Construct | IR shape | Notes |

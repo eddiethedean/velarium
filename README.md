@@ -5,7 +5,7 @@
 **Velarium** is a Python monorepo built around a shared **ModelSpec IR**: a normalized representation of models and types, with a JSON codec and pluggable backends. Today the main backend is **stub** generation (`.pyi`); Pydantic, Spark-like schemas, and a unified CLI are on the [roadmap](docs/ROADMAP.md).
 
 - **Single IR** — One structure for tooling to agree on, instead of re-parsing Python differently in every consumer.
-- **Core library** — [`velarium`](packages/velarium/README.md) on PyPI: types, normalization, JSON, and builders (e.g. dataclass → `ModelSpec`).
+- **Core library** — [`velarium`](packages/velarium/README.md) on PyPI: types, normalization, JSON, and builders (e.g. dataclass → `ModelSpec`). Annotation → `TypeSpec` behavior is documented in [Supported annotations](docs/supported-annotations.md) (Phase **0.2** fidelity).
 - **Stubs + CLI** — [`velotype`](packages/velotype/README.md): IR → `.pyi` and the `velotype` CLI (`ir`, `stub`).
 
 Requires **Python 3.10+**.
@@ -81,6 +81,8 @@ print(generate_pyi(spec))
 
 Version constants: **`velarium`** — `packages/velarium/velarium/__init__.py`; **`velotype`** — `packages/velotype/velotype/__init__.py`.
 
+Integration and golden JSON IR tests live under `tests/` (`test_ir_integration.py`, `test_ir_golden.py`, `fixtures/ir_golden/`). CI enforces **100%** line coverage on `velarium` and `velotype` sources.
+
 ```bash
 uv sync --group dev
 uv run pytest
@@ -105,6 +107,7 @@ CI runs **pytest**, **ty**, and wheel builds for all packages on Python 3.10–3
 | [Velarium ecosystem](docs/valarium.md) | Architecture and monorepo layout |
 | [Design & philosophy](docs/design.md) | Why the IR exists |
 | [ModelSpec IR specification](docs/modelspec-ir.md) | Schema and normalization |
+| [Supported annotations](docs/supported-annotations.md) | Annotation → IR matrix, gaps, stub behavior |
 | [Roadmap](docs/ROADMAP.md) | Planned work |
 | [Installing & releasing](docs/releasing.md) | Builds and PyPI |
 | [Changelog](CHANGELOG.md) | Release notes |

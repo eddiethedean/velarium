@@ -9,6 +9,8 @@ The repo is a **[uv](https://docs.astral.sh/uv/) workspace** at the root. **Tier
 
 Do not duplicate version strings under `[project]` in those `pyproject.toml` files.
 
+Before tagging a release for **`velarium`** or **`velotype`**, run the full test suite (`pytest` with coverage) and `ty check` as in the root [README.md](../README.md#development). Any intentional **JSON IR** output change should update golden fixtures under `tests/fixtures/ir_golden/` and [CHANGELOG.md](../CHANGELOG.md).
+
 ## Install from a Git checkout
 
 ```bash

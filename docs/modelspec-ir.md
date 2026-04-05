@@ -302,3 +302,5 @@ Possible additions:
 > ModelSpec IR is a **deterministic, backend-agnostic, serializable** model of Python types.
 
 **Implementation:** [`velarium`](https://pypi.org/project/velarium/) — normalization, JSON codec, builders. **Consumers:** **`velotype`** (`.pyi`), and future packages (**morphra**, **granitus**, …) per [valarium.md](valarium.md). Other tools can consume the same JSON shape without depending on every package in the monorepo.
+
+**Regression tests:** The monorepo keeps integration tests and canonical JSON golden files under `tests/` (see root [README.md](../README.md#development)). Changing wire JSON or normalization should update fixtures and [CHANGELOG.md](../CHANGELOG.md).

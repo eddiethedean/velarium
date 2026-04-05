@@ -15,4 +15,6 @@
 ## See also
 
 - [docs/valarium.md](../../docs/valarium.md) — backend placement in the pipeline  
+- [docs/modelspec-ir.md](../../docs/modelspec-ir.md) — `ModelSpec` / `TypeSpec` schema  
+- [docs/supported-annotations.md](../../docs/supported-annotations.md) — what the IR can represent today  
 - [**velarium**](../velarium/README.md) — IR types morphra will consume  

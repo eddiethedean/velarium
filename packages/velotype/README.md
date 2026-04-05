@@ -10,6 +10,8 @@
 
 The IR types and builders live in **`velarium`**. **`velotype`** re-exports most public IR symbols (same layout as **`velarium`**) for convenience; prefer `from velarium import …` in new code when you only need IR.
 
+**Stub output:** `generate_pyi` / `render_typespec` aim for valid, checker-friendly `.pyi` text. Advanced `TypeKind` values (`protocol`, `nominal`, `paramspec`, `typevartuple`, and bare `typevar` in fields) are rendered as **`typing.Any`** in stubs so generated files do not invent `TypeVar`/`ParamSpec` declarations; the JSON IR still carries `name` / `qualname` / `module` for tooling. See [docs/supported-annotations.md](../../docs/supported-annotations.md) § Stub generation.
+
 ## Install
 
 ```bash

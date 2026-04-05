@@ -17,4 +17,5 @@
 
 - [docs/valarium.md](../../docs/valarium.md) — pipeline and component list  
 - [docs/design.md](../../docs/design.md) — why the IR exists  
+- [docs/supported-annotations.md](../../docs/supported-annotations.md) — annotation → IR matrix (what **viperis** will eventually preserve from source)  
 - [**velarium**](../velarium/README.md) — current IR implementation  

@@ -1,0 +1,42 @@
+{
+  "config": {
+    "extra": "forbid",
+    "from_attributes": true,
+    "frozen": false,
+    "strict": false,
+    "validate_assignment": true
+  },
+  "fields": {
+    "flag": {
+      "kind": "bool"
+    },
+    "tag": {
+      "args": [
+        {
+          "kind": "int"
+        },
+        {
+          "kind": "str"
+        }
+      ],
+      "kind": "union"
+    },
+    "var": {
+      "args": [
+        {
+          "kind": "int"
+        }
+      ],
+      "kind": "typevar",
+      "name": "T"
+    }
+  },
+  "metadata": {
+    "generated_by": "golden-test",
+    "line_number": null,
+    "source_file": null,
+    "source_module": null,
+    "version": null
+  },
+  "name": "Complex"
+}

@@ -33,8 +33,9 @@ An umbrella CLI (**Velocus**) will orchestrate the ecosystem; today **`velotype`
 - Represent Python types in a normalized graph (`TypeSpec`, `ModelSpec`, …).
 - Encode primitives, unions, generics, structs, and constraints.
 - Provide a language-agnostic schema for downstream tools.
+- Map `typing` constructs and builders (dataclass, `TypedDict`) to IR with documented behavior; see [Supported annotations](supported-annotations.md).
 
-**Characteristics:** Minimal dependencies (`typing_extensions`), immutable data shapes, JSON-serializable design.
+**Characteristics:** Minimal dependencies (`typing_extensions`), immutable data shapes, JSON-serializable design. The in-repo test suite includes integration tests (`tests/test_ir_integration.py`) and JSON golden fixtures (`tests/fixtures/ir_golden/`) to guard the IR contract.
 
 **Monorepo:** [`packages/velarium`](../packages/velarium/README.md) · PyPI: **`velarium`**
 

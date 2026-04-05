@@ -4,7 +4,7 @@
 
 This document explains **why** that IR exists and how we think about typing tooling—not as “another type checker,” but as a **thin compilation layer** between annotations and portable outputs.
 
-For the concrete schema (`ModelSpec`, `TypeSpec`, `TypeKind`, …), see [ModelSpec IR](modelspec-ir.md). For package roles and the target pipeline, see [Velarium ecosystem spec](valarium.md).
+For the concrete schema (`ModelSpec`, `TypeSpec`, `TypeKind`, …), see [ModelSpec IR](modelspec-ir.md). For package roles and the target pipeline, see [Velarium ecosystem spec](valarium.md). For the annotation → IR support matrix (Phase **0.2**), see [Supported annotations](supported-annotations.md).
 
 ---
 

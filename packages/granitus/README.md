@@ -15,4 +15,6 @@
 ## See also
 
 - [docs/valarium.md](../../docs/valarium.md) — backend overview  
+- [docs/modelspec-ir.md](../../docs/modelspec-ir.md) — IR schema  
+- [docs/supported-annotations.md](../../docs/supported-annotations.md) — type coverage in IR  
 - [**velarium**](../velarium/README.md) — IR contract  

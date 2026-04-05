@@ -232,8 +232,8 @@ The numbered phases below (**0.2**–**0.9**) are **monorepo-wide**; this sectio
 
 **Exit criteria:**
 
-- [ ] `docs/` page or section: **supported annotations** table + known gaps.
-- [ ] No silent behavior change without a test or changelog note for IR output.
+- [x] `docs/` page or section: **supported annotations** table + known gaps ([supported-annotations.md](supported-annotations.md)).
+- [x] No silent behavior change without a test or changelog note for IR output (integration + golden tests in `tests/`).
 
 ---
 

@@ -21,4 +21,5 @@ Thin orchestration only: parse commands, call **`velarium`** and backend package
 ## See also
 
 - [docs/design.md](../../docs/design.md) — CLI philosophy  
+- [docs/modelspec-ir.md](../../docs/modelspec-ir.md) — IR consumed by orchestrated tools  
 - [Documentation index](../../docs/README.md)  
