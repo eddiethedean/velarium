@@ -10,7 +10,7 @@ The intended pipeline:
 Python source → Viperis → Velarium IR → Backend generators → Outputs
 ```
 
-An umbrella CLI (**Clarion**) will orchestrate the ecosystem; today **`stubber`** provides the supported CLI for IR export and stub generation.
+An umbrella CLI (**Velocus**) will orchestrate the ecosystem; today **`stubber`** provides the supported CLI for IR export and stub generation.
 
 ---
 
@@ -90,22 +90,22 @@ An umbrella CLI (**Clarion**) will orchestrate the ecosystem; today **`stubber`*
 
 ---
 
-### 6. `clarion` (ecosystem CLI)
+### 6. `velocus` (ecosystem CLI)
 
 **Role:** User-facing CLI that dispatches to ecosystem modules (inspect, build, emit backends).
 
 **Example commands (target):**
 
 ```text
-clarion inspect file.py
-clarion build
-clarion emit pydantic User
-clarion graph module.py
+velocus inspect file.py
+velocus build
+velocus emit pydantic User
+velocus graph module.py
 ```
 
-**Status:** Scaffold — use **`stubber`** for IR and stub commands until **clarion** ships.
+**Status:** Scaffold — use **`stubber`** for IR and stub commands until **velocus** ships.
 
-**Monorepo:** [`packages/clarion`](../packages/clarion/README.md)
+**Monorepo:** [`packages/velocus`](../packages/velocus/README.md)
 
 ---
 
@@ -129,7 +129,7 @@ Python Source
 ### CLI (target)
 
 ```text
-User → Clarion → ecosystem APIs → backends → output
+User → Velocus → ecosystem APIs → backends → output
 ```
 
 Today: **User → `stubber` CLI → velarium + stubber**.
@@ -151,7 +151,7 @@ Today: **User → `stubber` CLI → velarium + stubber**.
 
 **Backend tools must:** not mutate the IR **definition**; only consume and transform; stay independently versionable on PyPI.
 
-**Clarion (when implemented) must:** stay thin — orchestration only, no duplicated business logic.
+**Velocus (when implemented) must:** stay thin — orchestration only, no duplicated business logic.
 
 ---
 
@@ -180,7 +180,7 @@ A **universal intermediate representation** for Python types and downstream sche
 | **stubber**  | IR → stubs + current CLI |
 | **morphra**  | IR → Pydantic |
 | **granitus** | IR → Spark-like schemas |
-| **clarion**  | Ecosystem CLI (planned) |
+| **velocus**  | Ecosystem CLI (planned) |
 
 ---
 
@@ -195,6 +195,6 @@ The Git repository is a **[uv](https://docs.astral.sh/uv/) workspace** (see root
 | `packages/viperis` | `viperis` | Scaffold — Python → IR |
 | `packages/morphra` | `morphra` | Scaffold — IR → Pydantic |
 | `packages/granitus` | `granitus` | Scaffold — IR → Spark-like schemas |
-| `packages/clarion` | `clarion` | Scaffold — umbrella CLI (use **`stubber`** until implemented) |
+| `packages/velocus` | `velocus` | Scaffold — umbrella CLI (use **`stubber`** until implemented) |
 
 See also [Installing & releasing](releasing.md) and [Design & philosophy](design.md).

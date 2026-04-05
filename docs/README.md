@@ -15,7 +15,7 @@ Welcome to the **Velarium** monorepo docs: a shared **ModelSpec IR** (`velarium`
 ## Repository map
 
 - **Root [README](../README.md)** — Quick install, CLI examples, package table.
-- **Source:** `packages/velarium` (IR), `packages/stubber` (stubs + CLI), `packages/viperis`, `packages/morphra`, `packages/granitus`, `packages/clarion` (scaffolds).
+- **Source:** `packages/velarium` (IR), `packages/stubber` (stubs + CLI), `packages/viperis`, `packages/morphra`, `packages/granitus`, `packages/velocus` (scaffolds).
 - **Changelog:** [CHANGELOG.md](../CHANGELOG.md).
 
 ## Naming

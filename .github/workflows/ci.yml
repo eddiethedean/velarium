@@ -34,7 +34,7 @@ jobs:
       - name: Build sdist and wheel (each package)
         run: |
           set -e
-          for pkg in velarium stubber viperis morphra granitus clarion; do
+          for pkg in velarium stubber viperis morphra granitus velocus; do
             uv run python -m build "packages/$pkg"
           done
 

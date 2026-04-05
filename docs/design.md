@@ -17,7 +17,7 @@ For the concrete schema (`ModelSpec`, `TypeSpec`, `TypeKind`, …), see [ModelSp
 | **viperis** | `viperis` | Planned frontend: Python source → IR (scaffold) |
 | **morphra** | `morphra` | Planned backend: IR → Pydantic (scaffold) |
 | **granitus** | `granitus` | Planned backend: IR → Spark-like schemas (scaffold) |
-| **clarion** | `clarion` | Planned umbrella CLI (scaffold); **`stubber`** is the supported CLI until then |
+| **velocus** | `velocus` | Planned umbrella CLI (scaffold); **`stubber`** is the supported CLI until then |
 
 The **`stubber`** package **re-exports** most IR symbols for backward compatibility; new code may import from **`velarium`** directly.
 
@@ -148,7 +148,7 @@ The aim is not to pretend Python is a different language, but to capture **inten
 
 ## 11. CLI and developer experience
 
-Today, the **`stubber`** CLI is intentionally **thin** and built with **Typer**: commands call into **velarium** + **stubber** library code. A future **clarion** CLI would orchestrate multiple backends without duplicating IR logic—see [valarium.md](valarium.md).
+Today, the **`stubber`** CLI is intentionally **thin** and built with **Typer**: commands call into **velarium** + **stubber** library code. A future **velocus** CLI would orchestrate multiple backends without duplicating IR logic—see [valarium.md](valarium.md).
 
 ---
 

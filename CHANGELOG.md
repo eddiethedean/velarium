@@ -7,9 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Renamed scaffold package **`clarion`** → **`velocus`** — the PyPI project name **`clarion`** is not available for this maintainer ([PyPI project name policy](https://pypi.org/help/#project-name)).
+
 ## [0.1.0] - 2026-04-05
 
-Coordinated **0.1.0** line for the monorepo: **`velarium`** and **`stubber`** are the supported libraries; **`viperis`**, **`morphra`**, **`granitus`**, and **`clarion`** ship as minimal **scaffold** packages (importable, documented as not yet implemented).
+Coordinated **0.1.0** line for the monorepo: **`velarium`** and **`stubber`** are the supported libraries; **`viperis`**, **`morphra`**, **`granitus`**, and **`velocus`** (formerly scaffold **`clarion`** in-repo) ship as minimal **scaffold** packages (importable, documented as not yet implemented).
 
 ### Packages
 
@@ -17,7 +21,7 @@ Coordinated **0.1.0** line for the monorepo: **`velarium`** and **`stubber`** ar
 |-----------|---------|--------|
 | velarium  | 0.1.0   | ModelSpec IR core (`typing_extensions` only). |
 | stubber   | 0.1.0   | Depends on `velarium>=0.1.0`; IR → `.pyi` + CLI. |
-| viperis, morphra, granitus, clarion | 0.1.0 | Pre-alpha scaffolds; no runtime dependencies. |
+| viperis, morphra, granitus, velocus | 0.1.0 | Pre-alpha scaffolds; no runtime dependencies. |
 
 ### Added
 
@@ -32,7 +36,7 @@ Coordinated **0.1.0** line for the monorepo: **`velarium`** and **`stubber`** ar
 
 ### Changed
 
-- **Monorepo** — Split into **`velarium`** (core ModelSpec IR) and **`stubber`** (IR → `.pyi` + CLI). Scaffold packages: **`viperis`**, **`morphra`**, **`granitus`**, **`clarion`**. Root **[uv](https://docs.astral.sh/uv/)** workspace; see [docs/valarium.md](docs/valarium.md) and [README.md](README.md).
+- **Monorepo** — Split into **`velarium`** (core ModelSpec IR) and **`stubber`** (IR → `.pyi` + CLI). Scaffold packages: **`viperis`**, **`morphra`**, **`granitus`**, **`velocus`**. Root **[uv](https://docs.astral.sh/uv/)** workspace; see [docs/valarium.md](docs/valarium.md) and [README.md](README.md).
 - **`stubber`** re-exports IR APIs from `stubber` for compatibility; prefer `from velarium import …` for IR-only use.
 - Replaced **mypy** with **[Astral ty](https://docs.astral.sh/ty/)** for static typing in dev and CI (`[tool.ty]` in root `pyproject.toml`).
 - `typing_extensions.is_typeddict` used directly in `modelspec_from_typed_dict` (removed redundant try/except).
@@ -42,7 +46,7 @@ Coordinated **0.1.0** line for the monorepo: **`velarium`** and **`stubber`** ar
 
 - [docs/design.md](docs/design.md), [docs/modelspec-ir.md](docs/modelspec-ir.md), [docs/valarium.md](docs/valarium.md), [docs/README.md](docs/README.md) for the Velarium ecosystem.
 - [docs/ROADMAP.md](docs/ROADMAP.md) and [docs/releasing.md](docs/releasing.md) for workspace layout and releases.
-- Per-package [packages/*/README.md](packages/) (`velarium`, `stubber`, `viperis`, `morphra`, `granitus`, `clarion`).
+- Per-package [packages/*/README.md](packages/) (`velarium`, `stubber`, `viperis`, `morphra`, `granitus`, `velocus`).
 
 [Unreleased]: https://github.com/eddiethedean/velarium/compare/v0.1.0...HEAD
 [0.1.0]: https://github.com/eddiethedean/velarium/releases/tag/v0.1.0

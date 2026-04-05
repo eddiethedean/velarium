@@ -1,6 +1,6 @@
 # Installing and releasing Velarium packages
 
-The repo is a **[uv](https://docs.astral.sh/uv/) workspace** at the root. **Tier-1** publish targets are **`velarium`** (core IR) and **`stubber`** (stubs + CLI). Scaffold packages (**`viperis`**, **`morphra`**, **`granitus`**, **`clarion`**) are versioned **0.1.0** and buildable; publish them to PyPI only when you want those names live (they remain minimal stubs).
+The repo is a **[uv](https://docs.astral.sh/uv/) workspace** at the root. **Tier-1** publish targets are **`velarium`** (core IR) and **`stubber`** (stubs + CLI). Scaffold packages (**`viperis`**, **`morphra`**, **`granitus`**, **`velocus`**) are versioned **0.1.0** and buildable; publish them to PyPI only when you want those names live (they remain minimal stubs).
 
 ## Version numbers
 
@@ -40,23 +40,31 @@ uv sync --group dev
 for d in packages/*/; do (cd "$d" && uv run python -m build); done
 ```
 
-Artifacts appear under each package’s `dist/` directory. To merge into a single `dist/` at the root (e.g. for **twine**):
+Artifacts appear under each package’s `dist/` directory. To merge into a single **`dist/`** at the repo root (for **twine**):
 
 ```bash
-mkdir -p dist
-(cd packages/velarium && uv run python -m build --outdir "$PWD/../../dist")
-(cd packages/stubber && uv run python -m build --outdir "$PWD/../../dist")
+rm -rf dist && mkdir -p dist
+for pkg in velarium stubber viperis morphra granitus velocus; do
+  (cd "packages/$pkg" && uv run python -m build --outdir "$PWD/../../dist")
+done
+uv run twine check dist/*
 ```
 
-(Run from repo root; adjust paths if your shell resolves `$PWD` differently.)
+Configure credentials in the usual way for the CLI: **`~/.pypirc`**, **keyring**, or **`TWINE_USERNAME`** / **`TWINE_PASSWORD`** (see [twine authentication](https://twine.readthedocs.io/en/stable/#authentication)). If upload fails with **403** and a message that your user **isn’t allowed to upload to project `X`**, the name **`X`** is already taken on PyPI by another owner — pick a different [project name](https://pypi.org/help/#project-name) (e.g. rename the package in `pyproject.toml`).
 
-## Publish to PyPI
+Then upload:
 
-### Manual (API token)
+```bash
+uv run twine upload dist/*
+```
+
+Upload **`velarium`** before **`stubber`** if you step through uploads manually (so **`stubber`**’s `velarium>=0.1.0` resolves on PyPI). A single `twine upload dist/*` is fine once **`velarium`** is already published or all files upload in one batch.
+
+### Manual release checklist
 
 1. Bump `__version__` in the package(s) you release and update [CHANGELOG.md](../CHANGELOG.md).
 2. Tag (e.g. `git tag -a v0.1.0 -m "Release 0.1.0"`) and `git push origin v0.1.0`.
-3. Build as above, then upload with [twine](https://twine.readthedocs.io/) (publish **`velarium`** before **`stubber`** if you rely on the new dependency on PyPI).
+3. Build and upload as above.
 
 ### Automated (GitHub Actions)
 

@@ -3,7 +3,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "clarion"
+name = "velocus"
 dynamic = ["version"]
 description = "Velarium ecosystem CLI — scaffold"
 readme = "README.md"
@@ -27,13 +27,13 @@ Documentation = "https://github.com/eddiethedean/velarium/blob/main/docs/README.
 Changelog = "https://github.com/eddiethedean/velarium/blob/main/CHANGELOG.md"
 
 [tool.hatch.version]
-path = "clarion/__init__.py"
+path = "velocus/__init__.py"
 
 [tool.hatch.build.targets.sdist]
-include = ["clarion", "README.md"]
+include = ["velocus", "README.md"]
 
 [tool.hatch.build.targets.sdist.force-include]
 "../../LICENSE" = "LICENSE"
 
 [tool.hatch.build.targets.wheel]
-packages = ["clarion"]
+packages = ["velocus"]

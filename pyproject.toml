@@ -16,6 +16,7 @@ dev = [
   "ruff>=0.15",
   "ty>=0.0.29",
   "build>=1",
+  "twine>=6",
 ]
 
 [tool.uv.workspace]
@@ -50,5 +51,5 @@ include = [
   "packages/viperis/viperis/**/*.py",
   "packages/morphra/morphra/**/*.py",
   "packages/granitus/granitus/**/*.py",
-  "packages/clarion/clarion/**/*.py",
+  "packages/velocus/velocus/**/*.py",
 ]

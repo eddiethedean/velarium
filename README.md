@@ -19,7 +19,7 @@ Requires **Python 3.10+**.
 | [**viperis**](packages/viperis/README.md) | Python source → IR *(scaffold)* |
 | [**morphra**](packages/morphra/README.md) | IR → Pydantic *(scaffold)* |
 | [**granitus**](packages/granitus/README.md) | IR → Spark-like schemas *(scaffold)* |
-| [**clarion**](packages/clarion/README.md) | Ecosystem CLI *(scaffold; use **`stubber`** for now)* |
+| [**velocus**](packages/velocus/README.md) | Ecosystem CLI *(scaffold; use **`stubber`** for now)* |
 
 Scaffold packages are placeholders for the full pipeline; **velarium** and **stubber** are the supported libraries today.
 

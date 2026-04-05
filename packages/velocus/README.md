@@ -1,10 +1,10 @@
-# clarion
+# velocus
 
 **Role in Velarium:** **Ecosystem CLI** — single entry point to inspect IR, drive builds, and dispatch to backends (**stubber**, **morphra**, **granitus**, future tools) without each package exposing a separate UX.
 
 | | |
 |---|---|
-| **PyPI** | `clarion` (scaffold) |
+| **PyPI** | `velocus` (scaffold) |
 | **Status** | **Scaffold** — orchestration not implemented |
 
 ## Today
