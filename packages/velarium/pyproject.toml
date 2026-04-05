@@ -26,11 +26,20 @@ dependencies = [
 [project.optional-dependencies]
 dev = ["pytest>=7.0", "ty>=0.0.29", "build>=1.0", "pytest-cov>=4.0"]
 
+[project.urls]
+Homepage = "https://github.com/eddiethedean/velarium"
+Repository = "https://github.com/eddiethedean/velarium"
+Documentation = "https://github.com/eddiethedean/velarium/blob/main/docs/README.md"
+Changelog = "https://github.com/eddiethedean/velarium/blob/main/CHANGELOG.md"
+
 [tool.hatch.version]
 path = "velarium/__init__.py"
 
 [tool.hatch.build.targets.sdist]
 include = ["velarium", "README.md"]
+
+[tool.hatch.build.targets.sdist.force-include]
+"../../LICENSE" = "LICENSE"
 
 [tool.hatch.build.targets.wheel]
 packages = ["velarium"]

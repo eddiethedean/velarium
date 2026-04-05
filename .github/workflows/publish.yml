@@ -30,11 +30,12 @@ jobs:
       - name: Install build
         run: uv pip install build
 
-      - name: Build velarium and stubber into dist/
+      - name: Build all packages into dist/
         run: |
           mkdir -p dist
-          (cd packages/velarium && uv run python -m build --outdir "$GITHUB_WORKSPACE/dist")
-          (cd packages/stubber && uv run python -m build --outdir "$GITHUB_WORKSPACE/dist")
+          for pkg in velarium stubber viperis morphra granitus clarion; do
+            (cd "packages/$pkg" && uv run python -m build --outdir "$GITHUB_WORKSPACE/dist")
+          done
 
       - name: Publish to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1

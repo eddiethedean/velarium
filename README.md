@@ -1,6 +1,6 @@
 # Velarium
 
-[![CI](https://github.com/eddiethedean/valarium/actions/workflows/ci.yml/badge.svg)](https://github.com/eddiethedean/valarium/actions/workflows/ci.yml)
+[![CI](https://github.com/eddiethedean/velarium/actions/workflows/ci.yml/badge.svg)](https://github.com/eddiethedean/velarium/actions/workflows/ci.yml)
 
 **Velarium** is a Python monorepo built around a shared **ModelSpec IR**: a normalized representation of models and types, with a JSON codec and pluggable backends. Today the main backend is **stub** generation (`.pyi`); Pydantic, Spark-like schemas, and a unified CLI are on the [roadmap](docs/ROADMAP.md).
 

@@ -10,10 +10,30 @@ readme = "README.md"
 requires-python = ">=3.10"
 license = { text = "MIT" }
 authors = [{ name = "Velarium contributors" }]
-dependencies = []
+keywords = ["typing", "ir", "spark", "velarium"]
+classifiers = [
+  "Development Status :: 2 - Pre-Alpha",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+]
+
+[project.urls]
+Homepage = "https://github.com/eddiethedean/velarium"
+Repository = "https://github.com/eddiethedean/velarium"
+Documentation = "https://github.com/eddiethedean/velarium/blob/main/docs/README.md"
+Changelog = "https://github.com/eddiethedean/velarium/blob/main/CHANGELOG.md"
 
 [tool.hatch.version]
 path = "granitus/__init__.py"
+
+[tool.hatch.build.targets.sdist]
+include = ["granitus", "README.md"]
+
+[tool.hatch.build.targets.sdist.force-include]
+"../../LICENSE" = "LICENSE"
 
 [tool.hatch.build.targets.wheel]
 packages = ["granitus"]

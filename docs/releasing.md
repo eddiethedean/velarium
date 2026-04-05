@@ -1,6 +1,6 @@
 # Installing and releasing Velarium packages
 
-The repo is a **[uv](https://docs.astral.sh/uv/) workspace** at the root. **Tier-1** publish targets are **`velarium`** (core IR) and **`stubber`** (stubs + CLI). Scaffold packages (**`viperis`**, **`morphra`**, **`granitus`**, **`clarion`**) can be versioned and published independently when they gain real implementations.
+The repo is a **[uv](https://docs.astral.sh/uv/) workspace** at the root. **Tier-1** publish targets are **`velarium`** (core IR) and **`stubber`** (stubs + CLI). Scaffold packages (**`viperis`**, **`morphra`**, **`granitus`**, **`clarion`**) are versioned **0.1.0** and buildable; publish them to PyPI only when you want those names live (they remain minimal stubs).
 
 ## Version numbers
 
@@ -12,8 +12,8 @@ Do not duplicate version strings under `[project]` in those `pyproject.toml` fil
 ## Install from a Git checkout
 
 ```bash
-git clone https://github.com/eddiethedean/valarium.git
-cd valarium
+git clone https://github.com/eddiethedean/velarium.git
+cd velarium
 uv sync --group dev
 ```
 
@@ -26,10 +26,10 @@ pip install -e packages/velarium -e "packages/stubber[dev]"
 Tagged installs:
 
 ```bash
-pip install git+https://github.com/eddiethedean/valarium.git@v0.2.0#subdirectory=packages/stubber
+pip install git+https://github.com/eddiethedean/velarium.git@v0.1.0#subdirectory=packages/stubber
 ```
 
-(Adjust tag and subdirectory for **`velarium`** as needed.)
+(Adjust tag and subdirectory for **`velarium`** or scaffold packages as needed.)
 
 ## Build wheels locally
 
@@ -55,17 +55,19 @@ mkdir -p dist
 ### Manual (API token)
 
 1. Bump `__version__` in the package(s) you release and update [CHANGELOG.md](../CHANGELOG.md).
-2. Tag (e.g. `git tag -a v0.2.0 -m "Release 0.2.0"`) and `git push origin v0.2.0`.
+2. Tag (e.g. `git tag -a v0.1.0 -m "Release 0.1.0"`) and `git push origin v0.1.0`.
 3. Build as above, then upload with [twine](https://twine.readthedocs.io/) (publish **`velarium`** before **`stubber`** if you rely on the new dependency on PyPI).
 
 ### Automated (GitHub Actions)
 
-The [Publish workflow](../.github/workflows/publish.yml) runs when a **GitHub Release** is **published**. It builds **`velarium`** and **`stubber`** into a single `dist/` folder and uploads via [pypa/gh-action-pypi-publish](https://github.com/pypa/gh-action-pypi-publish).
+The [Publish workflow](../.github/workflows/publish.yml) runs when a **GitHub Release** is **published**. It builds **all workspace packages** into a single `dist/` folder and uploads via [pypa/gh-action-pypi-publish](https://github.com/pypa/gh-action-pypi-publish). Publish **`velarium`** before **`stubber`** on PyPI if you upload manually (stubber depends on velarium).
 
 1. Configure **trusted publishing** on [pypi.org](https://pypi.org) for this repository (OIDC / GitHub).
 2. Add a GitHub **environment** named `pypi` if you use environment protection rules.
 3. Create a release from the tag; publishing the release triggers the workflow.
 
-Configure **two** trusted publishers if you publish both **`velarium`** and **`stubber`** as separate projects, or use one workflow job per package.
+Configure trusted publishers for each PyPI project you publish (**`velarium`**, **`stubber`**, and any scaffold package), or use one workflow job per package.
 
 If automated publish is not configured, use the manual steps above.
+
+The **Publish** workflow uploads **every** wheel and sdist in `dist/`. If you only intend to ship **`velarium`** and **`stubber`**, upload those artifacts only (or split the workflow) so scaffold packages are not published unintentionally.
