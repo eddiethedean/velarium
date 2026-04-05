@@ -52,6 +52,29 @@ def test_cli_target_not_a_class() -> None:
     assert "not a class" in (r.stdout or r.stderr or "").lower()
 
 
+@pytest.mark.parametrize("cmd", ["ir", "stub"])
+def test_cli_unknown_module_exits_2(cmd: str) -> None:
+    r = _runner.invoke(
+        app,
+        [cmd, "definitely_not_a_real_velarium_module_xyz:Foo"],
+    )
+    assert r.exit_code == 2
+    out = (r.stdout or "") + (r.stderr or "")
+    assert "Cannot import module" in out
+
+
+@pytest.mark.parametrize("cmd", ["ir", "stub"])
+def test_cli_bad_attribute_path_exits_2(cmd: str) -> None:
+    r = _runner.invoke(
+        app,
+        [cmd, "tests.fixtures.sample_pkg:NoSuchSymbol"],
+        env=_env(),
+    )
+    assert r.exit_code == 2
+    out = (r.stdout or "") + (r.stderr or "")
+    assert "Cannot resolve import path" in out
+
+
 def test_cli_ir_dataclass_stdout() -> None:
     r = _runner.invoke(
         app,

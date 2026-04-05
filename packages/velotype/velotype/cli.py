@@ -22,10 +22,18 @@ def _load_class(path: str) -> type:
     if not mod_name or not qual:
         typer.echo("Target must be module:Class", err=True)
         raise typer.Exit(code=2)
-    mod = importlib.import_module(mod_name)
+    try:
+        mod = importlib.import_module(mod_name)
+    except ImportError as e:
+        typer.echo(f"Cannot import module {mod_name!r}: {e}", err=True)
+        raise typer.Exit(code=2) from e
     obj: Any = mod
-    for part in qual.split("."):
-        obj = getattr(obj, part)
+    try:
+        for part in qual.split("."):
+            obj = getattr(obj, part)
+    except AttributeError as e:
+        typer.echo(f"Cannot resolve import path {path!r}: {e}", err=True)
+        raise typer.Exit(code=2) from e
     if not isinstance(obj, type):
         typer.echo(f"{path!r} is not a class", err=True)
         raise typer.Exit(code=2)

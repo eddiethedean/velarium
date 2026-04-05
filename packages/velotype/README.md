@@ -45,6 +45,8 @@ velotype ir myapp.models:User -o user.ir.json
 velotype stub myapp.models:User -o user.pyi
 ```
 
+Exit codes: **2** for bad target syntax, missing module, unresolvable import path, or target not a class; **1** when the class is not a dataclass (or other **`modelspec_from_dataclass`** failure).
+
 ## Library
 
 ```python
