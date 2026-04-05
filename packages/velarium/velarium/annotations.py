@@ -231,6 +231,20 @@ def type_to_typespec(
             TypeSpec(kind=TypeKind.CALLABLE, args=None), optional=optional
         )
 
+    # ParamSpec / TypeVarTuple before TypeVar: on Python 3.10, TypeVarTuple can be
+    # isinstance(..., TypeVar) but has no __bound__ (see test_param_spec_and_typevar_tuple).
+    if type(t).__name__ == "ParamSpec":
+        return _merge_optional(
+            TypeSpec(kind=TypeKind.PARAM_SPEC, name=getattr(t, "__name__", None)),
+            optional=optional,
+        )
+
+    if type(t).__name__ == "TypeVarTuple":
+        return _merge_optional(
+            TypeSpec(kind=TypeKind.TYPE_VAR_TUPLE, name=getattr(t, "__name__", None)),
+            optional=optional,
+        )
+
     if isinstance(t, TypeVar):
         bound_args: list[TypeSpec] | None = None
         if t.__bound__ is not None:
@@ -245,18 +259,6 @@ def type_to_typespec(
                 args=bound_args,
                 name=getattr(t, "__name__", None),
             ),
-            optional=optional,
-        )
-
-    if type(t).__name__ == "ParamSpec":
-        return _merge_optional(
-            TypeSpec(kind=TypeKind.PARAM_SPEC, name=getattr(t, "__name__", None)),
-            optional=optional,
-        )
-
-    if type(t).__name__ == "TypeVarTuple":
-        return _merge_optional(
-            TypeSpec(kind=TypeKind.TYPE_VAR_TUPLE, name=getattr(t, "__name__", None)),
             optional=optional,
         )
 

@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- **`type_to_typespec`** — resolve `ParamSpec` / `TypeVarTuple` before plain `TypeVar` so Python 3.10 does not treat `TypeVarTuple` as a `TypeVar` and access missing `__bound__` (CI on 3.10).
+
 ## [0.3.0] - 2026-04-05
 
 Monorepo packages (**`velarium`**, **`velotype`**, **`viperis`**, **`morphra`**, **`granitus`**, **`velocus`**) are aligned at **0.3.0**. **`velotype`** depends on **`velarium>=0.3.0`**.
