@@ -12,7 +12,7 @@
 | **Repository** | [github.com/eddiethedean/velarium](https://github.com/eddiethedean/velarium) |
 | **Python** | 3.10+ (follows **velarium**) |
 | **Depends on** | [**velarium** on PyPI](https://pypi.org/project/velarium/) (required) |
-| **CLI** | `velotype ir`, `velotype stub` (also `python -m velotype`) |
+| **CLI** | `velotype ir`, `velotype stub`, `velotype batch stub` / `batch ir`, `velotype watch stub` (optional extra `[watch]`); also `python -m velotype` |
 
 The IR types and builders live in **`velarium`**. **`velotype`** re-exports the same public IR symbols and builder entry points as **`velarium`** (including `modelspec_from_pydantic_model` and `modelspec_from_attrs_class` when extras are installed); prefer `from velarium import …` in new code when you only need IR. See [docs/model-sources.md](https://github.com/eddiethedean/velarium/blob/main/docs/model-sources.md) for optional dependencies.
 
@@ -43,9 +43,13 @@ pip install -e packages/velarium -e "packages/velotype[dev]"
 velotype ir myapp.models:User
 velotype ir myapp.models:User -o user.ir.json
 velotype stub myapp.models:User -o user.pyi
+velotype batch stub myapp.models --out-dir stubs/
+velotype batch ir myapp.models --out-dir ir-json/ --merge
+# pip install 'velotype[watch]'
+velotype watch stub myapp.models --out-dir stubs/
 ```
 
-Exit codes: **2** for bad target syntax, missing module, unresolvable import path, or target not a class; **1** when the class is not a dataclass (or other **`modelspec_from_dataclass`** failure).
+**Batch** walks an importable package for **dataclasses** and writes one `.pyi` (or `merged.pyi` with **`--merge`**) or JSON per model. **Exit codes** and failures: [docs/troubleshooting-cli.md](https://github.com/eddiethedean/velarium/blob/main/docs/troubleshooting-cli.md). Tutorial: [docs/tutorial-stubs.md](https://github.com/eddiethedean/velarium/blob/main/docs/tutorial-stubs.md).
 
 ## Library
 
@@ -70,7 +74,7 @@ print(generate_pyi(spec))
 - [docs/valarium.md](https://github.com/eddiethedean/velarium/blob/main/docs/valarium.md) — ecosystem and backends  
 - [Repository README](https://github.com/eddiethedean/velarium/blob/main/README.md)  
 - [Documentation index](https://github.com/eddiethedean/velarium/blob/main/docs/README.md)  
-- [Roadmap](https://github.com/eddiethedean/velarium/blob/main/docs/ROADMAP.md) — Phase **0.4** (stub quality)  
+- [Roadmap](https://github.com/eddiethedean/velarium/blob/main/docs/ROADMAP.md) — Phase **0.5** (batch / tooling)  
 - [Changelog](https://github.com/eddiethedean/velarium/blob/main/CHANGELOG.md)
 
 ## License

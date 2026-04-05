@@ -21,11 +21,14 @@ classifiers = [
 ]
 dependencies = [
   "typer>=0.9.0",
-  "velarium>=0.4.0",
+  "velarium>=0.5.0",
 ]
 
 [project.optional-dependencies]
 dev = ["pytest>=7.0", "ty>=0.0.29", "build>=1.0", "pytest-cov>=4.0"]
+watch = [
+    "watchfiles>=0.21",
+]
 
 [project.scripts]
 velotype = "velotype.cli:app"

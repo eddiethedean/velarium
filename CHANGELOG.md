@@ -7,6 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.5.0] - 2026-04-05
+
+Monorepo packages (**`velarium`**, **`velotype`**, **`viperis`**, **`morphra`**, **`granitus`**, **`velocus`**) are aligned at **0.5.0**. **`velotype`** depends on **`velarium>=0.5.0`**.
+
+### Added
+
+- **Phase 0.5 — tooling** — `velotype batch stub` / `velotype batch ir` (package-wide dataclass discovery, `--out-dir`, `--merge`, `--exclude`, `--fail-fast`), `velotype watch stub` (optional **`velotype[watch]`** / **watchfiles**); library helpers in **`velotype.batch`**; [tutorial-stubs.md](docs/tutorial-stubs.md), [troubleshooting-cli.md](docs/troubleshooting-cli.md), [interchange-ir-json.md](docs/interchange-ir-json.md); [`.pre-commit-hooks.yaml`](.pre-commit-hooks.yaml) hook snippet; [CLI issue template](.github/ISSUE_TEMPLATE/cli_failure.md).
+
+### Packages
+
+| Package   | Version | Notes |
+|-----------|---------|-------|
+| velarium  | 0.5.0   | Unchanged API surface; coordinates with **velotype** 0.5. |
+| velotype  | 0.5.0   | Depends on `velarium>=0.5.0`; batch + watch CLI. |
+| viperis, morphra, granitus, velocus | 0.5.0 | Scaffolds; version aligned. |
+
 ## [0.4.0] - 2026-04-05
 
 Monorepo packages (**`velarium`**, **`velotype`**, **`viperis`**, **`morphra`**, **`granitus`**, **`velocus`**) are aligned at **0.4.0**. **`velotype`** depends on **`velarium>=0.4.0`**.
@@ -109,7 +125,8 @@ Coordinated **0.1.0** line for the monorepo: **`velarium`** and **`velotype`** a
 - [docs/ROADMAP.md](docs/ROADMAP.md) and [docs/RELEASING.md](docs/RELEASING.md) for workspace layout and releases.
 - Per-package [packages/*/README.md](packages/) (`velarium`, `velotype`, `viperis`, `morphra`, `granitus`, `velocus`).
 
-[Unreleased]: https://github.com/eddiethedean/velarium/compare/v0.4.0...HEAD
+[Unreleased]: https://github.com/eddiethedean/velarium/compare/v0.5.0...HEAD
+[0.5.0]: https://github.com/eddiethedean/velarium/releases/tag/v0.5.0
 [0.4.0]: https://github.com/eddiethedean/velarium/releases/tag/v0.4.0
 [0.3.0]: https://github.com/eddiethedean/velarium/releases/tag/v0.3.0
 [0.2.0]: https://github.com/eddiethedean/velarium/releases/tag/v0.2.0

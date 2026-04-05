@@ -143,9 +143,9 @@ The numbered phases below (**0.2**–**0.9**) are **monorepo-wide** for **velari
 
 ### velotype (stubs + CLI)
 
-**Owns:** `.pyi` generation, `generate_pyi` / `render_typespec`, **`velotype`** CLI (`ir`, `stub`).
+**Owns:** `.pyi` generation, `generate_pyi` / `render_typespec`, **`velotype`** CLI (`ir`, `stub`, **`batch`**, optional **`watch`**).
 
-- **0.2–0.5:** Directly tracked by phases **0.2** (fidelity), **0.4** (stub quality), **0.5** (batch/pre-commit/workflows).
+- **0.2–0.5:** Directly tracked by phases **0.2** (fidelity), **0.4** (stub quality), **0.5** (batch/pre-commit/workflows) — see [tutorial-stubs.md](tutorial-stubs.md).
 - **0.6–0.7:** Performance and security story for stub pipelines and CLI (see phases **0.6**, **0.7**).
 - **Exit:** Checker-usable stubs and documented CLI threat model toward **1.0.0**.
 
@@ -260,7 +260,7 @@ The numbered phases below (**0.2**–**0.9**) are **monorepo-wide** for **velari
 
 ---
 
-## Phase 0.5.* — Tooling and integrations
+## Phase 0.5.* — Tooling and integrations *(completed — shipped in **0.5.0**)*
 
 **Theme:** velotype fits **repos** and **pipelines**, not only one-off CLI invocations.
 
@@ -274,8 +274,15 @@ The numbered phases below (**0.2**–**0.9**) are **monorepo-wide** for **velari
 
 **Exit criteria:**
 
-- [ ] “From clone to generated stubs” **tutorial** in docs (copy-paste friendly).
-- [ ] Issue template or **troubleshooting** section for common CLI failures.
+- [x] “From clone to generated stubs” **tutorial** in docs (copy-paste friendly) — [tutorial-stubs.md](tutorial-stubs.md).
+- [x] Issue template or **troubleshooting** section for common CLI failures — [troubleshooting-cli.md](troubleshooting-cli.md), [.github/ISSUE_TEMPLATE/cli_failure.md](../.github/ISSUE_TEMPLATE/cli_failure.md).
+
+**Reference implementation (0.5.0):**
+
+- **Library:** `velotype.batch` — `discover_dataclass_targets`, `emit_batch_stubs`, `emit_batch_ir`, `path_matches_excludes`.
+- **CLI:** `velotype batch stub`, `velotype batch ir`, `velotype watch stub` (requires **`velotype[watch]`**); exit codes in [troubleshooting-cli.md](troubleshooting-cli.md).
+- **Pre-commit:** [`.pre-commit-hooks.yaml`](../.pre-commit-hooks.yaml) (copy into your `.pre-commit-config.yaml`).
+- **Interchange:** [interchange-ir-json.md](interchange-ir-json.md) (JSON via `dumps_model_spec`; full JSON Schema deferred).
 
 ---
 
@@ -466,7 +473,7 @@ Phase themes for the repo as a whole; **which packages move in each 0.x phase** 
 | **0.2** | Fidelity | Annotation coverage + golden IR tests + support matrix |
 | **0.3** | Sources | Pydantic (+ optional attrs/msgspec) |
 | **0.4** | Stubs | Checker-validated `.pyi`, import/style quality |
-| **0.5** | Tooling | Batch, pre-commit, docs for workflows |
+| **0.5** | Tooling | Batch / watch CLI, pre-commit hook, tutorials *(shipped **0.5.0**)* |
 | **0.6** | Performance | Profiling, cache, optional native backend |
 | **0.7** | Hardening | Security doc, fuzzing, resource limits |
 | **0.8** | Freeze | Public API + IR version + migration guide |

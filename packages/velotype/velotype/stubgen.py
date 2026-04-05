@@ -202,7 +202,7 @@ def generate_pyi(
     lines.append("")
 
     if include_all:
-        lines.append(f"__all__ = (\"{spec.name}\",)")
+        lines.append(f'__all__ = ("{spec.name}",)')
         lines.append("")
 
     if footer:

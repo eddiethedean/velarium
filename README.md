@@ -12,9 +12,9 @@
 
 - **Single IR** — One structure for tooling to agree on, instead of re-parsing Python differently in every consumer.
 - **Core library** — [**velarium** on PyPI](https://pypi.org/project/velarium/): types, normalization, JSON, and builders (dataclass, `TypedDict`, Pydantic, attrs → `ModelSpec`). Annotation → `TypeSpec` behavior is in [Supported annotations](https://github.com/eddiethedean/velarium/blob/main/docs/supported-annotations.md) (Phase **0.2**); builders and extras are in [Model sources](https://github.com/eddiethedean/velarium/blob/main/docs/model-sources.md) (Phase **0.3**).
-- **Stubs + CLI** — [**velotype** on PyPI](https://pypi.org/project/velotype/): IR → `.pyi`, optional layout helpers, and the `velotype` CLI (`ir`, `stub`). Stub guarantees and checker CI are described in [Stub compatibility](https://github.com/eddiethedean/velarium/blob/main/docs/stub-compatibility.md) (Phase **0.4**).
+- **Stubs + CLI** — [**velotype** on PyPI](https://pypi.org/project/velotype/): IR → `.pyi`, **`velotype`** CLI (`ir`, `stub`, **`batch`**, optional **`watch`**). Stub guarantees and checker CI are in [Stub compatibility](https://github.com/eddiethedean/velarium/blob/main/docs/stub-compatibility.md) (Phase **0.4**); batch workflows and tutorials are in [Tutorial: stubs](https://github.com/eddiethedean/velarium/blob/main/docs/tutorial-stubs.md) and [Troubleshooting CLI](https://github.com/eddiethedean/velarium/blob/main/docs/troubleshooting-cli.md) (Phase **0.5**).
 
-Requires **Python 3.10+**. Coordinated library releases are tagged in [CHANGELOG.md](https://github.com/eddiethedean/velarium/blob/main/CHANGELOG.md); **0.4.0** is the current published line for all six `packages/*` PyPI names.
+Requires **Python 3.10+**. Coordinated library releases are tagged in [CHANGELOG.md](https://github.com/eddiethedean/velarium/blob/main/CHANGELOG.md); **0.5.0** is the current published line for all six `packages/*` PyPI names.
 
 ## Packages
 
@@ -59,8 +59,11 @@ Targets are import paths: `module:Class` or `module:Outer.Inner` (nested class).
 velotype ir myapp.models:User
 velotype ir myapp.models:User -o user.ir.json
 velotype stub myapp.models:User -o user.pyi
+velotype batch stub myapp.models --out-dir stubs/
 python -m velotype ir myapp.models:User
 ```
+
+See [docs/tutorial-stubs.md](https://github.com/eddiethedean/velarium/blob/main/docs/tutorial-stubs.md) for a full **clone → batch stub** walkthrough.
 
 ## Library
 
@@ -88,6 +91,8 @@ print(generate_pyi(spec))
 Version constants: **`velarium`** — `packages/velarium/velarium/__init__.py`; **`velotype`** — `packages/velotype/velotype/__init__.py`.
 
 Integration and golden JSON IR tests live under `tests/` (`test_ir_integration.py`, `test_ir_golden.py`, `fixtures/ir_golden/`). Stub goldens (`ModelSpec` JSON + expected `.pyi`) live under `tests/fixtures/stub_corpus/`; **`test_stubgen_corpus.py`** compares **`generate_pyi`** output to those files. CI enforces **100%** line coverage on `velarium` and `velotype` sources.
+
+The root `pyproject.toml` sets `pythonpath = ["tests"]` for pytest so fixture packages (for example `fixtures.batch_pkg`) import without extra env. Batch CLI coverage lives in **`tests/test_batch.py`**, **`tests/test_batch_subprocess.py`** (subprocess `python -m velotype`), and **`tests/test_cli.py`**.
 
 ```bash
 uv sync --group dev
@@ -121,6 +126,9 @@ CI runs **pytest**, **ty**, and wheel builds for all packages on Python 3.10–3
 | [Model sources](https://github.com/eddiethedean/velarium/blob/main/docs/model-sources.md) | Builders (dataclass, TypedDict, Pydantic, attrs), extras, policies |
 | [Stub compatibility](https://github.com/eddiethedean/velarium/blob/main/docs/stub-compatibility.md) | Generated `.pyi` guarantees, **`generate_pyi`** options, CI **mypy** / **Pyright** |
 | [Roadmap](https://github.com/eddiethedean/velarium/blob/main/docs/ROADMAP.md) | Planned work |
+| [Tutorial: stubs](https://github.com/eddiethedean/velarium/blob/main/docs/tutorial-stubs.md) | Clone → **`velotype batch stub`** |
+| [Troubleshooting CLI](https://github.com/eddiethedean/velarium/blob/main/docs/troubleshooting-cli.md) | Exit codes, imports, pre-commit |
+| [IR JSON interchange](https://github.com/eddiethedean/velarium/blob/main/docs/interchange-ir-json.md) | Non-Python consumers |
 | [Installing & releasing](https://github.com/eddiethedean/velarium/blob/main/docs/RELEASING.md) | Builds and PyPI |
 | [Changelog](https://github.com/eddiethedean/velarium/blob/main/CHANGELOG.md) | Release notes |
 

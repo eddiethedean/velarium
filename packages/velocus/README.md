@@ -18,6 +18,7 @@ Use the [**velotype** CLI on PyPI](https://pypi.org/project/velotype/) for:
 
 - `velotype ir` — print ModelSpec JSON for a class the builders support (see [docs/model-sources.md](https://github.com/eddiethedean/velarium/blob/main/docs/model-sources.md))  
 - `velotype stub` — emit `.pyi` body  
+- `velotype batch stub` / `velotype batch ir` — package-wide dataclass discovery and merged outputs (see [docs/tutorial-stubs.md](https://github.com/eddiethedean/velarium/blob/main/docs/tutorial-stubs.md))
 
 Stub behavior and CI validation are documented in [docs/stub-compatibility.md](https://github.com/eddiethedean/velarium/blob/main/docs/stub-compatibility.md).
 

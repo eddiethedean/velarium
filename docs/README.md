@@ -18,6 +18,9 @@ Welcome to the **Velarium** monorepo docs: a shared **ModelSpec IR** ([**velariu
 | **[Supported annotations (Phase 0.2)](https://github.com/eddiethedean/velarium/blob/main/docs/supported-annotations.md)** | Annotation → IR matrix, PEP 563 / forward refs, TypedDict keys, known gaps |
 | **[Model sources (Phase 0.3)](https://github.com/eddiethedean/velarium/blob/main/docs/model-sources.md)** | Builders: dataclass, TypedDict, Pydantic, attrs — install extras, policies |
 | **[Stub compatibility (Phase 0.4)](https://github.com/eddiethedean/velarium/blob/main/docs/stub-compatibility.md)** | Guarantees vs best-effort for generated `.pyi`, imports, CI **mypy** / **Pyright** |
+| **[Tutorial: stubs (Phase 0.5)](https://github.com/eddiethedean/velarium/blob/main/docs/tutorial-stubs.md)** | Clone → **`velotype batch stub`** / **`batch ir`** |
+| **[Troubleshooting CLI](https://github.com/eddiethedean/velarium/blob/main/docs/troubleshooting-cli.md)** | Exit codes, **`PYTHONPATH`**, pre-commit |
+| **[IR JSON interchange](https://github.com/eddiethedean/velarium/blob/main/docs/interchange-ir-json.md)** | Using **`dumps_model_spec`** JSON outside Python |
 | **[Roadmap to 1.0.0](https://github.com/eddiethedean/velarium/blob/main/docs/ROADMAP.md)** | Phased **0.x** work through stable **1.0.0** |
 | **[Installing & releasing](https://github.com/eddiethedean/velarium/blob/main/docs/RELEASING.md)** | uv workspace, editable installs, builds, PyPI |
 

@@ -1,6 +1,6 @@
 [project]
 name = "velarium-workspace"
-version = "0.4.0"
+version = "0.5.0"
 description = "Velarium monorepo (workspace root; not published to PyPI)"
 readme = "README.md"
 requires-python = ">=3.10"
@@ -19,6 +19,7 @@ dev = [
   "twine>=6",
   "pydantic>=2.4.0",
   "attrs>=23.1.0",
+  "velotype[watch]",
 ]
 
 # Phase 0.4 — mypy + pyright on generated stub corpus (CI: uv sync --group stubcheck)
@@ -36,6 +37,7 @@ velotype = { workspace = true }
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+pythonpath = ["tests"]
 addopts = ["--cov=velotype", "--cov=velarium", "--cov-report=term-missing", "--cov-fail-under=100"]
 
 [tool.coverage.run]
@@ -65,3 +67,6 @@ include = [
   "packages/granitus/granitus/**/*.py",
   "packages/velocus/velocus/**/*.py",
 ]
+
+[tool.ruff]
+exclude = ["tests/fixtures/stub_corpus"]

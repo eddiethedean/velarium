@@ -1,0 +1,21 @@
+# Hook definitions for use with pre-commit when this layout is mirrored or vendored.
+# In your project, add to .pre-commit-config.yaml:
+#
+#   repos:
+#     - repo: local
+#       hooks:
+#         - id: velotype-batch-stub
+#           name: velotype batch stub
+#           language: system
+#           entry: velotype
+#           pass_filenames: false
+#           args: [batch, stub, your.root.package, --out-dir, stubs]
+#
+# See docs/tutorial-stubs.md and docs/troubleshooting-cli.md.
+
+- id: velotype-batch-stub
+  name: velotype batch stub
+  language: system
+  entry: velotype
+  pass_filenames: false
+  args: [batch, stub, your.root.package, --out-dir, stubs]
