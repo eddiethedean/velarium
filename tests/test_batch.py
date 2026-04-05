@@ -78,7 +78,9 @@ def test_batch_ir_merge_json(tmp_path: Path) -> None:
 def test_cli_batch_stub_help() -> None:
     r = _runner.invoke(app, ["batch", "stub", "--help"])
     assert r.exit_code == 0
-    assert "--out-dir" in r.stdout
+    # Typer/Rich may split help across stdout/stderr depending on TTY width (Linux CI).
+    out = (r.stdout or "") + (r.stderr or "")
+    assert "--out-dir" in out
 
 
 def test_cli_batch_stub_runs(tmp_path: Path) -> None:
