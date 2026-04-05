@@ -1,4 +1,5 @@
-# Publish to PyPI when a GitHub Release is published (requires PyPI trusted publishing setup).
+# Publish to PyPI when a GitHub Release is published.
+# Auth: repository secret PYPI_API_TOKEN (PyPI API token), or configure trusted publishing (OIDC).
 # See docs/releasing.md
 
 name: Publish
@@ -11,7 +12,7 @@ jobs:
   pypi:
     runs-on: ubuntu-latest
     permissions:
-      id-token: write
+      contents: read
     steps:
       - uses: actions/checkout@v4
 
@@ -39,6 +40,10 @@ jobs:
 
       - name: Publish to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          # PyPI: username __token__ + API token password (repo secret)
+          user: __token__
+          password: ${{ secrets.PYPI_API_TOKEN }}
 
       - name: List artifacts
         run: ls -la dist/
