@@ -213,7 +213,7 @@ The numbered phases below (**0.2**–**0.9**) are **monorepo-wide**; this sectio
 
 ---
 
-## Phase 0.2.* — Type surface and IR fidelity
+## Phase 0.2.* — Type surface and IR fidelity *(completed — shipped in **0.2.0**)*
 
 **Theme:** Reduce `any` noise; make annotation → IR behavior **predictable and testable**.
 

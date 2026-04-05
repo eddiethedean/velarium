@@ -11,6 +11,21 @@ Do not duplicate version strings under `[project]` in those `pyproject.toml` fil
 
 Before tagging a release for **`velarium`** or **`velotype`**, run the full test suite (`pytest` with coverage) and `ty check` as in the root [README.md](../README.md#development). Any intentional **JSON IR** output change should update golden fixtures under `tests/fixtures/ir_golden/` and [CHANGELOG.md](../CHANGELOG.md).
 
+### Ready for **0.2.0**?
+
+Before publishing the **0.2.0** tag / GitHub Release, confirm:
+
+| Check | Notes |
+|-------|--------|
+| Versions | Every package’s `__version__` is **`0.2.0`** (see each `packages/*/…/__init__.py`). **`velotype`** lists **`velarium>=0.2.0`** in [packages/velotype/pyproject.toml](../packages/velotype/pyproject.toml). |
+| Changelog | [CHANGELOG.md](../CHANGELOG.md) has a **`[0.2.0]`** section with the correct date and `[Unreleased]` compare link pointing at **`v0.2.0...HEAD`**. |
+| CI | [ci.yml](../.github/workflows/ci.yml) green on **`main`** (pytest, `ty`, wheel build for all packages). |
+| Local build | `python -m build` in each `packages/*/`, or the merged `dist/` loop + `twine check dist/*` below. |
+| Tag | Create **`v0.2.0`** on the commit that contains the version bump (annotated tag recommended). |
+| PyPI order | If uploading manually, ensure **`velarium`** is available before **`velotype`** (dependency). |
+
+Scaffold packages (**`viperis`**, **`morphra`**, **`granitus`**, **`velocus`**) are also **0.2.0** in-repo; only publish them to PyPI if you intend those names to update.
+
 ## Install from a Git checkout
 
 ```bash
