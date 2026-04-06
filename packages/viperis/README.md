@@ -24,6 +24,7 @@
 - [docs/design.md](https://github.com/eddiethedean/velarium/blob/main/docs/design.md) — why the IR exists  
 - [docs/supported-annotations.md](https://github.com/eddiethedean/velarium/blob/main/docs/supported-annotations.md) — annotation → IR matrix (what **viperis** will eventually preserve from source)  
 - [docs/modelspec-ir.md](https://github.com/eddiethedean/velarium/blob/main/docs/modelspec-ir.md) — IR schema **viperis** will emit  
+- [docs/migration-ir.md](https://github.com/eddiethedean/velarium/blob/main/docs/migration-ir.md) — JSON **`format_version`** and wire compatibility  
 - [Roadmap](https://github.com/eddiethedean/velarium/blob/main/docs/ROADMAP.md)  
 - [Repository README](https://github.com/eddiethedean/velarium/blob/main/README.md)  
 - [Documentation index](https://github.com/eddiethedean/velarium/blob/main/docs/README.md)  

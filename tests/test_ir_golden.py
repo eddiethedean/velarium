@@ -39,3 +39,14 @@ def test_complex_model_json_roundtrip_matches_fixture() -> None:
     assert m.config is not None
     out = dumps_model_spec(m, indent=2)
     assert json.loads(out) == json.loads(text)
+
+
+def test_minimal_fixture_without_format_version_still_loads_and_canonicalizes() -> None:
+    """Regression: older IR JSON without ``format_version`` must still parse."""
+    text = (_FIXTURES / "minimal_model.json").read_text(encoding="utf-8")
+    data = json.loads(text)
+    data.pop("format_version", None)
+    legacy = json.dumps(data, indent=2, sort_keys=True)
+    m = loads_model_spec(legacy)
+    assert m.name == "Golden"
+    assert json.loads(dumps_model_spec(m, indent=2)) == json.loads(text)

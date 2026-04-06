@@ -36,7 +36,7 @@ The default is **`VELARIUM_NORMALIZE_BACKEND=python`** (or unset).
 
 **Semantic rule:** native and Python backends must produce the **same** normalized IR for the same inputs; the repo’s golden and integration tests enforce JSON IR stability.
 
-A shipped **Rust** (or other) wheel is **not** required for performance work through **0.7.x**; the hook has been available since **0.6.0**, and optional accelerators can land in a later **0.6.x** / **0.7.x** without changing IR semantics (see [ROADMAP.md](ROADMAP.md) Phase **0.6**).
+A shipped **Rust** (or other) wheel is **not** required for performance work through **0.8.x**; the hook has been available since **0.6.0**, and optional accelerators can land in a later **0.x** patch without changing IR semantics (see [ROADMAP.md](ROADMAP.md) Phase **0.6**).
 
 ## Pure Python improvements
 

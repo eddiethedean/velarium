@@ -13,7 +13,7 @@ If you parse IR JSON from external sources, use optional limits in **`velarium`*
 
 ## Versioning
 
-- The **`format_version`** field (integer, monotonic) labels the **top-level JSON shape** for `ModelSpec`. **`velarium`** emits the current version; **`loads_model_spec`** accepts missing/`null` **`format_version`** as **1** for older files.
+- The **`format_version`** field (JSON **integer**, monotonic) labels the **top-level JSON shape** for `ModelSpec`. **`velarium`** emits the current version; **`loads_model_spec`** accepts missing/`null` **`format_version`** as **1** for older files. When set, the value must be an integer, not a boolean or float (see [migration-ir.md](migration-ir.md)).
 - Minor **0.x** releases may extend the JSON shape in **additive** ways; see [CHANGELOG.md](../CHANGELOG.md), [stability.md](stability.md), and the roadmap’s API/IR milestones before **1.0.0**.
 - Downstream tools should tolerate unknown keys if they only need a subset of the IR.
 

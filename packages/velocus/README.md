@@ -30,6 +30,7 @@ Thin orchestration only: parse commands, call [**velarium**](https://pypi.org/pr
 
 - [docs/design.md](https://github.com/eddiethedean/velarium/blob/main/docs/design.md) — CLI philosophy  
 - [docs/modelspec-ir.md](https://github.com/eddiethedean/velarium/blob/main/docs/modelspec-ir.md) — IR consumed by orchestrated tools  
+- [docs/api-reference.md](https://github.com/eddiethedean/velarium/blob/main/docs/api-reference.md) — tier‑1 **`velarium`** / **`velotype`** CLI and library surface  
 - [Roadmap](https://github.com/eddiethedean/velarium/blob/main/docs/ROADMAP.md)  
 - [Repository README](https://github.com/eddiethedean/velarium/blob/main/README.md)  
 - [Documentation index](https://github.com/eddiethedean/velarium/blob/main/docs/README.md)  

@@ -22,7 +22,7 @@ Submodules (`velarium.json_codec`, `velarium.normalize`, `velotype.stubgen`, …
 
 ## IR JSON (`format_version`)
 
-ModelSpec JSON carries a top-level integer **`format_version`** (see [modelspec-ir.md](modelspec-ir.md), [migration-ir.md](migration-ir.md)). **`velarium`** rejects unknown **future** format versions until support is added. Older files **without** `format_version` load as **version 1**.
+ModelSpec JSON carries a top-level integer **`format_version`** (see [modelspec-ir.md](modelspec-ir.md), [migration-ir.md](migration-ir.md)). **`velarium`** rejects unknown **future** format versions until support is added. Older files **without** `format_version` load as **version 1**. The wire value must be a JSON **integer** (not boolean or float).
 
 ## Deprecations
 

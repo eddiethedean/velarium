@@ -19,7 +19,7 @@ When resolving **string** annotations, [`velarium` annotations](https://github.c
 
 ### ModelSpec JSON (`loads_model_spec` / `model_spec_from_dict`)
 
-Parsing IR JSON builds Python objects from structured data. Malformed input can raise exceptions. **Untrusted JSON** (e.g. from a network peer) should be validated and size-limited before parsing; see [Resource limits](#resource-limits) for optional knobs.
+Parsing IR JSON builds Python objects from structured data. Malformed input can raise exceptions. The top-level **`format_version`** field, when present, must be a JSON **integer** (see [migration-ir.md](migration-ir.md)). **Untrusted JSON** (e.g. from a network peer) should be validated and size-limited before parsing; see [Resource limits](#resource-limits) for optional knobs.
 
 The **batch cache** reads JSON files from `--cache-dir`. Corrupt or hostile files are treated as cache misses when parsing fails; optional **byte limits** apply when configured (see below).
 
@@ -41,6 +41,7 @@ Please report security-sensitive bugs **privately** via [GitHub Security Advisor
 ## Related docs
 
 - [interchange-ir-json.md](interchange-ir-json.md) — JSON interchange and untrusted input
+- [migration-ir.md](migration-ir.md) — **`format_version`** and legacy JSON
 - [modelspec-ir.md](modelspec-ir.md) — IR schema and semantics
 - [performance.md](performance.md) — batch cache; byte limits on cache reads
 - [troubleshooting-cli.md](troubleshooting-cli.md) — env vars table for limits

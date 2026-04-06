@@ -22,6 +22,7 @@
 
 - [docs/valarium.md](https://github.com/eddiethedean/velarium/blob/main/docs/valarium.md) — backend overview  
 - [docs/modelspec-ir.md](https://github.com/eddiethedean/velarium/blob/main/docs/modelspec-ir.md) — IR schema  
+- [docs/interchange-ir-json.md](https://github.com/eddiethedean/velarium/blob/main/docs/interchange-ir-json.md) — JSON IR interchange and **`format_version`**  
 - [docs/supported-annotations.md](https://github.com/eddiethedean/velarium/blob/main/docs/supported-annotations.md) — type coverage in IR  
 - [docs/model-sources.md](https://github.com/eddiethedean/velarium/blob/main/docs/model-sources.md) — how models become IR today  
 - [Roadmap](https://github.com/eddiethedean/velarium/blob/main/docs/ROADMAP.md)  

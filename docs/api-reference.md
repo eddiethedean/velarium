@@ -10,7 +10,7 @@ Defined in [`packages/velarium/velarium/__init__.py`](https://github.com/eddieth
 
 | Symbol | Description |
 |--------|-------------|
-| `MODEL_SPEC_FORMAT_VERSION` | Current ModelSpec JSON **`format_version`** integer (see [migration-ir.md](migration-ir.md)). |
+| `MODEL_SPEC_FORMAT_VERSION` | Current ModelSpec JSON **`format_version`** wire integer (JSON number without fraction; not boolean/float; see [migration-ir.md](migration-ir.md)). |
 | `ModelSpec`, `FieldSpec`, `ModelConfig`, `ModelMetadata`, `TypeSpec`, `TypeKind` | Core IR types (`velarium.ir`). |
 | `dumps_model_spec`, `loads_model_spec`, `model_spec_to_dict`, `model_spec_from_dict` | JSON codec (`velarium.json_codec`). |
 | `annotation_to_typespec`, `type_to_typespec` | Annotation → `TypeSpec` (`velarium.annotations`). |

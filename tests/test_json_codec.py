@@ -22,6 +22,7 @@ from velotype.json_codec import (
     field_spec_to_dict,
     loads_model_spec,
     model_spec_from_dict,
+    model_spec_to_dict,
     typespec_from_dict,
     typespec_to_dict,
 )
@@ -92,6 +93,40 @@ def test_dumps_includes_format_version() -> None:
     assert data["format_version"] == MODEL_SPEC_FORMAT_VERSION == 1
 
 
+def test_model_spec_to_dict_includes_format_version() -> None:
+    m = ModelSpec(name="B", fields={"x": TypeSpec(kind=TypeKind.STR)})
+    d = model_spec_to_dict(m)
+    assert d["format_version"] == MODEL_SPEC_FORMAT_VERSION
+    assert d["name"] == "B"
+
+
+def test_legacy_json_without_format_version_loads_and_redump_matches_canonical() -> (
+    None
+):
+    """Pre-0.8 snapshots omit ``format_version``; loading treats them as version 1."""
+    legacy = json.dumps({"name": "Legacy", "fields": {}}, sort_keys=True)
+    m = loads_model_spec(legacy)
+    assert m.name == "Legacy"
+    canonical = json.loads(dumps_model_spec(m, indent=None))
+    assert canonical["format_version"] == 1
+    assert loads_model_spec(json.dumps(canonical, sort_keys=True)) == m
+
+
+def test_explicit_format_version_one_matches_omitted() -> None:
+    omitted = model_spec_from_dict({"name": "X", "fields": {}})
+    explicit = model_spec_from_dict({"format_version": 1, "name": "X", "fields": {}})
+    assert omitted == explicit
+
+
+def test_roundtrip_preserves_model_after_format_version_injection() -> None:
+    """Parsed dict may omit ``format_version``; ``model_spec_from_dict`` is stable."""
+    m = ModelSpec(name="Inject", fields={"n": TypeSpec(kind=TypeKind.INT)})
+    data = json.loads(dumps_model_spec(m, indent=None))
+    assert data.pop("format_version") == MODEL_SPEC_FORMAT_VERSION
+    m2 = model_spec_from_dict(data)
+    assert m2 == m
+
+
 def test_model_spec_from_dict_rejects_unsupported_format_version() -> None:
     d = {
         "format_version": 999,
@@ -105,6 +140,19 @@ def test_model_spec_from_dict_rejects_unsupported_format_version() -> None:
 def test_model_spec_from_dict_rejects_non_int_format_version() -> None:
     with pytest.raises(ValueError, match="format_version must be int"):
         model_spec_from_dict({"format_version": "1", "name": "X", "fields": {}})
+
+
+def test_model_spec_from_dict_rejects_bool_format_version() -> None:
+    """JSON booleans are not valid ``format_version`` (``bool`` subclasses ``int``)."""
+    with pytest.raises(ValueError, match="format_version must be int"):
+        model_spec_from_dict({"format_version": True, "name": "X", "fields": {}})
+    with pytest.raises(ValueError, match="format_version must be int"):
+        model_spec_from_dict({"format_version": False, "name": "X", "fields": {}})
+
+
+def test_model_spec_from_dict_rejects_float_format_version() -> None:
+    with pytest.raises(ValueError, match="format_version must be int"):
+        model_spec_from_dict({"format_version": 1.0, "name": "X", "fields": {}})
 
 
 def test_model_spec_from_dict_format_version_null_treated_as_one() -> None:

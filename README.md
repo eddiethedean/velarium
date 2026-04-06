@@ -91,7 +91,7 @@ print(generate_pyi(spec))
 
 Version constants: **`velarium`** — `packages/velarium/velarium/__init__.py`; **`velotype`** — `packages/velotype/velotype/__init__.py` (all six `packages/*` names share the same **`__version__`**).
 
-Integration and golden JSON IR tests live under `tests/` (`test_ir_integration.py`, `test_ir_golden.py`, `fixtures/ir_golden/`). Stub goldens (`ModelSpec` JSON + expected `.pyi`) live under `tests/fixtures/stub_corpus/`; **`test_stubgen_corpus.py`** compares **`generate_pyi`** output to those files. **Hypothesis** property tests (`test_property_json_codec.py`, `test_json_limits.py`) cover JSON round-trip, normalization idempotence, and optional deserialization limits (Phase **0.7**). CI enforces **100%** line coverage on `velarium` and `velotype` sources.
+Integration and golden JSON IR tests live under `tests/` (`test_ir_integration.py`, `test_ir_golden.py`, `fixtures/ir_golden/`). Stub goldens (`ModelSpec` JSON + expected `.pyi`) live under `tests/fixtures/stub_corpus/`; **`test_stubgen_corpus.py`** compares **`generate_pyi`** output to those files. **Hypothesis** property tests (`test_property_json_codec.py`, `test_json_limits.py`) cover JSON round-trip (including **`format_version`** invariants and legacy JSON without that field), normalization idempotence, and optional deserialization limits (Phases **0.7**–**0.8**). CI enforces **100%** line coverage on `velarium` and `velotype` sources.
 
 The root `pyproject.toml` sets `pythonpath = ["tests"]` for pytest so fixture packages (for example `fixtures.batch_pkg`) import without extra env. Batch CLI coverage lives in **`tests/test_batch.py`**, **`tests/test_batch_subprocess.py`** (subprocess `python -m velotype`), and **`tests/test_cli.py`**.
 
@@ -120,10 +120,13 @@ CI uses **`uv sync --locked`**: a **`lint`** job on **Ubuntu** runs [**ruff**](h
 | | |
 |---|---|
 | [Documentation index](https://github.com/eddiethedean/velarium/blob/main/docs/README.md) | Entry point for deeper docs |
+| [API reference](https://github.com/eddiethedean/velarium/blob/main/docs/api-reference.md) | Public **`velarium`** / **`velotype`** surface (`__all__`, CLI, batch helpers) |
+| [Stability](https://github.com/eddiethedean/velarium/blob/main/docs/stability.md) | Pre-1.0 semver and IR policy |
+| [IR JSON migration](https://github.com/eddiethedean/velarium/blob/main/docs/migration-ir.md) | **`format_version`**, legacy JSON, fixtures |
 | [Performance](https://github.com/eddiethedean/velarium/blob/main/docs/performance.md) | Batch `--cache-dir`, `VELARIUM_NORMALIZE_BACKEND`, scripts |
 | [Velarium ecosystem](https://github.com/eddiethedean/velarium/blob/main/docs/valarium.md) | Architecture and monorepo layout |
 | [Design & philosophy](https://github.com/eddiethedean/velarium/blob/main/docs/design.md) | Why the IR exists |
-| [ModelSpec IR specification](https://github.com/eddiethedean/velarium/blob/main/docs/modelspec-ir.md) | Schema and normalization |
+| [ModelSpec IR specification](https://github.com/eddiethedean/velarium/blob/main/docs/modelspec-ir.md) | Schema, normalization, JSON wire **`format_version`** |
 | [Supported annotations](https://github.com/eddiethedean/velarium/blob/main/docs/supported-annotations.md) | Annotation → IR matrix, gaps, stub behavior |
 | [Model sources](https://github.com/eddiethedean/velarium/blob/main/docs/model-sources.md) | Builders (dataclass, TypedDict, Pydantic, attrs), extras, policies |
 | [Stub compatibility](https://github.com/eddiethedean/velarium/blob/main/docs/stub-compatibility.md) | Generated `.pyi` guarantees, **`generate_pyi`** options, CI **mypy** / **Pyright** |

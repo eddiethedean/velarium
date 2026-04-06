@@ -2,12 +2,16 @@
 
 from __future__ import annotations
 
+import json
+
 import hypothesis.strategies as st
 from hypothesis import HealthCheck, given, settings
 
 from velarium.json_codec import (
+    MODEL_SPEC_FORMAT_VERSION,
     dumps_model_spec,
     loads_model_spec,
+    model_spec_from_dict,
     typespec_from_dict,
     typespec_to_dict,
 )
@@ -102,6 +106,25 @@ _ci_settings = settings(
 def test_model_spec_json_roundtrip(m: ModelSpec) -> None:
     text = dumps_model_spec(m, indent=None)
     m2 = loads_model_spec(text)
+    assert m2 == m
+
+
+@_ci_settings
+@given(_model_spec_strategy())
+def test_model_spec_dumped_json_always_has_format_version(m: ModelSpec) -> None:
+    data = json.loads(dumps_model_spec(m, indent=None))
+    assert data["format_version"] == MODEL_SPEC_FORMAT_VERSION
+
+
+@_ci_settings
+@given(_model_spec_strategy())
+def test_model_spec_loads_after_stripping_format_version_from_dict(
+    m: ModelSpec,
+) -> None:
+    """Wire JSON may omit ``format_version``; dict round-trip without it must match."""
+    data = json.loads(dumps_model_spec(m, indent=None))
+    assert data.pop("format_version") == MODEL_SPEC_FORMAT_VERSION
+    m2 = model_spec_from_dict(data)
     assert m2 == m
 
 

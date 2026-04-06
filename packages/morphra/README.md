@@ -22,6 +22,7 @@
 
 - [docs/valarium.md](https://github.com/eddiethedean/velarium/blob/main/docs/valarium.md) — backend placement in the pipeline  
 - [docs/modelspec-ir.md](https://github.com/eddiethedean/velarium/blob/main/docs/modelspec-ir.md) — `ModelSpec` / `TypeSpec` schema  
+- [docs/migration-ir.md](https://github.com/eddiethedean/velarium/blob/main/docs/migration-ir.md) — JSON **`format_version`** for IR snapshots  
 - [docs/supported-annotations.md](https://github.com/eddiethedean/velarium/blob/main/docs/supported-annotations.md) — what the IR can represent today  
 - [docs/model-sources.md](https://github.com/eddiethedean/velarium/blob/main/docs/model-sources.md) — Pydantic → IR ingestion in **velarium** (this package is the reverse direction)  
 - [docs/stub-compatibility.md](https://github.com/eddiethedean/velarium/blob/main/docs/stub-compatibility.md) — how **velotype** renders `.pyi` today  

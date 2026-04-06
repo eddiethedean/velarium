@@ -16,6 +16,7 @@ Since **0.8.0**, canonical JSON includes a top-level integer field:
 
 - **`MODEL_SPEC_FORMAT_VERSION`** in code (exported from **`velarium`** and **`velotype`**) is the **current** format number emitted by `dumps_model_spec`.
 - **`loads_model_spec`** / **`model_spec_from_dict`**: if **`format_version`** is **missing** or **`null`**, it is treated as **1**, so **older snapshots** (0.7.x and earlier) still load unchanged.
+- When present, **`format_version`** must be a JSON **integer** (not a string, boolean, or float). Non-integers raise **`ValueError`** (booleans are rejected because JSON `true`/`false` are not valid wire versions).
 - If **`format_version`** is **greater** than the version supported by your installed **`velarium`**, loading raises **`ValueError`** — upgrade **`velarium`** (and **`velotype`** if you use the CLI) to a release that supports that format.
 
 There is **no** separate `model_spec_v2` export path; evolution is a **single codec** plus an explicit version integer.

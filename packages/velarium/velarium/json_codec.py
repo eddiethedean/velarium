@@ -26,7 +26,9 @@ def _validate_format_version(d: dict[str, Any]) -> None:
     raw = d.get("format_version", 1)
     if raw is None:
         raw = 1
-    if not isinstance(raw, int):
+    # JSON ``number`` deserializes to ``int`` or ``float``; reject ``bool`` (``bool`` is a
+    # subclass of ``int`` in Python, so ``isinstance(True, int)`` is misleading).
+    if type(raw) is not int:
         raise ValueError(
             f"ModelSpec JSON format_version must be int, got {type(raw).__name__}"
         )

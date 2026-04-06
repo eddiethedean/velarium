@@ -49,6 +49,7 @@ uv sync --group dev
 
 - [Repository README](https://github.com/eddiethedean/velarium/blob/main/README.md) — full package table and workspace setup  
 - [Documentation index](https://github.com/eddiethedean/velarium/blob/main/docs/README.md)  
+- [API reference](https://github.com/eddiethedean/velarium/blob/main/docs/api-reference.md) — supported public imports  
 - [Security](https://github.com/eddiethedean/velarium/blob/main/docs/security.md) — JSON deserialization limits, trust boundaries for builders  
 - [Roadmap](https://github.com/eddiethedean/velarium/blob/main/docs/ROADMAP.md)  
 - [Changelog](https://github.com/eddiethedean/velarium/blob/main/CHANGELOG.md)

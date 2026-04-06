@@ -62,6 +62,7 @@ class ModelSpec:
 When serialized with **`dumps_model_spec`** / **`model_spec_to_dict`**, the JSON object includes a top-level integer **`format_version`** equal to **`MODEL_SPEC_FORMAT_VERSION`** in **`velarium.json_codec`**. This is the **wire** version of the object shape (not the Python package version).
 
 - **Missing or `null` `format_version`** on load is treated as **1** (backward compatible with JSON from **0.7.x** and earlier).
+- If the field is present, it must be a JSON **integer**; non-integers (including booleans and floats) raise **`ValueError`**.
 - **Future** format integers **greater** than the version supported by your installed **`velarium`** are rejected with a clear **`ValueError`** until you upgrade.
 
 See [interchange-ir-json.md](interchange-ir-json.md) and [migration-ir.md](migration-ir.md) for interchange and migration notes.

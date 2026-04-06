@@ -15,6 +15,14 @@ Monorepo packages (**`velarium`**, **`velotype`**, **`viperis`**, **`morphra`**,
 
 - **Phase 0.8 — API and IR stability prep** — top-level JSON **`format_version`** on `dumps_model_spec` output; **`MODEL_SPEC_FORMAT_VERSION`** in **`velarium.json_codec`** (exported from **`velarium`** and **`velotype`**); missing/`null` **`format_version`** loads as **1**; [api-reference.md](docs/api-reference.md), [stability.md](docs/stability.md), [migration-ir.md](docs/migration-ir.md).
 
+### Changed
+
+- **`format_version`** validation requires a JSON **integer** (booleans and floats are rejected). Expanded unit and property tests for legacy JSON without **`format_version`** and for invalid wire types.
+
+### Documentation
+
+- README and docs index: cross-links for **Phase 0.8**; **RELEASING** checklist for the next minor after **0.8.0**; **`format_version`** integer semantics in migration, IR spec, interchange, stability, security, valarium, and package READMEs.
+
 ### Packages
 
 | Package   | Version | Notes |

@@ -35,7 +35,7 @@ An umbrella CLI (**Velocus**) will orchestrate the ecosystem; today **`velotype`
 - Provide a language-agnostic schema for downstream tools.
 - Map `typing` constructs and class-based builders (dataclass, `TypedDict`, Pydantic v2, attrs with optional extras) to IR with documented behavior; see [Supported annotations](supported-annotations.md) and [Model sources](model-sources.md).
 
-**Characteristics:** Minimal dependencies (`typing_extensions`), immutable data shapes, JSON-serializable design. The in-repo test suite includes integration tests (`tests/test_ir_integration.py`), JSON golden fixtures (`tests/fixtures/ir_golden/`), and **Hypothesis** property tests plus deserialization limit tests (`tests/test_property_json_codec.py`, `tests/test_json_limits.py`) to guard the IR contract and JSON codec behavior (Phase **0.7**).
+**Characteristics:** Minimal dependencies (`typing_extensions`), immutable data shapes, JSON-serializable design. The in-repo test suite includes integration tests (`tests/test_ir_integration.py`), JSON golden fixtures (`tests/fixtures/ir_golden/`), and **Hypothesis** property tests plus deserialization limit tests (`tests/test_property_json_codec.py`, `tests/test_json_limits.py`) to guard the IR contract and JSON codec behavior (Phases **0.7**–**0.8**, including **`format_version`** on wire JSON).
 
 **Monorepo:** [`packages/velarium`](../packages/velarium/README.md) · PyPI: **`velarium`**
 

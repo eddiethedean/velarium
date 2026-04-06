@@ -43,7 +43,7 @@ Welcome to the **Velarium** monorepo docs: a shared **ModelSpec IR** ([**velariu
 ## Repository map
 
 - **Root [README](https://github.com/eddiethedean/velarium/blob/main/README.md)** — Quick install, CLI examples, package table, current release line (**0.8.0**).
-- **Source:** `packages/velarium` (IR), `packages/velotype` (stubs + CLI), `packages/viperis`, `packages/morphra`, `packages/granitus`, `packages/velocus` (scaffolds); `scripts/` (profile/benchmark helpers for Phase **0.6**); `tests/` (integration/goldens, **Hypothesis** property tests and JSON limit tests for Phase **0.7**).
+- **Source:** `packages/velarium` (IR), `packages/velotype` (stubs + CLI), `packages/viperis`, `packages/morphra`, `packages/granitus`, `packages/velocus` (scaffolds); `scripts/` (profile/benchmark helpers for Phase **0.6**); `tests/` (integration/goldens, **Hypothesis** property tests, JSON limit tests, and **`format_version`** / legacy IR JSON tests for Phases **0.7**–**0.8**).
 - **Changelog:** [CHANGELOG.md](https://github.com/eddiethedean/velarium/blob/main/CHANGELOG.md).
 - **CI:** [.github/workflows/ci.yml](https://github.com/eddiethedean/velarium/blob/main/.github/workflows/ci.yml) — [**ruff**](https://docs.astral.sh/ruff/) lint + format, [**ty**](https://docs.astral.sh/ty/), **pytest** (including **Hypothesis**), per-package wheels, **`stub-check`** (**mypy** + **Pyright** on stub goldens); see [ci-reusable.yml](https://github.com/eddiethedean/velarium/blob/main/.github/workflows/ci-reusable.yml).
 
