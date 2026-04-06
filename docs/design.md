@@ -13,7 +13,7 @@ For the concrete schema (`ModelSpec`, `TypeSpec`, `TypeKind`, …), see [ModelSp
 | Piece | PyPI / import | Role today |
 |-------|----------------|------------|
 | **velarium** | `velarium` | Core IR: types, normalization, JSON codec, builders (dataclass, `TypedDict`, optional Pydantic / attrs → `ModelSpec`; see [model-sources](model-sources.md)) |
-| **velotype** | `velotype` | Backend: IR → `.pyi`; ships the **`velotype`** CLI (`ir`, `stub`). Depends on **velarium**. |
+| **velotype** | `velotype` | Backend: IR → `.pyi`; ships the **`velotype`** CLI (`ir`, `stub`, **`batch`**, optional **`watch`**). Depends on **velarium**. |
 | **viperis** | `viperis` | Planned frontend: Python source → IR (scaffold) |
 | **morphra** | `morphra` | Planned backend: IR → Pydantic (scaffold) |
 | **granitus** | `granitus` | Planned backend: IR → Spark-like schemas (scaffold) |

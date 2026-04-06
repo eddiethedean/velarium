@@ -21,7 +21,7 @@ Downstream packages (e.g. [**velotype** on PyPI](https://pypi.org/project/veloty
 | Area | Modules / entry points |
 |------|-------------------------|
 | IR types | `velarium.ir` — `ModelSpec`, `TypeSpec`, `TypeKind`, … |
-| JSON | `velarium.json_codec` — `dumps_model_spec`, `loads_model_spec`, dict helpers |
+| JSON | `velarium.json_codec` — `dumps_model_spec`, `loads_model_spec`, dict helpers; optional **`VELARIUM_JSON_MAX_DEPTH`** / **`VELARIUM_JSON_MAX_BYTES`** (see [security.md](https://github.com/eddiethedean/velarium/blob/main/docs/security.md)) |
 | Normalization | `velarium.normalize` — `normalize_typespec`, unions, optional handling; optional **`VELARIUM_NORMALIZE_BACKEND=native`** (falls back to Python; see [performance.md](https://github.com/eddiethedean/velarium/blob/main/docs/performance.md)) |
 | Annotations | `velarium.annotations` — `type_to_typespec`, `annotation_to_typespec` |
 | Builders | `velarium.modelspec_build` — `modelspec_from_dataclass`, `modelspec_from_typed_dict`, `typespec_from_object`; `velarium.modelspec_pydantic` / `modelspec_from_pydantic_model` (extra); `velarium.modelspec_attrs` / `modelspec_from_attrs_class` (extra) |
@@ -49,6 +49,7 @@ uv sync --group dev
 
 - [Repository README](https://github.com/eddiethedean/velarium/blob/main/README.md) — full package table and workspace setup  
 - [Documentation index](https://github.com/eddiethedean/velarium/blob/main/docs/README.md)  
+- [Security](https://github.com/eddiethedean/velarium/blob/main/docs/security.md) — JSON deserialization limits, trust boundaries for builders  
 - [Roadmap](https://github.com/eddiethedean/velarium/blob/main/docs/ROADMAP.md)  
 - [Changelog](https://github.com/eddiethedean/velarium/blob/main/CHANGELOG.md)
 

@@ -36,7 +36,7 @@ The default is **`VELARIUM_NORMALIZE_BACKEND=python`** (or unset).
 
 **Semantic rule:** native and Python backends must produce the **same** normalized IR for the same inputs; the repo’s golden and integration tests enforce JSON IR stability.
 
-A shipped **Rust** (or other) wheel is **not** required for **0.6.0**; the hook is documented so optional accelerators can land in a later **0.6.x** without API changes.
+A shipped **Rust** (or other) wheel is **not** required for performance work through **0.7.x**; the hook has been available since **0.6.0**, and optional accelerators can land in a later **0.6.x** / **0.7.x** without changing IR semantics (see [ROADMAP.md](ROADMAP.md) Phase **0.6**).
 
 ## Pure Python improvements
 
@@ -70,4 +70,5 @@ An optional GitHub Actions workflow **Benchmark** (`workflow_dispatch`) runs the
 
 - [ROADMAP.md](ROADMAP.md) — Phase **0.6** exit criteria
 - [tutorial-stubs.md](tutorial-stubs.md) — batch CLI flags
-- [troubleshooting-cli.md](troubleshooting-cli.md) — cache pitfalls
+- [troubleshooting-cli.md](troubleshooting-cli.md) — cache pitfalls, optional JSON byte limits on cache reads
+- [security.md](security.md) — trust boundaries; **`VELARIUM_JSON_MAX_BYTES`** when set skips oversized batch cache files

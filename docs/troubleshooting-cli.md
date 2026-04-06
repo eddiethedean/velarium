@@ -42,6 +42,18 @@ Single-target commands (`velotype ir`, `velotype stub`) use the same conventions
 - **Stale outputs after edits:** The cache keys off **file content** (SHA-256 of the module file). If you change a class without saving, or edit a different file than the one `inspect.getfile` reports, clear the cache directory or use **`--no-cache`** once.
 - **Version bumps:** Upgrading **`velarium`** or **`velotype`** changes the cache key; old entries are ignored (leftover files in `DIR` are harmless but can be deleted to save disk).
 - **Corrupt JSON:** If a cache file is truncated or edited by hand, the run **rebuilds** IR for that class and overwrites the entry when possible.
+- **Large or hostile cache files:** If **`VELARIUM_JSON_MAX_BYTES`** is set, cache entries larger than that (in bytes) are skipped (see [security.md](security.md)).
+
+## JSON deserialization limits
+
+For **`loads_model_spec`** and batch cache reads:
+
+| Environment variable | Meaning |
+|----------------------|--------|
+| **`VELARIUM_JSON_MAX_DEPTH`** | Max **`TypeSpec`** nesting when parsing JSON (default **256** if unset). |
+| **`VELARIUM_JSON_MAX_BYTES`** | If set to a positive integer, reject input whose UTF-8 **byte** length exceeds this value (`loads_model_spec` and cache reads). Unset = no byte cap. |
+
+Details: [security.md](security.md).
 
 ## Filing issues
 

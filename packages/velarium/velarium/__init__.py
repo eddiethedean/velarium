@@ -49,4 +49,4 @@ __all__ = [
     "optional_to_union",
 ]
 
-__version__ = "0.6.0"
+__version__ = "0.7.0"

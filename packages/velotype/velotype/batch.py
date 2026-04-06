@@ -15,7 +15,11 @@ from pathlib import Path
 from typing import Any, Literal
 
 from velarium.ir import ModelSpec
-from velarium.json_codec import dumps_model_spec, loads_model_spec
+from velarium.json_codec import (
+    dumps_model_spec,
+    json_input_byte_limit,
+    loads_model_spec,
+)
 from velarium.modelspec_build import modelspec_from_dataclass
 from velotype.cli_support import BatchItemError
 from velotype.stubgen import generate_pyi
@@ -106,6 +110,9 @@ def _load_model_spec_cache(cache_dir: Path, stem: str) -> ModelSpec | None:
     if not path.is_file():
         return None
     try:
+        limit = json_input_byte_limit()
+        if limit is not None and path.stat().st_size > limit:
+            return None
         text = path.read_text(encoding="utf-8")
         return loads_model_spec(text)
     except (OSError, UnicodeDecodeError, ValueError, TypeError, KeyError):

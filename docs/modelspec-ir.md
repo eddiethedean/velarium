@@ -2,7 +2,7 @@
 
 This document describes the **ModelSpec IR** implemented by the **`velarium`** package (`velarium.ir` and related modules). The same types are also re-exported from **`velotype`** for compatibility (`velotype.ir`, etc.).
 
-For **non-Python interchange**, see [interchange-ir-json.md](interchange-ir-json.md) (JSON as produced by `dumps_model_spec`).
+For **non-Python interchange**, see [interchange-ir-json.md](interchange-ir-json.md) (JSON as produced by `dumps_model_spec`). For **untrusted JSON** or size limits when loading IR, see [security.md](security.md).
 
 ModelSpec is the **language-agnostic layer** used to normalize Python annotations, serialize typing structure to JSON, and drive backends (notably **velotype** for `.pyi` generation).
 

@@ -7,6 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.7.0] - 2026-04-05
+
+Monorepo packages (**`velarium`**, **`velotype`**, **`viperis`**, **`morphra`**, **`granitus`**, **`velocus`**) are aligned at **0.7.0**. **`velotype`** depends on **`velarium>=0.7.0`**.
+
+### Added
+
+- **Phase 0.7 — hardening** — [security.md](docs/security.md) (CLI import model, `eval` in string annotations, JSON trust boundaries, disclosure); optional **`VELARIUM_JSON_MAX_DEPTH`** (default **256**) and **`VELARIUM_JSON_MAX_BYTES`** for `loads_model_spec` and batch cache reads; **`json_input_byte_limit()`** in **`velarium.json_codec`**; Hypothesis property tests ([tests/test_property_json_codec.py](tests/test_property_json_codec.py), [tests/test_json_limits.py](tests/test_json_limits.py)).
+
+### Packages
+
+| Package   | Version | Notes |
+|-----------|---------|-------|
+| velarium  | 0.7.0   | JSON deserialization limits; security doc cross-links. |
+| velotype  | 0.7.0   | Depends on `velarium>=0.7.0`; cache honors byte limit when set. |
+| viperis, morphra, granitus, velocus | 0.7.0 | Scaffolds; version aligned. |
+
 ## [0.6.0] - 2026-04-05
 
 Monorepo packages (**`velarium`**, **`velotype`**, **`viperis`**, **`morphra`**, **`granitus`**, **`velocus`**) are aligned at **0.6.0**. **`velotype`** depends on **`velarium>=0.6.0`**.
@@ -142,6 +158,7 @@ Coordinated **0.1.0** line for the monorepo: **`velarium`** and **`velotype`** a
 - Per-package [packages/*/README.md](packages/) (`velarium`, `velotype`, `viperis`, `morphra`, `granitus`, `velocus`).
 
 [Unreleased]: https://github.com/eddiethedean/velarium/compare/v0.6.0...HEAD
+[0.7.0]: https://github.com/eddiethedean/velarium/releases/tag/v0.7.0
 [0.6.0]: https://github.com/eddiethedean/velarium/releases/tag/v0.6.0
 [0.5.0]: https://github.com/eddiethedean/velarium/releases/tag/v0.5.0
 [0.4.0]: https://github.com/eddiethedean/velarium/releases/tag/v0.4.0

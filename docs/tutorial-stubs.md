@@ -70,5 +70,6 @@ Stop with **Ctrl+C**. New classes may require a new process if Python has alread
 
 - [Performance](performance.md) — batch cache, normalization hook, benchmark scripts.
 - [Stub compatibility](stub-compatibility.md) — what we guarantee for generated `.pyi` files.
-- [Troubleshooting CLI](troubleshooting-cli.md) — exit codes and common failures.
+- [Troubleshooting CLI](troubleshooting-cli.md) — exit codes, cache behavior, optional JSON limits.
+- [Security](security.md) — what the CLI imports and executes; trust boundaries.
 - [Interchange: IR JSON](interchange-ir-json.md) — using IR outside Python.

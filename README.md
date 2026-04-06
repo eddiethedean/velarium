@@ -12,9 +12,9 @@
 
 - **Single IR** — One structure for tooling to agree on, instead of re-parsing Python differently in every consumer.
 - **Core library** — [**velarium** on PyPI](https://pypi.org/project/velarium/): types, normalization, JSON, and builders (dataclass, `TypedDict`, Pydantic, attrs → `ModelSpec`). Annotation → `TypeSpec` behavior is in [Supported annotations](https://github.com/eddiethedean/velarium/blob/main/docs/supported-annotations.md) (Phase **0.2**); builders and extras are in [Model sources](https://github.com/eddiethedean/velarium/blob/main/docs/model-sources.md) (Phase **0.3**).
-- **Stubs + CLI** — [**velotype** on PyPI](https://pypi.org/project/velotype/): IR → `.pyi`, **`velotype`** CLI (`ir`, `stub`, **`batch`**, optional **`watch`**). Stub guarantees and checker CI are in [Stub compatibility](https://github.com/eddiethedean/velarium/blob/main/docs/stub-compatibility.md) (Phase **0.4**); batch workflows and tutorials are in [Tutorial: stubs](https://github.com/eddiethedean/velarium/blob/main/docs/tutorial-stubs.md) and [Troubleshooting CLI](https://github.com/eddiethedean/velarium/blob/main/docs/troubleshooting-cli.md) (Phase **0.5**).
+- **Stubs + CLI** — [**velotype** on PyPI](https://pypi.org/project/velotype/): IR → `.pyi`, **`velotype`** CLI (`ir`, `stub`, **`batch`**, optional **`watch`**). Stub guarantees and checker CI are in [Stub compatibility](https://github.com/eddiethedean/velarium/blob/main/docs/stub-compatibility.md) (Phase **0.4**); batch workflows and tutorials are in [Tutorial: stubs](https://github.com/eddiethedean/velarium/blob/main/docs/tutorial-stubs.md) and [Troubleshooting CLI](https://github.com/eddiethedean/velarium/blob/main/docs/troubleshooting-cli.md) (Phase **0.5**). Performance and batch cache are in [Performance](https://github.com/eddiethedean/velarium/blob/main/docs/performance.md) (Phase **0.6**); CLI / JSON hardening is in [Security](https://github.com/eddiethedean/velarium/blob/main/docs/security.md) (Phase **0.7**).
 
-Requires **Python 3.10+**. Coordinated library releases are tagged in [CHANGELOG.md](https://github.com/eddiethedean/velarium/blob/main/CHANGELOG.md); **0.6.0** is the current monorepo version for all six `packages/*` PyPI names (upload after tagging per [RELEASING.md](https://github.com/eddiethedean/velarium/blob/main/docs/RELEASING.md)).
+Requires **Python 3.10+**. Coordinated library releases are tagged in [CHANGELOG.md](https://github.com/eddiethedean/velarium/blob/main/CHANGELOG.md); **0.7.0** is the current monorepo version for all six `packages/*` PyPI names (upload after tagging per [RELEASING.md](https://github.com/eddiethedean/velarium/blob/main/docs/RELEASING.md)).
 
 ## Packages
 
@@ -43,7 +43,7 @@ From a git clone, use the workspace root with [uv](https://github.com/astral-sh/
 uv sync --group dev
 ```
 
-That installs the **`velarium-workspace`** root (not published to PyPI) plus workspace members **`velarium`** and **`velotype`**, with dev tools (tests, **ty**, **Ruff**, `build`).
+That installs the **`velarium-workspace`** root (not published to PyPI) plus workspace members **`velarium`** and **`velotype`**, with dev tools (tests, **Hypothesis**, **ty**, **Ruff**, `build`).
 
 Without uv, editable installs:
 
@@ -91,7 +91,7 @@ print(generate_pyi(spec))
 
 Version constants: **`velarium`** — `packages/velarium/velarium/__init__.py`; **`velotype`** — `packages/velotype/velotype/__init__.py` (all six `packages/*` names share the same **`__version__`**).
 
-Integration and golden JSON IR tests live under `tests/` (`test_ir_integration.py`, `test_ir_golden.py`, `fixtures/ir_golden/`). Stub goldens (`ModelSpec` JSON + expected `.pyi`) live under `tests/fixtures/stub_corpus/`; **`test_stubgen_corpus.py`** compares **`generate_pyi`** output to those files. CI enforces **100%** line coverage on `velarium` and `velotype` sources.
+Integration and golden JSON IR tests live under `tests/` (`test_ir_integration.py`, `test_ir_golden.py`, `fixtures/ir_golden/`). Stub goldens (`ModelSpec` JSON + expected `.pyi`) live under `tests/fixtures/stub_corpus/`; **`test_stubgen_corpus.py`** compares **`generate_pyi`** output to those files. **Hypothesis** property tests (`test_property_json_codec.py`, `test_json_limits.py`) cover JSON round-trip, normalization idempotence, and optional deserialization limits (Phase **0.7**). CI enforces **100%** line coverage on `velarium` and `velotype` sources.
 
 The root `pyproject.toml` sets `pythonpath = ["tests"]` for pytest so fixture packages (for example `fixtures.batch_pkg`) import without extra env. Batch CLI coverage lives in **`tests/test_batch.py`**, **`tests/test_batch_subprocess.py`** (subprocess `python -m velotype`), and **`tests/test_cli.py`**.
 
@@ -113,7 +113,7 @@ Build wheels for every package under `packages/`:
 for d in packages/*/; do (cd "$d" && uv run python -m build); done
 ```
 
-CI uses **`uv sync --locked`**: a **`lint`** job on **Ubuntu** runs **ruff** (`check` + `format --check`) and **ty**; **`pytest`** and wheel builds for all packages run on **Ubuntu** across Python 3.10–3.13, plus **Windows** and **macOS** on Python 3.12 (with **uv** dependency caching); a **`stub-check`** job runs pinned **mypy** + **Pyright** on `tests/fixtures/stub_corpus/` on all three OSes (see [.github/workflows/ci-reusable.yml](https://github.com/eddiethedean/velarium/blob/main/.github/workflows/ci-reusable.yml), invoked from [.github/workflows/ci.yml](https://github.com/eddiethedean/velarium/blob/main/.github/workflows/ci.yml)).
+CI uses **`uv sync --locked`**: a **`lint`** job on **Ubuntu** runs [**ruff**](https://docs.astral.sh/ruff/) (`check` + `format --check`) and [**ty**](https://docs.astral.sh/ty/); **`pytest`** (including **Hypothesis** property tests) and wheel builds for all packages run on **Ubuntu** across Python 3.10–3.13, plus **Windows** and **macOS** on Python 3.12 (with **uv** dependency caching); a **`stub-check`** job runs pinned **mypy** + **Pyright** on `tests/fixtures/stub_corpus/` on all three OSes (see [.github/workflows/ci-reusable.yml](https://github.com/eddiethedean/velarium/blob/main/.github/workflows/ci-reusable.yml), invoked from [.github/workflows/ci.yml](https://github.com/eddiethedean/velarium/blob/main/.github/workflows/ci.yml)).
 
 ## Documentation
 
@@ -132,6 +132,7 @@ CI uses **`uv sync --locked`**: a **`lint`** job on **Ubuntu** runs **ruff** (`c
 | [Troubleshooting CLI](https://github.com/eddiethedean/velarium/blob/main/docs/troubleshooting-cli.md) | Exit codes, imports, pre-commit |
 | [IR JSON interchange](https://github.com/eddiethedean/velarium/blob/main/docs/interchange-ir-json.md) | Non-Python consumers |
 | [Installing & releasing](https://github.com/eddiethedean/velarium/blob/main/docs/RELEASING.md) | Builds and PyPI |
+| [Security](https://github.com/eddiethedean/velarium/blob/main/docs/security.md) | CLI trust model, JSON limits, disclosure (Phase **0.7**) |
 | [Changelog](https://github.com/eddiethedean/velarium/blob/main/CHANGELOG.md) | Release notes |
 
 ## License

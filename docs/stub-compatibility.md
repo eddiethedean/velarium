@@ -48,3 +48,4 @@ Regenerating goldens after intentional stub changes: rebuild **`ModelSpec`** JSO
 
 - [Supported annotations](supported-annotations.md) — IR matrix and stub fallbacks for advanced kinds.
 - [Roadmap — Phase 0.4](ROADMAP.md#phase-04--stub-generation-quality) — phase exit criteria.
+- [security.md](security.md) — CLI import boundary and **`eval`** in string annotations (not stub-specific, but relevant when models use forward refs).

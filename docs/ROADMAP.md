@@ -110,7 +110,7 @@ You can parallelize **some** work (e.g. docs vs code) within a phase, but **do n
 
 ## Release alignment by phase and package
 
-**Versioning:** Every tag bumps **all** `packages/*` to the same **`__version__`** (see [RELEASING.md](RELEASING.md)). Phases are **monorepo-wide**: tier‑1 exit criteria are what gate calling a line (e.g. **0.5.0**) “done” for the release notes—**scaffold** packages may still be placeholders on PyPI until their [exit criteria](#plans-by-package) are met, even though their version number moves in lockstep.
+**Versioning:** Every tag bumps **all** `packages/*` to the same **`__version__`** (see [RELEASING.md](RELEASING.md)). Phases are **monorepo-wide**: tier‑1 exit criteria are what gate calling a line (e.g. **0.7.0**) “done” for the release notes—**scaffold** packages may still be placeholders on PyPI until their [exit criteria](#plans-by-package) are met, even though their version number moves in lockstep.
 
 | Phase | **velarium** | **velotype** | **viperis** | **morphra** | **granitus** | **velocus** |
 |-------|--------------|--------------|-------------|-------------|--------------|-------------|
@@ -120,7 +120,7 @@ You can parallelize **some** work (e.g. docs vs code) within a phase, but **do n
 | **0.4** | — | Checker‑validated `.pyi`, import/style, **stub-check** CI | Continue | Continue | Continue | — |
 | **0.5** | — | Batch / pre-commit / repo workflows ([Phase 0.5](#phase-05--tooling-and-integrations)) | **Target** first “usable” slice (optional) | **Target** first “usable” path (optional) | **Target** first “usable” path (optional) | **Start** only if **velotype** + ≥1 other backend are worth orchestrating |
 | **0.6** | Performance hooks, optional native acceleration ([Phase 0.6](#phase-06--performance-and-scale)) *(shipped **0.6.0**)* | Performance, incremental cache *(shipped **0.6.0**)* | Optional | Optional | Optional | Optional |
-| **0.7** | — | Security / fuzzing / CLI limits ([Phase 0.7](#phase-07--hardening)) | — | — | — | Harden if already shipping |
+| **0.7** | — | Security / fuzzing / CLI limits ([Phase 0.7](#phase-07--hardening)) *(shipped **0.7.0**)* | — | — | — | Harden if already shipping |
 | **0.8** | Public API audit + IR versioning ([Phase 0.8](#phase-08--api-and-ir-stability-prep)) | Track tier‑1 freeze | Docs vs IR spec; no contradiction | Stable emit API surface | Stable emit API surface | Subcommand freeze if shipped |
 | **0.9** | RC ([Phase 0.9](#phase-09--release-candidate)) | RC | RC if feature-complete | RC if feature-complete | RC if feature-complete | RC if feature-complete |
 | **1.0** | Core **1.0** | **1.x** stubs/CLI ([summary](#package-summary-toward-100)) | [Independent bar](#package-summary-toward-100) | [Independent bar](#package-summary-toward-100) | [Independent bar](#package-summary-toward-100) | Optional orchestrator |
@@ -312,7 +312,7 @@ The numbered phases below (**0.2**–**0.9**) are **monorepo-wide** for **velari
 
 ---
 
-## Phase 0.7.* — Hardening
+## Phase 0.7.* — Hardening *(completed — shipped in **0.7.0**)*
 
 **Theme:** Security, robustness, and abuse resistance.
 
@@ -325,8 +325,14 @@ The numbered phases below (**0.2**–**0.9**) are **monorepo-wide** for **velari
 
 **Exit criteria:**
 
-- [ ] `docs/security.md` or equivalent section in README.
-- [ ] Fuzz/property tests in CI or documented manual cadence.
+- [x] `docs/security.md` or equivalent section in README.
+- [x] Fuzz/property tests in CI or documented manual cadence.
+
+**Reference implementation (0.7.0):**
+
+- **Docs:** [security.md](security.md) — import-based CLI threat model, `annotation_to_typespec` / `eval`, JSON trust boundaries, **`VELARIUM_JSON_MAX_DEPTH`** / **`VELARIUM_JSON_MAX_BYTES`**, responsible disclosure pointer; cross-links from [README.md](../README.md) and [troubleshooting-cli.md](troubleshooting-cli.md).
+- **Library:** [json_codec.py](../packages/velarium/velarium/json_codec.py) — depth limit (default **256**) and optional UTF-8 byte cap on `loads_model_spec`; **`json_input_byte_limit()`**; batch cache skips oversized files when the byte limit is set ([batch.py](../packages/velotype/velotype/batch.py)).
+- **Tests:** [Hypothesis](https://hypothesis.readthedocs.io/) property tests for `ModelSpec` JSON round-trip and `normalize_typespec` idempotence; unit tests for limits ([tests/test_property_json_codec.py](../tests/test_property_json_codec.py), [tests/test_json_limits.py](../tests/test_json_limits.py)).
 
 ---
 
@@ -483,7 +489,7 @@ Phase themes for the repo as a whole; **which packages move in each 0.x phase** 
 | **0.4** | Stubs | Checker-validated `.pyi`, import/style quality |
 | **0.5** | Tooling | Batch / watch CLI, pre-commit hook, tutorials *(shipped **0.5.0**)* |
 | **0.6** | Performance | Profiling, cache, native hook *(shipped **0.6.0**)*; optional native wheel **0.6.x** |
-| **0.7** | Hardening | Security doc, fuzzing, resource limits |
+| **0.7** | Hardening | Security doc, property tests, resource limits *(shipped **0.7.0**)* |
 | **0.8** | Freeze | Public API + IR version + migration guide |
 | **0.9** | RC | Changelog, feedback, no blockers |
 | **1.0** | Stable | Semver + long-lived 1.0 line |

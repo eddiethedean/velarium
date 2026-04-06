@@ -22,6 +22,7 @@ Welcome to the **Velarium** monorepo docs: a shared **ModelSpec IR** ([**velariu
 | **[Troubleshooting CLI](https://github.com/eddiethedean/velarium/blob/main/docs/troubleshooting-cli.md)** | Exit codes, **`PYTHONPATH`**, pre-commit |
 | **[IR JSON interchange](https://github.com/eddiethedean/velarium/blob/main/docs/interchange-ir-json.md)** | Using **`dumps_model_spec`** JSON outside Python |
 | **[Performance and scale](https://github.com/eddiethedean/velarium/blob/main/docs/performance.md)** | Batch cache, normalization hook, profiling/benchmark scripts (Phase **0.6**) |
+| **[Security](https://github.com/eddiethedean/velarium/blob/main/docs/security.md)** | CLI and library threat model, JSON limits, disclosure (Phase **0.7**) |
 | **[Roadmap to 1.0.0](https://github.com/eddiethedean/velarium/blob/main/docs/ROADMAP.md)** | Phased **0.x** work through stable **1.0.0** |
 | **[Installing & releasing](https://github.com/eddiethedean/velarium/blob/main/docs/RELEASING.md)** | uv workspace, editable installs, builds, PyPI |
 
@@ -38,10 +39,10 @@ Welcome to the **Velarium** monorepo docs: a shared **ModelSpec IR** ([**velariu
 
 ## Repository map
 
-- **Root [README](https://github.com/eddiethedean/velarium/blob/main/README.md)** — Quick install, CLI examples, package table.
-- **Source:** `packages/velarium` (IR), `packages/velotype` (stubs + CLI), `packages/viperis`, `packages/morphra`, `packages/granitus`, `packages/velocus` (scaffolds); `scripts/` (profile/benchmark helpers for Phase **0.6**).
+- **Root [README](https://github.com/eddiethedean/velarium/blob/main/README.md)** — Quick install, CLI examples, package table, current release line (**0.7.0**).
+- **Source:** `packages/velarium` (IR), `packages/velotype` (stubs + CLI), `packages/viperis`, `packages/morphra`, `packages/granitus`, `packages/velocus` (scaffolds); `scripts/` (profile/benchmark helpers for Phase **0.6**); `tests/` (integration/goldens, **Hypothesis** property tests and JSON limit tests for Phase **0.7**).
 - **Changelog:** [CHANGELOG.md](https://github.com/eddiethedean/velarium/blob/main/CHANGELOG.md).
-- **CI:** [.github/workflows/ci.yml](https://github.com/eddiethedean/velarium/blob/main/.github/workflows/ci.yml) — pytest, **ty**, wheels, **`stub-check`** (**mypy** + **Pyright** on stub goldens).
+- **CI:** [.github/workflows/ci.yml](https://github.com/eddiethedean/velarium/blob/main/.github/workflows/ci.yml) — [**ruff**](https://docs.astral.sh/ruff/) lint + format, [**ty**](https://docs.astral.sh/ty/), **pytest** (including **Hypothesis**), per-package wheels, **`stub-check`** (**mypy** + **Pyright** on stub goldens); see [ci-reusable.yml](https://github.com/eddiethedean/velarium/blob/main/.github/workflows/ci-reusable.yml).
 
 ## Naming
 

@@ -23,6 +23,7 @@ The IR types and builders live in **`velarium`**. **`velotype`** re-exports the 
 | Stub fallbacks | [docs/supported-annotations.md](https://github.com/eddiethedean/velarium/blob/main/docs/supported-annotations.md) |
 | Guarantees, imports, CI **mypy** / **Pyright** | [docs/stub-compatibility.md](https://github.com/eddiethedean/velarium/blob/main/docs/stub-compatibility.md) |
 | Performance, batch cache | [docs/performance.md](https://github.com/eddiethedean/velarium/blob/main/docs/performance.md) |
+| CLI trust model, JSON limits | [docs/security.md](https://github.com/eddiethedean/velarium/blob/main/docs/security.md) |
 
 ## Install
 
@@ -75,7 +76,7 @@ print(generate_pyi(spec))
 - [docs/valarium.md](https://github.com/eddiethedean/velarium/blob/main/docs/valarium.md) — ecosystem and backends  
 - [Repository README](https://github.com/eddiethedean/velarium/blob/main/README.md)  
 - [Documentation index](https://github.com/eddiethedean/velarium/blob/main/docs/README.md)  
-- [Roadmap](https://github.com/eddiethedean/velarium/blob/main/docs/ROADMAP.md) — Phase **0.5** (batch / tooling)  
+- [Roadmap](https://github.com/eddiethedean/velarium/blob/main/docs/ROADMAP.md) — Phases **0.5**–**0.7** (tooling, performance, hardening)  
 - [Changelog](https://github.com/eddiethedean/velarium/blob/main/CHANGELOG.md)
 
 ## License

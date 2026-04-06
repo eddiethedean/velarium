@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import os
 from enum import Enum
 from typing import Any
 
@@ -15,11 +16,64 @@ from velarium.ir import (
     TypeSpec,
 )
 
+_DEFAULT_MAX_DEPTH = 256
 
-def _typespec_from_dict(d: dict[str, Any]) -> TypeSpec:
+
+def _max_depth_from_env() -> int:
+    raw = os.environ.get("VELARIUM_JSON_MAX_DEPTH")
+    if raw is None or not raw.strip():
+        return _DEFAULT_MAX_DEPTH
+    try:
+        v = int(raw.strip())
+    except ValueError:
+        return _DEFAULT_MAX_DEPTH
+    return max(1, v)
+
+
+def json_input_byte_limit() -> int | None:
+    """Return ``VELARIUM_JSON_MAX_BYTES`` if set to a positive integer, else ``None`` (no limit)."""
+    raw = os.environ.get("VELARIUM_JSON_MAX_BYTES")
+    if raw is None or not raw.strip():
+        return None
+    try:
+        v = int(raw.strip())
+    except ValueError:
+        return None
+    return v if v > 0 else None
+
+
+def _check_utf8_byte_limit(s: str) -> None:
+    limit = json_input_byte_limit()
+    if limit is None:
+        return
+    n = len(s.encode("utf-8"))
+    if n > limit:
+        raise ValueError(
+            f"ModelSpec JSON exceeds maximum size ({n} bytes > {limit} bytes); "
+            "adjust VELARIUM_JSON_MAX_BYTES or unset it to disable the cap"
+        )
+
+
+def _typespec_from_dict(
+    d: dict[str, Any],
+    *,
+    depth: int,
+    max_depth: int,
+) -> TypeSpec:
+    if depth > max_depth:
+        raise ValueError(
+            f"TypeSpec nesting exceeds maximum depth ({max_depth}); "
+            "set VELARIUM_JSON_MAX_DEPTH to increase"
+        )
     args = d.get("args")
     if args is not None:
-        args = [_typespec_from_dict(x) if isinstance(x, dict) else x for x in args]
+        next_depth = depth + 1
+        args = [
+            _typespec_from_dict(x, depth=next_depth, max_depth=max_depth)
+            if isinstance(x, dict)
+            else x
+            for x in args
+        ]
     return TypeSpec(
         kind=TypeKind(d["kind"]),
         args=args,
@@ -74,8 +128,14 @@ def typespec_to_dict(ts: TypeSpec) -> dict[str, Any]:
     return out
 
 
-def typespec_from_dict(d: dict[str, Any]) -> TypeSpec:
-    return _typespec_from_dict(d)
+def typespec_from_dict(
+    d: dict[str, Any],
+    *,
+    depth: int = 0,
+    max_depth: int | None = None,
+) -> TypeSpec:
+    md = max_depth if max_depth is not None else _max_depth_from_env()
+    return _typespec_from_dict(d, depth=depth, max_depth=md)
 
 
 def model_spec_to_dict(m: ModelSpec) -> dict[str, Any]:
@@ -104,9 +164,14 @@ def model_spec_to_dict(m: ModelSpec) -> dict[str, Any]:
     return out
 
 
-def model_spec_from_dict(d: dict[str, Any]) -> ModelSpec:
+def model_spec_from_dict(
+    d: dict[str, Any], *, max_depth: int | None = None
+) -> ModelSpec:
+    md = max_depth if max_depth is not None else _max_depth_from_env()
     fields_raw = d.get("fields") or {}
-    fields = {k: typespec_from_dict(v) for k, v in fields_raw.items()}
+    fields = {
+        k: _typespec_from_dict(v, depth=0, max_depth=md) for k, v in fields_raw.items()
+    }
     config = None
     if "config" in d and d["config"] is not None:
         c = d["config"]
@@ -152,10 +217,13 @@ def field_spec_to_dict(f: FieldSpec) -> dict[str, Any]:
     }
 
 
-def field_spec_from_dict(d: dict[str, Any]) -> FieldSpec:
+def field_spec_from_dict(
+    d: dict[str, Any], *, max_depth: int | None = None
+) -> FieldSpec:
+    md = max_depth if max_depth is not None else _max_depth_from_env()
     return FieldSpec(
         name=d["name"],
-        type=typespec_from_dict(d["type"]),
+        type=_typespec_from_dict(d["type"], depth=0, max_depth=md),
         required=d["required"],
         default=d.get("default"),
         alias=d.get("alias"),
@@ -175,4 +243,5 @@ def dumps_model_spec(m: ModelSpec, *, indent: int | None = 2) -> str:
 
 
 def loads_model_spec(s: str) -> ModelSpec:
+    _check_utf8_byte_limit(s)
     return model_spec_from_dict(json.loads(s))
