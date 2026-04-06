@@ -110,7 +110,7 @@ You can parallelize **some** work (e.g. docs vs code) within a phase, but **do n
 
 ## Release alignment by phase and package
 
-**Versioning:** Every tag bumps **all** `packages/*` to the same **`__version__`** (see [RELEASING.md](RELEASING.md)). Phases are **monorepo-wide**: tier‑1 exit criteria are what gate calling a line (e.g. **0.7.0**) “done” for the release notes—**scaffold** packages may still be placeholders on PyPI until their [exit criteria](#plans-by-package) are met, even though their version number moves in lockstep.
+**Versioning:** Every tag bumps **all** `packages/*` to the same **`__version__`** (see [RELEASING.md](RELEASING.md)). Phases are **monorepo-wide**: tier‑1 exit criteria are what gate calling a line (e.g. **0.8.0**) “done” for the release notes—**scaffold** packages may still be placeholders on PyPI until their [exit criteria](#plans-by-package) are met, even though their version number moves in lockstep.
 
 | Phase | **velarium** | **velotype** | **viperis** | **morphra** | **granitus** | **velocus** |
 |-------|--------------|--------------|-------------|-------------|--------------|-------------|
@@ -121,7 +121,7 @@ You can parallelize **some** work (e.g. docs vs code) within a phase, but **do n
 | **0.5** | — | Batch / pre-commit / repo workflows ([Phase 0.5](#phase-05--tooling-and-integrations)) | **Target** first “usable” slice (optional) | **Target** first “usable” path (optional) | **Target** first “usable” path (optional) | **Start** only if **velotype** + ≥1 other backend are worth orchestrating |
 | **0.6** | Performance hooks, optional native acceleration ([Phase 0.6](#phase-06--performance-and-scale)) *(shipped **0.6.0**)* | Performance, incremental cache *(shipped **0.6.0**)* | Optional | Optional | Optional | Optional |
 | **0.7** | — | Security / fuzzing / CLI limits ([Phase 0.7](#phase-07--hardening)) *(shipped **0.7.0**)* | — | — | — | Harden if already shipping |
-| **0.8** | Public API audit + IR versioning ([Phase 0.8](#phase-08--api-and-ir-stability-prep)) | Track tier‑1 freeze | Docs vs IR spec; no contradiction | Stable emit API surface | Stable emit API surface | Subcommand freeze if shipped |
+| **0.8** | Public API audit + IR versioning ([Phase 0.8](#phase-08--api-and-ir-stability-prep)) *(shipped **0.8.0**)* | Track tier‑1 freeze *(shipped **0.8.0**)* | Docs vs IR spec; no contradiction | Stable emit API surface | Stable emit API surface | Subcommand freeze if shipped |
 | **0.9** | RC ([Phase 0.9](#phase-09--release-candidate)) | RC | RC if feature-complete | RC if feature-complete | RC if feature-complete | RC if feature-complete |
 | **1.0** | Core **1.0** | **1.x** stubs/CLI ([summary](#package-summary-toward-100)) | [Independent bar](#package-summary-toward-100) | [Independent bar](#package-summary-toward-100) | [Independent bar](#package-summary-toward-100) | Optional orchestrator |
 
@@ -336,7 +336,7 @@ The numbered phases below (**0.2**–**0.9**) are **monorepo-wide** for **velari
 
 ---
 
-## Phase 0.8.* — API and IR stability prep
+## Phase 0.8.* — API and IR stability prep *(completed — shipped in **0.8.0**)*
 
 **Theme:** Everything public is **named**, **documented**, and **versioned**.
 
@@ -349,10 +349,16 @@ The numbered phases below (**0.2**–**0.9**) are **monorepo-wide** for **velari
 
 **Exit criteria:**
 
-- [ ] “**API reference**” (Sphinx, mkdocs, or hand-maintained) for public symbols.
-- [ ] Commitment text: only **additive** minors or **deprecation** paths until 1.0 after this phase starts.
+- [x] “**API reference**” (Sphinx, mkdocs, or hand-maintained) for public symbols — [api-reference.md](api-reference.md).
+- [x] Commitment text: only **additive** minors or **deprecation** paths until 1.0 after this phase starts — [stability.md](stability.md).
+
+**Reference implementation (0.8.0):**
+
+- **Docs:** [api-reference.md](api-reference.md) (`__all__` for **`velarium`** / **`velotype`**, CLI, **`velotype.batch`**); [migration-ir.md](migration-ir.md) (missing **`format_version`** → **1**); [stability.md](stability.md) (pre-1.0 policy).
+- **Library:** **`MODEL_SPEC_FORMAT_VERSION`** and top-level JSON **`format_version`** in [`json_codec.py`](../packages/velarium/velarium/json_codec.py); exported from **`velarium`** and **`velotype`** package roots.
 
 ---
+
 
 ## Phase 0.9.* — Release candidate
 
@@ -490,6 +496,6 @@ Phase themes for the repo as a whole; **which packages move in each 0.x phase** 
 | **0.5** | Tooling | Batch / watch CLI, pre-commit hook, tutorials *(shipped **0.5.0**)* |
 | **0.6** | Performance | Profiling, cache, native hook *(shipped **0.6.0**)*; optional native wheel **0.6.x** |
 | **0.7** | Hardening | Security doc, property tests, resource limits *(shipped **0.7.0**)* |
-| **0.8** | Freeze | Public API + IR version + migration guide |
+| **0.8** | Freeze | Public API + IR version + migration guide *(shipped **0.8.0**)* |
 | **0.9** | RC | Changelog, feedback, no blockers |
 | **1.0** | Stable | Semver + long-lived 1.0 line |

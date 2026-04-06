@@ -1,6 +1,6 @@
 # Interchange: ModelSpec JSON outside Python
 
-**Velarium** does not ship a full **JSON Schema** for `ModelSpec` yet (as of **0.7.x**); Phase **0.5** focused on documenting interchange. For non-Python consumers, treat **[`dumps_model_spec`](https://github.com/eddiethedean/velarium/blob/main/packages/velarium/velarium/json_codec.py)** output as the interchange format.
+**Velarium** does not ship a full **JSON Schema** for `ModelSpec` yet (as of **0.8.x**); Phase **0.5** focused on documenting interchange. For non-Python consumers, treat **[`dumps_model_spec`](https://github.com/eddiethedean/velarium/blob/main/packages/velarium/velarium/json_codec.py)** output as the interchange format. Canonical JSON includes a top-level **`format_version`** integer (see [migration-ir.md](migration-ir.md)).
 
 ## Stable contract
 
@@ -13,7 +13,8 @@ If you parse IR JSON from external sources, use optional limits in **`velarium`*
 
 ## Versioning
 
-- Minor **0.x** releases may extend the JSON shape in **additive** ways; see [CHANGELOG.md](../CHANGELOG.md) and the roadmap’s API/IR freeze milestones before **1.0.0**.
+- The **`format_version`** field (integer, monotonic) labels the **top-level JSON shape** for `ModelSpec`. **`velarium`** emits the current version; **`loads_model_spec`** accepts missing/`null` **`format_version`** as **1** for older files.
+- Minor **0.x** releases may extend the JSON shape in **additive** ways; see [CHANGELOG.md](../CHANGELOG.md), [stability.md](stability.md), and the roadmap’s API/IR milestones before **1.0.0**.
 - Downstream tools should tolerate unknown keys if they only need a subset of the IR.
 
 ## JSON Schema (future)

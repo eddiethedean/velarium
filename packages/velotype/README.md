@@ -24,6 +24,7 @@ The IR types and builders live in **`velarium`**. **`velotype`** re-exports the 
 | Guarantees, imports, CI **mypy** / **Pyright** | [docs/stub-compatibility.md](https://github.com/eddiethedean/velarium/blob/main/docs/stub-compatibility.md) |
 | Performance, batch cache | [docs/performance.md](https://github.com/eddiethedean/velarium/blob/main/docs/performance.md) |
 | CLI trust model, JSON limits | [docs/security.md](https://github.com/eddiethedean/velarium/blob/main/docs/security.md) |
+| Public API, IR **`format_version`** | [docs/api-reference.md](https://github.com/eddiethedean/velarium/blob/main/docs/api-reference.md), [docs/stability.md](https://github.com/eddiethedean/velarium/blob/main/docs/stability.md), [docs/migration-ir.md](https://github.com/eddiethedean/velarium/blob/main/docs/migration-ir.md) |
 
 ## Install
 
@@ -76,7 +77,7 @@ print(generate_pyi(spec))
 - [docs/valarium.md](https://github.com/eddiethedean/velarium/blob/main/docs/valarium.md) — ecosystem and backends  
 - [Repository README](https://github.com/eddiethedean/velarium/blob/main/README.md)  
 - [Documentation index](https://github.com/eddiethedean/velarium/blob/main/docs/README.md)  
-- [Roadmap](https://github.com/eddiethedean/velarium/blob/main/docs/ROADMAP.md) — Phases **0.5**–**0.7** (tooling, performance, hardening)  
+- [Roadmap](https://github.com/eddiethedean/velarium/blob/main/docs/ROADMAP.md) — Phases **0.5**–**0.8** (tooling, performance, hardening, API/IR stability prep)  
 - [Changelog](https://github.com/eddiethedean/velarium/blob/main/CHANGELOG.md)
 
 ## License

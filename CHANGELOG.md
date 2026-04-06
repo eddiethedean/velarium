@@ -7,6 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.8.0] - 2026-04-05
+
+Monorepo packages (**`velarium`**, **`velotype`**, **`viperis`**, **`morphra`**, **`granitus`**, **`velocus`**) are aligned at **0.8.0**. **`velotype`** depends on **`velarium>=0.8.0`**.
+
+### Added
+
+- **Phase 0.8 — API and IR stability prep** — top-level JSON **`format_version`** on `dumps_model_spec` output; **`MODEL_SPEC_FORMAT_VERSION`** in **`velarium.json_codec`** (exported from **`velarium`** and **`velotype`**); missing/`null` **`format_version`** loads as **1**; [api-reference.md](docs/api-reference.md), [stability.md](docs/stability.md), [migration-ir.md](docs/migration-ir.md).
+
+### Packages
+
+| Package   | Version | Notes |
+|-----------|---------|-------|
+| velarium  | 0.8.0   | IR JSON **`format_version`**; docs for public API and stability. |
+| velotype  | 0.8.0   | Depends on `velarium>=0.8.0`; re-exports **`MODEL_SPEC_FORMAT_VERSION`**. |
+| viperis, morphra, granitus, velocus | 0.8.0 | Scaffolds; version aligned. |
+
 ## [0.7.0] - 2026-04-05
 
 Monorepo packages (**`velarium`**, **`velotype`**, **`viperis`**, **`morphra`**, **`granitus`**, **`velocus`**) are aligned at **0.7.0**. **`velotype`** depends on **`velarium>=0.7.0`**.
@@ -157,7 +173,8 @@ Coordinated **0.1.0** line for the monorepo: **`velarium`** and **`velotype`** a
 - [docs/ROADMAP.md](docs/ROADMAP.md) and [docs/RELEASING.md](docs/RELEASING.md) for workspace layout and releases.
 - Per-package [packages/*/README.md](packages/) (`velarium`, `velotype`, `viperis`, `morphra`, `granitus`, `velocus`).
 
-[Unreleased]: https://github.com/eddiethedean/velarium/compare/v0.6.0...HEAD
+[Unreleased]: https://github.com/eddiethedean/velarium/compare/v0.8.0...HEAD
+[0.8.0]: https://github.com/eddiethedean/velarium/releases/tag/v0.8.0
 [0.7.0]: https://github.com/eddiethedean/velarium/releases/tag/v0.7.0
 [0.6.0]: https://github.com/eddiethedean/velarium/releases/tag/v0.6.0
 [0.5.0]: https://github.com/eddiethedean/velarium/releases/tag/v0.5.0

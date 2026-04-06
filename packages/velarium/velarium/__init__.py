@@ -10,6 +10,7 @@ from velarium.ir import (
     TypeSpec,
 )
 from velarium.json_codec import (
+    MODEL_SPEC_FORMAT_VERSION,
     dumps_model_spec,
     loads_model_spec,
     model_spec_from_dict,
@@ -26,6 +27,7 @@ from velarium.model_metadata import metadata_for_class
 from velarium.normalize import normalize_typespec, normalize_union, optional_to_union
 
 __all__ = [
+    "MODEL_SPEC_FORMAT_VERSION",
     "annotation_to_typespec",
     "type_to_typespec",
     "FieldSpec",
@@ -49,4 +51,4 @@ __all__ = [
     "optional_to_union",
 ]
 
-__version__ = "0.7.0"
+__version__ = "0.8.0"

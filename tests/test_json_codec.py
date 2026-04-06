@@ -5,6 +5,8 @@ from __future__ import annotations
 import json
 from enum import Enum
 
+import pytest
+
 from velotype.ir import (
     FieldSpec,
     ModelConfig,
@@ -14,6 +16,7 @@ from velotype.ir import (
     TypeSpec,
 )
 from velotype.json_codec import (
+    MODEL_SPEC_FORMAT_VERSION,
     dumps_model_spec,
     field_spec_from_dict,
     field_spec_to_dict,
@@ -81,6 +84,39 @@ def test_model_spec_from_dict_minimal_metadata_branch() -> None:
     m = model_spec_from_dict(d)
     assert m.metadata is not None
     assert m.metadata.generated_by == "legacy"
+
+
+def test_dumps_includes_format_version() -> None:
+    m = ModelSpec(name="A", fields={})
+    data = json.loads(dumps_model_spec(m, indent=None))
+    assert data["format_version"] == MODEL_SPEC_FORMAT_VERSION == 1
+
+
+def test_model_spec_from_dict_rejects_unsupported_format_version() -> None:
+    d = {
+        "format_version": 999,
+        "name": "X",
+        "fields": {},
+    }
+    with pytest.raises(ValueError, match="Unsupported ModelSpec JSON format_version"):
+        model_spec_from_dict(d)
+
+
+def test_model_spec_from_dict_rejects_non_int_format_version() -> None:
+    with pytest.raises(ValueError, match="format_version must be int"):
+        model_spec_from_dict({"format_version": "1", "name": "X", "fields": {}})
+
+
+def test_model_spec_from_dict_format_version_null_treated_as_one() -> None:
+    m = model_spec_from_dict(
+        {"format_version": None, "name": "Y", "fields": {"z": {"kind": "int"}}}
+    )
+    assert m.name == "Y"
+
+
+def test_model_spec_from_dict_rejects_format_version_below_one() -> None:
+    with pytest.raises(ValueError, match="must be >= 1"):
+        model_spec_from_dict({"format_version": 0, "name": "X", "fields": {}})
 
 
 def test_field_spec_roundtrip() -> None:

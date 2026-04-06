@@ -4,6 +4,7 @@
       "kind": "int"
     }
   },
+  "format_version": 1,
   "metadata": {
     "generated_by": "golden-test",
     "line_number": null,

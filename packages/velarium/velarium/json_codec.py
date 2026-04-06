@@ -16,7 +16,27 @@ from velarium.ir import (
     TypeSpec,
 )
 
+# Monotonic integer: bump when the top-level ModelSpec JSON shape changes incompatibly.
+MODEL_SPEC_FORMAT_VERSION = 1
+
 _DEFAULT_MAX_DEPTH = 256
+
+
+def _validate_format_version(d: dict[str, Any]) -> None:
+    raw = d.get("format_version", 1)
+    if raw is None:
+        raw = 1
+    if not isinstance(raw, int):
+        raise ValueError(
+            f"ModelSpec JSON format_version must be int, got {type(raw).__name__}"
+        )
+    if raw < 1:
+        raise ValueError(f"ModelSpec JSON format_version must be >= 1, got {raw}")
+    if raw > MODEL_SPEC_FORMAT_VERSION:
+        raise ValueError(
+            f"Unsupported ModelSpec JSON format_version {raw}; "
+            f"this velarium supports up to {MODEL_SPEC_FORMAT_VERSION}"
+        )
 
 
 def _max_depth_from_env() -> int:
@@ -140,6 +160,7 @@ def typespec_from_dict(
 
 def model_spec_to_dict(m: ModelSpec) -> dict[str, Any]:
     out: dict[str, Any] = {
+        "format_version": MODEL_SPEC_FORMAT_VERSION,
         "name": m.name,
         "fields": {k: typespec_to_dict(v) for k, v in m.fields.items()},
     }
@@ -167,6 +188,7 @@ def model_spec_to_dict(m: ModelSpec) -> dict[str, Any]:
 def model_spec_from_dict(
     d: dict[str, Any], *, max_depth: int | None = None
 ) -> ModelSpec:
+    _validate_format_version(d)
     md = max_depth if max_depth is not None else _max_depth_from_env()
     fields_raw = d.get("fields") or {}
     fields = {
