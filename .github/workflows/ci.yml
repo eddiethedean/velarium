@@ -44,6 +44,7 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
           enable-cache: true
+          cache-suffix: test-${{ matrix.os }}-${{ matrix.python-version }}
 
       - name: Install workspace and dev tools
         run: uv sync --locked --group dev
@@ -62,7 +63,8 @@ jobs:
           done
 
       - name: Verify artifacts
-        run: find packages -type d -name dist -exec ls -la {} \;
+        run: |
+          python -c "import pathlib; ps=sorted(pathlib.Path('packages').rglob('dist')); assert ps, 'no dist dirs'; print('\n'.join(str(p) for p in ps))"
 
   stub-check:
     runs-on: ${{ matrix.os }}
@@ -82,6 +84,7 @@ jobs:
         with:
           python-version: "3.12"
           enable-cache: true
+          cache-suffix: stub-${{ matrix.os }}
 
       - name: Install stub checkers (pinned via uv.lock)
         run: uv sync --locked --group stubcheck

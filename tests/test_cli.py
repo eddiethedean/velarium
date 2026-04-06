@@ -9,6 +9,8 @@ from pathlib import Path
 
 import pytest
 
+from pythonpath_helpers import repo_pythonpath
+
 _REPO_ROOT = Path(__file__).resolve().parent.parent
 
 
@@ -39,7 +41,7 @@ def test_cli_ir_json_sample_dataclass() -> None:
         check=False,
         env={
             **os.environ,
-            "PYTHONPATH": f"{_REPO_ROOT / 'packages' / 'velotype'}:{_REPO_ROOT / 'packages' / 'velarium'}",
+            "PYTHONPATH": repo_pythonpath(_REPO_ROOT, include_tests=False),
         },
     )
     assert r.returncode == 0, r.stderr

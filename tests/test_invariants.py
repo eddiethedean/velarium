@@ -10,6 +10,7 @@ import pytest
 from typer.testing import CliRunner
 
 from fixtures.batch_pkg import RootModel
+from pythonpath_helpers import repo_pythonpath
 from velarium.json_codec import loads_model_spec, typespec_dedupe_key, typespec_to_dict
 from velarium.normalize import normalize_typespec
 from velotype.cli import app
@@ -26,9 +27,7 @@ _runner = CliRunner()
 
 
 def _env() -> dict[str, str]:
-    p = f"{_REPO_ROOT / 'packages' / 'velotype'}:{_REPO_ROOT / 'packages' / 'velarium'}"
-    tests_root = str(_REPO_ROOT / "tests")
-    return {**os.environ, "PYTHONPATH": f"{p}:{tests_root}"}
+    return {**os.environ, "PYTHONPATH": repo_pythonpath(_REPO_ROOT)}
 
 
 def _model_spec_roundtrip(m: ModelSpec) -> ModelSpec:

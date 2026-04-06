@@ -22,14 +22,14 @@ from velotype.batch import (
 from velotype.cli import app
 from velotype.cli_support import BatchItemError, format_batch_error
 
+from pythonpath_helpers import repo_pythonpath
+
 _REPO_ROOT = Path(__file__).resolve().parent.parent
 _runner = CliRunner()
 
 
 def _env() -> dict[str, str]:
-    p = f"{_REPO_ROOT / 'packages' / 'velotype'}:{_REPO_ROOT / 'packages' / 'velarium'}"
-    tests_root = str(_REPO_ROOT / "tests")
-    return {**os.environ, "PYTHONPATH": f"{p}:{tests_root}"}
+    return {**os.environ, "PYTHONPATH": repo_pythonpath(_REPO_ROOT)}
 
 
 def _subprocess_help_env() -> dict[str, str]:

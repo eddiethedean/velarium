@@ -12,18 +12,17 @@ from typer.testing import CliRunner
 
 from velotype.cli import app
 
+from pythonpath_helpers import repo_pythonpath
+
 _REPO_ROOT = Path(__file__).resolve().parent.parent
 _runner = CliRunner()
 
 
-def _pkg_paths() -> str:
-    return (
-        f"{_REPO_ROOT / 'packages' / 'velotype'}:{_REPO_ROOT / 'packages' / 'velarium'}"
-    )
-
-
 def _env() -> dict[str, str]:
-    return {**os.environ, "PYTHONPATH": _pkg_paths()}
+    return {
+        **os.environ,
+        "PYTHONPATH": repo_pythonpath(_REPO_ROOT, include_tests=False),
+    }
 
 
 def test_cli_no_colon_exits_2() -> None:

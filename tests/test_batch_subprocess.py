@@ -8,17 +8,13 @@ import subprocess
 import sys
 from pathlib import Path
 
+from pythonpath_helpers import repo_pythonpath
+
 _REPO_ROOT = Path(__file__).resolve().parent.parent
 
 
-def _pythonpath() -> str:
-    p = f"{_REPO_ROOT / 'packages' / 'velotype'}:{_REPO_ROOT / 'packages' / 'velarium'}"
-    tests_root = str(_REPO_ROOT / "tests")
-    return f"{p}:{tests_root}"
-
-
 def _env() -> dict[str, str]:
-    return {**os.environ, "PYTHONPATH": _pythonpath()}
+    return {**os.environ, "PYTHONPATH": repo_pythonpath(_REPO_ROOT)}
 
 
 def test_subprocess_batch_stub_writes_pyi_files(tmp_path: Path) -> None:
