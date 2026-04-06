@@ -4,23 +4,24 @@
 [![velarium on PyPI](https://img.shields.io/pypi/v/velarium.svg?label=velarium)](https://pypi.org/project/velarium/)
 [![velotype on PyPI](https://img.shields.io/pypi/v/velotype.svg?label=velotype)](https://pypi.org/project/velotype/)
 [![Python versions](https://img.shields.io/pypi/pyversions/velarium.svg)](https://pypi.org/project/velarium/)
+[![Documentation](https://readthedocs.org/projects/velarium/badge/?version=latest)](https://velarium.readthedocs.io/en/latest/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/eddiethedean/velarium/blob/main/LICENSE)
 
-**Repository:** [github.com/eddiethedean/velarium](https://github.com/eddiethedean/velarium)
+**Repository:** [github.com/eddiethedean/velarium](https://github.com/eddiethedean/velarium) · **Documentation:** [velarium.readthedocs.io](https://velarium.readthedocs.io/en/latest/)
 
-**Velarium** is a Python monorepo built around a shared **ModelSpec IR**: a normalized representation of models and types, with a JSON codec and pluggable backends. The supported backend today is **stub** generation (`.pyi`) via [**velotype**](https://pypi.org/project/velotype/). IR can be built from dataclasses, `TypedDict`, Pydantic v2, and attrs (see [Model sources](https://github.com/eddiethedean/velarium/blob/main/docs/model-sources.md)). **Spark-like** schemas, **IR → Pydantic codegen** ([**morphra**](https://pypi.org/project/morphra/)), and a unified umbrella CLI ([**velocus**](https://pypi.org/project/velocus/)) are on the [roadmap](https://github.com/eddiethedean/velarium/blob/main/docs/ROADMAP.md).
+**Velarium** is a Python monorepo built around a shared **ModelSpec IR**: a normalized representation of models and types, with a JSON codec and pluggable backends. The supported backend today is **stub** generation (`.pyi`) via [**velotype**](https://pypi.org/project/velotype/). IR can be built from dataclasses, `TypedDict`, Pydantic v2, and attrs (see [Model sources](https://velarium.readthedocs.io/en/latest/model-sources/)). **Spark-like** schemas, **IR → Pydantic codegen** ([**morphra**](https://pypi.org/project/morphra/)), and a unified umbrella CLI ([**velocus**](https://pypi.org/project/velocus/)) are on the [roadmap](https://velarium.readthedocs.io/en/latest/ROADMAP/).
 
 - **Single IR** — One structure for tooling to agree on, instead of re-parsing Python differently in every consumer.
-- **Core library** — [**velarium** on PyPI](https://pypi.org/project/velarium/): types, normalization, JSON, and builders (dataclass, `TypedDict`, Pydantic, attrs → `ModelSpec`). Annotation → `TypeSpec` behavior is in [Supported annotations](https://github.com/eddiethedean/velarium/blob/main/docs/supported-annotations.md) (Phase **0.2**); builders and extras are in [Model sources](https://github.com/eddiethedean/velarium/blob/main/docs/model-sources.md) (Phase **0.3**).
-- **Stubs + CLI** — [**velotype** on PyPI](https://pypi.org/project/velotype/): IR → `.pyi`, **`velotype`** CLI (`ir`, `stub`, **`batch`**, optional **`watch`**). Stub guarantees and checker CI are in [Stub compatibility](https://github.com/eddiethedean/velarium/blob/main/docs/stub-compatibility.md) (Phase **0.4**); batch workflows and tutorials are in [Tutorial: stubs](https://github.com/eddiethedean/velarium/blob/main/docs/tutorial-stubs.md) and [Troubleshooting CLI](https://github.com/eddiethedean/velarium/blob/main/docs/troubleshooting-cli.md) (Phase **0.5**). Performance and batch cache are in [Performance](https://github.com/eddiethedean/velarium/blob/main/docs/performance.md) (Phase **0.6**); CLI / JSON hardening is in [Security](https://github.com/eddiethedean/velarium/blob/main/docs/security.md) (Phase **0.7**); public API and IR **`format_version`** are in [API reference](https://github.com/eddiethedean/velarium/blob/main/docs/api-reference.md), [Stability](https://github.com/eddiethedean/velarium/blob/main/docs/stability.md), and [IR JSON migration](https://github.com/eddiethedean/velarium/blob/main/docs/migration-ir.md) (Phase **0.8**).
+- **Core library** — [**velarium** on PyPI](https://pypi.org/project/velarium/): types, normalization, JSON, and builders (dataclass, `TypedDict`, Pydantic, attrs → `ModelSpec`). Annotation → `TypeSpec` behavior is in [Supported annotations](https://velarium.readthedocs.io/en/latest/supported-annotations/) (Phase **0.2**); builders and extras are in [Model sources](https://velarium.readthedocs.io/en/latest/model-sources/) (Phase **0.3**).
+- **Stubs + CLI** — [**velotype** on PyPI](https://pypi.org/project/velotype/): IR → `.pyi`, **`velotype`** CLI (`ir`, `stub`, **`batch`**, optional **`watch`**). Stub guarantees and checker CI are in [Stub compatibility](https://velarium.readthedocs.io/en/latest/stub-compatibility/) (Phase **0.4**); batch workflows and tutorials are in [Tutorial: stubs](https://velarium.readthedocs.io/en/latest/tutorial-stubs/) and [Troubleshooting CLI](https://velarium.readthedocs.io/en/latest/troubleshooting-cli/) (Phase **0.5**). Performance and batch cache are in [Performance](https://velarium.readthedocs.io/en/latest/performance/) (Phase **0.6**); CLI / JSON hardening is in [Security](https://velarium.readthedocs.io/en/latest/security/) (Phase **0.7**); public API and IR **`format_version`** are in [API reference](https://velarium.readthedocs.io/en/latest/api-reference/), [Stability](https://velarium.readthedocs.io/en/latest/stability/), and [IR JSON migration](https://velarium.readthedocs.io/en/latest/migration-ir/) (Phase **0.8**).
 
-Requires **Python 3.10+**. Coordinated library releases are tagged in [CHANGELOG.md](https://github.com/eddiethedean/velarium/blob/main/CHANGELOG.md); **0.8.0** is the current monorepo version for all six `packages/*` PyPI names (upload after tagging per [RELEASING.md](https://github.com/eddiethedean/velarium/blob/main/docs/RELEASING.md)).
+Requires **Python 3.10+**. Coordinated library releases are tagged in [CHANGELOG.md](https://github.com/eddiethedean/velarium/blob/main/CHANGELOG.md); **0.8.0** is the current monorepo version for all six `packages/*` PyPI names (upload after tagging per [Installing & releasing](https://velarium.readthedocs.io/en/latest/RELEASING/)).
 
 ## Packages
 
 | Package | PyPI | Role |
 |--------|------|------|
-| **velarium** | [pypi.org/project/velarium](https://pypi.org/project/velarium/) | Core IR: `TypeSpec`, `ModelSpec`, normalization, JSON; builders ([Model sources](https://github.com/eddiethedean/velarium/blob/main/docs/model-sources.md)) — [README](https://github.com/eddiethedean/velarium/blob/main/packages/velarium/README.md) |
+| **velarium** | [pypi.org/project/velarium](https://pypi.org/project/velarium/) | Core IR: `TypeSpec`, `ModelSpec`, normalization, JSON; builders ([Model sources](https://velarium.readthedocs.io/en/latest/model-sources/)) — [README](https://github.com/eddiethedean/velarium/blob/main/packages/velarium/README.md) |
 | **velotype** | [pypi.org/project/velotype](https://pypi.org/project/velotype/) | IR → `.pyi`; **`velotype`** CLI — [README](https://github.com/eddiethedean/velarium/blob/main/packages/velotype/README.md) |
 | **viperis** | [pypi.org/project/viperis](https://pypi.org/project/viperis/) | Python source → IR *(scaffold)* — [README](https://github.com/eddiethedean/velarium/blob/main/packages/viperis/README.md) |
 | **morphra** | [pypi.org/project/morphra](https://pypi.org/project/morphra/) | IR → Pydantic *(scaffold)* — [README](https://github.com/eddiethedean/velarium/blob/main/packages/morphra/README.md) |
@@ -64,7 +65,7 @@ velotype batch stub myapp.models --out-dir stubs/ --cache-dir .velotype-cache
 python -m velotype ir myapp.models:User
 ```
 
-See [docs/tutorial-stubs.md](https://github.com/eddiethedean/velarium/blob/main/docs/tutorial-stubs.md) for a full **clone → batch stub** walkthrough.
+See [Tutorial: stubs](https://velarium.readthedocs.io/en/latest/tutorial-stubs/) for a full **clone → batch stub** walkthrough.
 
 ## Library
 
@@ -119,28 +120,31 @@ CI uses **`uv sync --locked`**: a **`lint`** job on **Ubuntu** runs [**ruff**](h
 
 ## Documentation
 
+Hosted on **Read the Docs** ([MkDocs](https://www.mkdocs.org/) + [Material](https://squidfunk.github.io/mkdocs-material/)). Browse everything below on **[velarium.readthedocs.io](https://velarium.readthedocs.io/en/latest/)** (or jump into the repo’s `docs/` tree on GitHub if you prefer raw Markdown).
+
 | | |
 |---|---|
-| [Documentation index](https://github.com/eddiethedean/velarium/blob/main/docs/README.md) | Entry point for deeper docs |
-| [User guides](https://github.com/eddiethedean/velarium/blob/main/docs/guides/README.md) | Getting started, **`velotype`** CLI, **`velarium`** library |
-| [Documentation site](https://velarium.readthedocs.io/) | Hosted on Read the Docs (MkDocs Material); build config: [`.readthedocs.yaml`](https://github.com/eddiethedean/velarium/blob/main/.readthedocs.yaml) |
-| [API reference](https://github.com/eddiethedean/velarium/blob/main/docs/api-reference.md) | Public **`velarium`** / **`velotype`** surface (`__all__`, CLI, batch helpers) |
-| [Stability](https://github.com/eddiethedean/velarium/blob/main/docs/stability.md) | Pre-1.0 semver and IR policy |
-| [IR JSON migration](https://github.com/eddiethedean/velarium/blob/main/docs/migration-ir.md) | **`format_version`**, legacy JSON, fixtures |
-| [Performance](https://github.com/eddiethedean/velarium/blob/main/docs/performance.md) | Batch `--cache-dir`, `VELARIUM_NORMALIZE_BACKEND`, scripts |
-| [Velarium ecosystem](https://github.com/eddiethedean/velarium/blob/main/docs/valarium.md) | Architecture and monorepo layout |
-| [Design & philosophy](https://github.com/eddiethedean/velarium/blob/main/docs/design.md) | Why the IR exists |
-| [ModelSpec IR specification](https://github.com/eddiethedean/velarium/blob/main/docs/modelspec-ir.md) | Schema, normalization, JSON wire **`format_version`** |
-| [Supported annotations](https://github.com/eddiethedean/velarium/blob/main/docs/supported-annotations.md) | Annotation → IR matrix, gaps, stub behavior |
-| [Model sources](https://github.com/eddiethedean/velarium/blob/main/docs/model-sources.md) | Builders (dataclass, TypedDict, Pydantic, attrs), extras, policies |
-| [Stub compatibility](https://github.com/eddiethedean/velarium/blob/main/docs/stub-compatibility.md) | Generated `.pyi` guarantees, **`generate_pyi`** options, CI **mypy** / **Pyright** |
-| [Roadmap](https://github.com/eddiethedean/velarium/blob/main/docs/ROADMAP.md) | Planned work |
-| [Tutorial: stubs](https://github.com/eddiethedean/velarium/blob/main/docs/tutorial-stubs.md) | Clone → **`velotype batch stub`** |
-| [Troubleshooting CLI](https://github.com/eddiethedean/velarium/blob/main/docs/troubleshooting-cli.md) | Exit codes, imports, pre-commit |
-| [IR JSON interchange](https://github.com/eddiethedean/velarium/blob/main/docs/interchange-ir-json.md) | Non-Python consumers |
-| [Installing & releasing](https://github.com/eddiethedean/velarium/blob/main/docs/RELEASING.md) | Builds and PyPI |
-| [Security](https://github.com/eddiethedean/velarium/blob/main/docs/security.md) | CLI trust model, JSON limits, disclosure (Phase **0.7**) |
-| [Changelog](https://github.com/eddiethedean/velarium/blob/main/CHANGELOG.md) | Release notes |
+| [Documentation home](https://velarium.readthedocs.io/en/latest/) | Same content as the docs index |
+| [User guides](https://velarium.readthedocs.io/en/latest/guides/) | Getting started, **`velotype`** CLI, **`velarium`** library |
+| [API reference](https://velarium.readthedocs.io/en/latest/api-reference/) | Public **`velarium`** / **`velotype`** surface (`__all__`, CLI, batch helpers) |
+| [Stability](https://velarium.readthedocs.io/en/latest/stability/) | Pre-1.0 semver and IR policy |
+| [IR JSON migration](https://velarium.readthedocs.io/en/latest/migration-ir/) | **`format_version`**, legacy JSON, fixtures |
+| [Performance](https://velarium.readthedocs.io/en/latest/performance/) | Batch `--cache-dir`, `VELARIUM_NORMALIZE_BACKEND`, scripts |
+| [Velarium ecosystem](https://velarium.readthedocs.io/en/latest/valarium/) | Architecture and monorepo layout |
+| [Design & philosophy](https://velarium.readthedocs.io/en/latest/design/) | Why the IR exists |
+| [ModelSpec IR specification](https://velarium.readthedocs.io/en/latest/modelspec-ir/) | Schema, normalization, JSON wire **`format_version`** |
+| [Supported annotations](https://velarium.readthedocs.io/en/latest/supported-annotations/) | Annotation → IR matrix, gaps, stub behavior |
+| [Model sources](https://velarium.readthedocs.io/en/latest/model-sources/) | Builders (dataclass, `TypedDict`, Pydantic, attrs), extras, policies |
+| [Stub compatibility](https://velarium.readthedocs.io/en/latest/stub-compatibility/) | Generated `.pyi` guarantees, **`generate_pyi`** options, CI **mypy** / **Pyright** |
+| [Roadmap](https://velarium.readthedocs.io/en/latest/ROADMAP/) | Planned work |
+| [Tutorial: stubs](https://velarium.readthedocs.io/en/latest/tutorial-stubs/) | Clone → **`velotype batch stub`** |
+| [Troubleshooting CLI](https://velarium.readthedocs.io/en/latest/troubleshooting-cli/) | Exit codes, imports, pre-commit |
+| [IR JSON interchange](https://velarium.readthedocs.io/en/latest/interchange-ir-json/) | Non-Python consumers |
+| [Installing & releasing](https://velarium.readthedocs.io/en/latest/RELEASING/) | Builds and PyPI; [Read the Docs setup](https://velarium.readthedocs.io/en/latest/RELEASING/#documentation-site-read-the-docs) |
+| [Security](https://velarium.readthedocs.io/en/latest/security/) | CLI trust model, JSON limits, disclosure (Phase **0.7**) |
+| [Changelog (docs)](https://velarium.readthedocs.io/en/latest/changelog/) | Pointer to release notes; canonical file: [CHANGELOG.md](https://github.com/eddiethedean/velarium/blob/main/CHANGELOG.md) on GitHub |
+
+Build config for the doc site: [`.readthedocs.yaml`](https://github.com/eddiethedean/velarium/blob/main/.readthedocs.yaml), [`mkdocs.yml`](https://github.com/eddiethedean/velarium/blob/main/mkdocs.yml).
 
 ## License
 
