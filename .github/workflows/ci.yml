@@ -6,6 +6,13 @@ on:
   pull_request:
   workflow_dispatch:
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -15,15 +22,16 @@ jobs:
         python-version: ["3.10", "3.11", "3.12", "3.13"]
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Install uv
-        uses: astral-sh/setup-uv@v5
+        uses: astral-sh/setup-uv@v7
         with:
           python-version: ${{ matrix.python-version }}
+          enable-cache: true
 
       - name: Install workspace and dev tools
-        run: uv sync --group dev
+        run: uv sync --locked --group dev
 
       - name: Run tests
         run: uv run pytest
@@ -44,15 +52,16 @@ jobs:
   stub-check:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Install uv
-        uses: astral-sh/setup-uv@v5
+        uses: astral-sh/setup-uv@v7
         with:
           python-version: "3.12"
+          enable-cache: true
 
       - name: Install stub checkers (pinned via uv.lock)
-        run: uv sync --group stubcheck
+        run: uv sync --locked --group stubcheck
 
       - name: mypy on fixture corpus
         run: |

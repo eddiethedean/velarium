@@ -12,28 +12,26 @@ on:
   release:
     types: [published]
 
+permissions:
+  contents: read
+
 jobs:
   pypi:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           # release events need an explicit tag; push(tag) already has refs/tags/… in github.ref
           ref: ${{ github.event_name == 'release' && github.event.release.tag_name || github.ref }}
 
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-
       - name: Install uv
-        uses: astral-sh/setup-uv@v5
+        uses: astral-sh/setup-uv@v7
         with:
           python-version: "3.12"
+          enable-cache: true
 
       - name: Sync workspace (velarium + velotype)
-        run: uv sync --group dev
+        run: uv sync --locked --group dev
 
       - name: Install build
         run: uv pip install build

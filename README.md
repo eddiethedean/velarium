@@ -113,7 +113,7 @@ Build wheels for every package under `packages/`:
 for d in packages/*/; do (cd "$d" && uv run python -m build); done
 ```
 
-CI runs **pytest**, **ty**, and wheel builds for all packages on Python 3.10–3.13, and a separate **`stub-check`** job that runs pinned **mypy** + **Pyright** on `tests/fixtures/stub_corpus/` (see [.github/workflows/ci.yml](https://github.com/eddiethedean/velarium/blob/main/.github/workflows/ci.yml)).
+CI uses **`uv sync --locked`**, **pytest**, **ty**, and wheel builds for all packages on Python 3.10–3.13 (with **uv** dependency caching), and a separate **`stub-check`** job that runs pinned **mypy** + **Pyright** on `tests/fixtures/stub_corpus/` (see [.github/workflows/ci.yml](https://github.com/eddiethedean/velarium/blob/main/.github/workflows/ci.yml)).
 
 ## Documentation
 
