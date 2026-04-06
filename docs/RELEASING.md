@@ -113,3 +113,24 @@ Optional: add a GitHub **environment** named `pypi` with protection rules and re
 If automated publish is not configured, use the manual steps above.
 
 The **Publish** workflow uploads **every** wheel and sdist in `dist/`. If you only intend to ship **`velarium`** and **`velotype`**, upload those artifacts only (or split the workflow) so scaffold packages are not published unintentionally.
+
+## Documentation site (Read the Docs)
+
+The HTML docs are built with **[MkDocs](https://www.mkdocs.org/)** ([Material](https://squidfunk.github.io/mkdocs-material/)) from the `docs/` tree.
+
+| File | Role |
+|------|--------|
+| [`.readthedocs.yaml`](../.readthedocs.yaml) | Read the Docs v2 config: Ubuntu, Python **3.12**, `pip install -r docs/requirements.txt`, MkDocs |
+| [`mkdocs.yml`](../mkdocs.yml) | Site name, theme, navigation, `docs_dir: docs` |
+| [`docs/requirements.txt`](requirements.txt) | Pins used by RTD (also listed in the root [`pyproject.toml`](../pyproject.toml) **`docs`** dependency group for `uv sync --group docs`) |
+
+**Import on Read the Docs:** [readthedocs.org](https://readthedocs.org) → *Add project* → connect **github.com/eddiethedean/velarium**. The webhook uses **`.readthedocs.yaml`** automatically. Set the **default branch** to **`main`** and pick a **slug** (e.g. **`velarium`**) for **`https://<slug>.readthedocs.io/`**.
+
+**Local preview** (from repo root):
+
+```bash
+uv sync --group docs
+mkdocs serve
+```
+
+Then open the URL MkDocs prints (usually `http://127.0.0.1:8000/`).

@@ -70,6 +70,8 @@ See [docs/tutorial-stubs.md](https://github.com/eddiethedean/velarium/blob/main/
 
 Import IR and JSON from **`velarium`**; use **`velotype`** for `generate_pyi`, `format_stub_text`, and related helpers. **`velotype`** still re-exports IR symbols for compatibility; new code can import from **`velarium`** directly when only IR is needed.
 
+A checked-in script that runs the same pattern (plus JSON round-trip checks) lives at [`examples/getting_started.py`](examples/getting_started.py) — run `uv run python examples/getting_started.py` from a clone.
+
 ```python
 from dataclasses import dataclass
 
@@ -120,6 +122,8 @@ CI uses **`uv sync --locked`**: a **`lint`** job on **Ubuntu** runs [**ruff**](h
 | | |
 |---|---|
 | [Documentation index](https://github.com/eddiethedean/velarium/blob/main/docs/README.md) | Entry point for deeper docs |
+| [User guides](https://github.com/eddiethedean/velarium/blob/main/docs/guides/README.md) | Getting started, **`velotype`** CLI, **`velarium`** library |
+| [Documentation site](https://velarium.readthedocs.io/) | Hosted on Read the Docs (MkDocs Material); build config: [`.readthedocs.yaml`](https://github.com/eddiethedean/velarium/blob/main/.readthedocs.yaml) |
 | [API reference](https://github.com/eddiethedean/velarium/blob/main/docs/api-reference.md) | Public **`velarium`** / **`velotype`** surface (`__all__`, CLI, batch helpers) |
 | [Stability](https://github.com/eddiethedean/velarium/blob/main/docs/stability.md) | Pre-1.0 semver and IR policy |
 | [IR JSON migration](https://github.com/eddiethedean/velarium/blob/main/docs/migration-ir.md) | **`format_version`**, legacy JSON, fixtures |

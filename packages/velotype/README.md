@@ -71,6 +71,7 @@ print(generate_pyi(spec))
 
 ## See also
 
+- [User guides — Velotype CLI](https://github.com/eddiethedean/velarium/blob/main/docs/guides/velotype-cli.md) — **`ir`**, **`stub`**, **`batch`**, **`watch`**  
 - [docs/modelspec-ir.md](https://github.com/eddiethedean/velarium/blob/main/docs/modelspec-ir.md) — IR schema  
 - [docs/model-sources.md](https://github.com/eddiethedean/velarium/blob/main/docs/model-sources.md) — builders (dataclass, TypedDict, Pydantic, attrs) and `velarium` extras  
 - [docs/stub-compatibility.md](https://github.com/eddiethedean/velarium/blob/main/docs/stub-compatibility.md) — stub guarantees and CI validation  

@@ -1,0 +1,77 @@
+# MkDocs site (local: mkdocs serve; Read the Docs uses .readthedocs.yaml)
+site_name: Velarium
+site_description: ModelSpec IR, velarium, and velotype documentation
+site_url: https://velarium.readthedocs.io/
+repo_url: https://github.com/eddiethedean/velarium
+edit_uri: edit/main/docs/
+# Many docs link to repo files via ../ (CHANGELOG, packages/). Those are not in docs_dir;
+# strict mode would fail CI; Read the Docs still validates internal doc links.
+strict: false
+
+docs_dir: docs
+site_dir: site
+
+theme:
+  name: material
+  palette:
+    - scheme: default
+      primary: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - scheme: slate
+      primary: indigo
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - content.code.copy
+    - search.suggest
+    - search.highlight
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.superfences
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - toc:
+      permalink: true
+  - admonition
+  - tables
+
+nav:
+  - Home: README.md
+  - User guides:
+      - guides/README.md
+      - guides/getting-started.md
+      - guides/velotype-cli.md
+      - guides/velarium-library.md
+  - Ecosystem & design:
+      - valarium.md
+      - design.md
+      - ROADMAP.md
+  - IR & types:
+      - modelspec-ir.md
+      - supported-annotations.md
+      - model-sources.md
+      - interchange-ir-json.md
+      - migration-ir.md
+  - Stubs & CLI:
+      - stub-compatibility.md
+      - tutorial-stubs.md
+      - troubleshooting-cli.md
+  - Operations:
+      - performance.md
+      - security.md
+      - stability.md
+      - api-reference.md
+      - RELEASING.md
+  - Changelog: changelog.md
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/eddiethedean/velarium

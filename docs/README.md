@@ -8,6 +8,17 @@
 
 Welcome to the **Velarium** monorepo docs: a shared **ModelSpec IR** ([**velarium** on PyPI](https://pypi.org/project/velarium/)), backends like [**velotype**](https://pypi.org/project/velotype/) (`.pyi`), and scaffold packages for the full pipeline in [valarium.md](https://github.com/eddiethedean/velarium/blob/main/docs/valarium.md).
 
+**Hosted docs:** [velarium.readthedocs.io](https://velarium.readthedocs.io/) (built with [MkDocs](https://www.mkdocs.org/) + [Material](https://squidfunk.github.io/mkdocs-material/); local preview: `pip install -r docs/requirements.txt && mkdocs serve` from the repo root).
+
+## User guides
+
+| Guide | Contents |
+|-------|----------|
+| **[Guides index](https://github.com/eddiethedean/velarium/blob/main/docs/guides/README.md)** | Hub: getting started, CLI, library |
+| **[Getting started](https://github.com/eddiethedean/velarium/blob/main/docs/guides/getting-started.md)** | Install, first **`ir`** / **`stub`**, minimal Python snippet |
+| **[Velotype CLI](https://github.com/eddiethedean/velarium/blob/main/docs/guides/velotype-cli.md)** | **`ir`**, **`stub`**, **`batch`**, **`watch`** |
+| **[Velarium library](https://github.com/eddiethedean/velarium/blob/main/docs/guides/velarium-library.md)** | Builders, JSON, normalization, **`velotype`** integration |
+
 ## Start here
 
 | Document | Contents |

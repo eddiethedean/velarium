@@ -10,6 +10,9 @@ venv/
 ENV/
 env/
 
+# MkDocs (Read the Docs / local: mkdocs build)
+site/
+
 # Packaging / build
 build/
 dist/

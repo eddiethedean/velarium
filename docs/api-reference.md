@@ -1,6 +1,6 @@
 # API reference (public surface)
 
-Hand-maintained index of **tier‑1** public symbols. Source of truth for **exports** is `__all__` in each package’s `__init__.py`.
+Hand-maintained index of **tier‑1** public symbols. Source of truth for **exports** is `__all__` in each package’s `__init__.py`. For task-oriented help, see the [user guides](guides/README.md).
 
 **Policy:** Prefer `from velarium import …` / `from velotype import …` for the symbols below. Submodules remain importable for advanced use (see [stability.md](stability.md)).
 
