@@ -101,6 +101,8 @@ def _run_batch(
     merge: bool,
     fail_fast: bool,
     emit_ir: bool,
+    cache_dir: Path | None = None,
+    use_cache: bool = True,
 ) -> None:
     extra = tuple(exclude)
     try:
@@ -122,6 +124,8 @@ def _run_batch(
             out_dir,
             merge=merge,
             fail_fast=fail_fast,
+            cache_dir=cache_dir,
+            use_cache=use_cache,
         )
     else:
         result = emit_batch_stubs(
@@ -129,6 +133,8 @@ def _run_batch(
             out_dir,
             merge=merge,
             fail_fast=fail_fast,
+            cache_dir=cache_dir,
+            use_cache=use_cache,
         )
 
     for p in result.written:
@@ -173,6 +179,21 @@ def batch_stub(
         "--fail-fast",
         help="Stop on first error instead of collecting failures",
     ),
+    cache_dir: Path | None = typer.Option(
+        None,
+        "--cache-dir",
+        help="Directory for per-class ModelSpec JSON cache (large repos; skips IR rebuild)",
+        exists=False,
+        file_okay=False,
+        dir_okay=True,
+        writable=True,
+        resolve_path=True,
+    ),
+    no_cache: bool = typer.Option(
+        False,
+        "--no-cache",
+        help="Do not read or write the batch cache",
+    ),
 ) -> None:
     """Batch-generate .pyi stubs for dataclasses under a package tree."""
     _run_batch(
@@ -182,6 +203,8 @@ def batch_stub(
         merge=merge,
         fail_fast=fail_fast,
         emit_ir=False,
+        cache_dir=cache_dir,
+        use_cache=not no_cache,
     )
 
 
@@ -218,6 +241,21 @@ def batch_ir(
         "--fail-fast",
         help="Stop on first error instead of collecting failures",
     ),
+    cache_dir: Path | None = typer.Option(
+        None,
+        "--cache-dir",
+        help="Directory for per-class ModelSpec JSON cache",
+        exists=False,
+        file_okay=False,
+        dir_okay=True,
+        writable=True,
+        resolve_path=True,
+    ),
+    no_cache: bool = typer.Option(
+        False,
+        "--no-cache",
+        help="Do not read or write the batch cache",
+    ),
 ) -> None:
     """Batch-dump ModelSpec IR JSON for dataclasses under a package tree."""
     _run_batch(
@@ -227,6 +265,8 @@ def batch_ir(
         merge=merge,
         fail_fast=fail_fast,
         emit_ir=True,
+        cache_dir=cache_dir,
+        use_cache=not no_cache,
     )
 
 
@@ -284,6 +324,8 @@ def watch_stub(
             merge=merge,
             fail_fast=False,
             emit_ir=False,
+            cache_dir=None,
+            use_cache=True,
         )
 
     _regen()

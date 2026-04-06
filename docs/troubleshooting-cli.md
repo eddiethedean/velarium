@@ -35,6 +35,13 @@ Single-target commands (`velotype ir`, `velotype stub`) use the same conventions
 
 - Requires **`velotype[watch]`** (pulls in **watchfiles**).
 - Not intended for CI; use **`batch stub`** in pipelines.
+- Does **not** use **`--cache-dir`**; each regeneration runs a full batch (see [performance.md](performance.md)).
+
+## Batch cache (`--cache-dir`)
+
+- **Stale outputs after edits:** The cache keys off **file content** (SHA-256 of the module file). If you change a class without saving, or edit a different file than the one `inspect.getfile` reports, clear the cache directory or use **`--no-cache`** once.
+- **Version bumps:** Upgrading **`velarium`** or **`velotype`** changes the cache key; old entries are ignored (leftover files in `DIR` are harmless but can be deleted to save disk).
+- **Corrupt JSON:** If a cache file is truncated or edited by hand, the run **rebuilds** IR for that class and overwrites the entry when possible.
 
 ## Filing issues
 

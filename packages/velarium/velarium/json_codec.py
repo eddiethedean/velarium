@@ -42,6 +42,19 @@ def _json_default_value(value: Any) -> Any:
     return value
 
 
+def typespec_dedupe_key(ts: TypeSpec) -> str:
+    """Stable string for structural equality of ``TypeSpec`` (union dedupe, caching).
+
+    Matches the historical ``json.dumps(typespec_to_dict(ts), sort_keys=True)`` behavior
+    with JSON serialization defaults for non-JSON-native field defaults.
+    """
+    return json.dumps(
+        typespec_to_dict(ts),
+        sort_keys=True,
+        default=_json_default_value,
+    )
+
+
 def typespec_to_dict(ts: TypeSpec) -> dict[str, Any]:
     out: dict[str, Any] = {"kind": ts.kind.value}
     if ts.args is not None:

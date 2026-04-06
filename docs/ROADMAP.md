@@ -119,7 +119,7 @@ You can parallelize **some** work (e.g. docs vs code) within a phase, but **do n
 | **0.3** | Pydantic v2 + attrs sources, unified metadata | — | Continue | **Start** IR → Pydantic | **Start** IR → Spark-like | — |
 | **0.4** | — | Checker‑validated `.pyi`, import/style, **stub-check** CI | Continue | Continue | Continue | — |
 | **0.5** | — | Batch / pre-commit / repo workflows ([Phase 0.5](#phase-05--tooling-and-integrations)) | **Target** first “usable” slice (optional) | **Target** first “usable” path (optional) | **Target** first “usable” path (optional) | **Start** only if **velotype** + ≥1 other backend are worth orchestrating |
-| **0.6** | Performance hooks, optional native acceleration ([Phase 0.6](#phase-06--performance-and-scale)) | Performance, incremental cache | Optional | Optional | Optional | Optional |
+| **0.6** | Performance hooks, optional native acceleration ([Phase 0.6](#phase-06--performance-and-scale)) *(shipped **0.6.0**)* | Performance, incremental cache *(shipped **0.6.0**)* | Optional | Optional | Optional | Optional |
 | **0.7** | — | Security / fuzzing / CLI limits ([Phase 0.7](#phase-07--hardening)) | — | — | — | Harden if already shipping |
 | **0.8** | Public API audit + IR versioning ([Phase 0.8](#phase-08--api-and-ir-stability-prep)) | Track tier‑1 freeze | Docs vs IR spec; no contradiction | Stable emit API surface | Stable emit API surface | Subcommand freeze if shipped |
 | **0.9** | RC ([Phase 0.9](#phase-09--release-candidate)) | RC | RC if feature-complete | RC if feature-complete | RC if feature-complete | RC if feature-complete |
@@ -286,7 +286,7 @@ The numbered phases below (**0.2**–**0.9**) are **monorepo-wide** for **velari
 
 ---
 
-## Phase 0.6.* — Performance and scale
+## Phase 0.6.* — Performance and scale *(completed — shipped in **0.6.0**)*
 
 **Theme:** Usable on **large** codebases without unacceptable memory or time.
 
@@ -299,8 +299,16 @@ The numbered phases below (**0.2**–**0.9**) are **monorepo-wide** for **velari
 
 **Exit criteria:**
 
-- [ ] Doc section: **performance expectations** and when to enable native backend.
-- [ ] Benchmark script or CI optional job (not necessarily blocking PRs) to catch regressions.
+- [x] Doc section: **performance expectations** and when to enable native backend — [performance.md](performance.md).
+- [x] Benchmark script or CI optional job (not necessarily blocking PRs) to catch regressions — `scripts/benchmark_velotype_batch.py`, `scripts/profile_velotype_batch.py`, [`.github/workflows/benchmark.yml`](../.github/workflows/benchmark.yml) (`workflow_dispatch`).
+
+**Reference implementation (0.6.0):**
+
+- **Library:** `velarium.json_codec.typespec_dedupe_key` — stable union dedupe keys; `VELARIUM_NORMALIZE_BACKEND` (`python` default, `native` attempts `velarium._native.normalize_typespec`, falls back to Python).
+- **Library:** `velotype.batch.emit_batch_stubs` / `emit_batch_ir` — optional `cache_dir`, `use_cache`, `stub_style` (batch stubs use `minimal` by default).
+- **CLI:** `velotype batch stub` / `batch ir` — `--cache-dir`, `--no-cache`.
+- **Scripts:** `scripts/profile_velotype_batch.py` (cProfile), `scripts/benchmark_velotype_batch.py` (cold vs cached).
+- **Native wheel:** deferred to a future **0.6.x** (hook + tests land in **0.6.0**).
 
 ---
 
@@ -474,7 +482,7 @@ Phase themes for the repo as a whole; **which packages move in each 0.x phase** 
 | **0.3** | Sources | Pydantic (+ optional attrs/msgspec) |
 | **0.4** | Stubs | Checker-validated `.pyi`, import/style quality |
 | **0.5** | Tooling | Batch / watch CLI, pre-commit hook, tutorials *(shipped **0.5.0**)* |
-| **0.6** | Performance | Profiling, cache, optional native backend |
+| **0.6** | Performance | Profiling, cache, native hook *(shipped **0.6.0**)*; optional native wheel **0.6.x** |
 | **0.7** | Hardening | Security doc, fuzzing, resource limits |
 | **0.8** | Freeze | Public API + IR version + migration guide |
 | **0.9** | RC | Changelog, feedback, no blockers |

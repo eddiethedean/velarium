@@ -1310,7 +1310,7 @@ provides-extras = ["attrs", "dev", "pydantic", "sources"]
 
 [[package]]
 name = "velarium-workspace"
-version = "0.5.0"
+version = "0.6.0"
 source = { virtual = "." }
 dependencies = [
     { name = "velarium" },

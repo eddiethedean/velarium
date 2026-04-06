@@ -12,7 +12,7 @@
 | **Repository** | [github.com/eddiethedean/velarium](https://github.com/eddiethedean/velarium) |
 | **Python** | 3.10+ (follows **velarium**) |
 | **Depends on** | [**velarium** on PyPI](https://pypi.org/project/velarium/) (required) |
-| **CLI** | `velotype ir`, `velotype stub`, `velotype batch stub` / `batch ir`, `velotype watch stub` (optional extra `[watch]`); also `python -m velotype` |
+| **CLI** | `velotype ir`, `velotype stub`, `velotype batch stub` / `batch ir` (`--cache-dir`, `--no-cache`), `velotype watch stub` (optional extra `[watch]`); also `python -m velotype` |
 
 The IR types and builders live in **`velarium`**. **`velotype`** re-exports the same public IR symbols and builder entry points as **`velarium`** (including `modelspec_from_pydantic_model` and `modelspec_from_attrs_class` when extras are installed); prefer `from velarium import …` in new code when you only need IR. See [docs/model-sources.md](https://github.com/eddiethedean/velarium/blob/main/docs/model-sources.md) for optional dependencies.
 
@@ -22,6 +22,7 @@ The IR types and builders live in **`velarium`**. **`velotype`** re-exports the 
 |-------|-----|
 | Stub fallbacks | [docs/supported-annotations.md](https://github.com/eddiethedean/velarium/blob/main/docs/supported-annotations.md) |
 | Guarantees, imports, CI **mypy** / **Pyright** | [docs/stub-compatibility.md](https://github.com/eddiethedean/velarium/blob/main/docs/stub-compatibility.md) |
+| Performance, batch cache | [docs/performance.md](https://github.com/eddiethedean/velarium/blob/main/docs/performance.md) |
 
 ## Install
 

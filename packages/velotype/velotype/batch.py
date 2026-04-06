@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import dataclasses
+import hashlib
 import importlib
 import inspect
 import json
@@ -11,9 +12,10 @@ import re
 from dataclasses import dataclass
 from fnmatch import fnmatch
 from pathlib import Path
-from typing import Any
+from typing import Any, Literal
 
-from velarium.json_codec import dumps_model_spec
+from velarium.ir import ModelSpec
+from velarium.json_codec import dumps_model_spec, loads_model_spec
 from velarium.modelspec_build import modelspec_from_dataclass
 from velotype.cli_support import BatchItemError
 from velotype.stubgen import generate_pyi
@@ -58,6 +60,85 @@ def _safe_stub_basename(cls: type) -> str:
     mod = cls.__module__.replace(".", "_")
     qual = cls.__qualname__.replace(".", "_")
     return f"{mod}__{qual}"
+
+
+def _class_source_sha256(cls: type) -> str | None:
+    """SHA-256 of the defining module file bytes, or ``None`` if unavailable."""
+    try:
+        path = Path(inspect.getfile(cls)).resolve()
+    except TypeError:
+        return None
+    try:
+        return hashlib.sha256(path.read_bytes()).hexdigest()
+    except OSError:
+        return None
+
+
+def _batch_cache_stem(
+    cls: type,
+    *,
+    mode: Literal["ir", "stub"],
+    merge: bool,
+    stub_style: str,
+) -> str | None:
+    """Hex digest used as cache filename stem, or ``None`` when caching is not possible."""
+    sh = _class_source_sha256(cls)
+    if sh is None:
+        return None
+    import velarium
+    import velotype
+
+    key = {
+        "class_path": _class_import_path(cls),
+        "merge": merge,
+        "mode": mode,
+        "source_sha256": sh,
+        "stub_style": stub_style,
+        "velarium": velarium.__version__,
+        "velotype": velotype.__version__,
+    }
+    raw = json.dumps(key, sort_keys=True, separators=(",", ":"))
+    return hashlib.sha256(raw.encode()).hexdigest()
+
+
+def _load_model_spec_cache(cache_dir: Path, stem: str) -> ModelSpec | None:
+    path = cache_dir / f"{stem}.json"
+    if not path.is_file():
+        return None
+    try:
+        text = path.read_text(encoding="utf-8")
+        return loads_model_spec(text)
+    except (OSError, UnicodeDecodeError, ValueError, TypeError, KeyError):
+        return None
+
+
+def _save_model_spec_cache(cache_dir: Path, stem: str, spec: ModelSpec) -> None:
+    cache_dir.mkdir(parents=True, exist_ok=True)
+    path = cache_dir / f"{stem}.json"
+    path.write_text(dumps_model_spec(spec), encoding="utf-8")
+
+
+def _modelspec_for_class(
+    cls: type,
+    *,
+    cache_dir: Path | None,
+    use_cache: bool,
+    mode: Literal["ir", "stub"],
+    merge: bool,
+    stub_style: str,
+) -> ModelSpec:
+    stem = _batch_cache_stem(cls, mode=mode, merge=merge, stub_style=stub_style)
+    if cache_dir is not None and use_cache and stem is not None:
+        cached = _load_model_spec_cache(cache_dir, stem)
+        if cached is not None:
+            return cached
+    spec = modelspec_from_dataclass(cls)
+    if cache_dir is not None and use_cache and stem is not None:
+        try:
+            _save_model_spec_cache(cache_dir, stem, spec)
+        except OSError:
+            pass
+    return spec
 
 
 def discover_dataclass_targets(
@@ -132,8 +213,15 @@ def emit_batch_stubs(
     *,
     merge: bool = False,
     fail_fast: bool = False,
+    cache_dir: Path | None = None,
+    use_cache: bool = True,
+    stub_style: Literal["default", "minimal"] = "minimal",
 ) -> BatchEmitResult:
-    """Write one ``.pyi`` per class, or a single merged file if ``merge`` is True."""
+    """Write one ``.pyi`` per class, or a single merged file if ``merge`` is True.
+
+    When ``cache_dir`` is set and ``use_cache`` is True, ``ModelSpec`` JSON is cached
+    keyed by source file hash and package versions (see ``docs/performance.md``).
+    """
     out_dir.mkdir(parents=True, exist_ok=True)
     written: list[Path] = []
     errors: list[BatchItemError] = []
@@ -142,14 +230,21 @@ def emit_batch_stubs(
     for cls in targets:
         path = _class_import_path(cls)
         try:
-            spec = modelspec_from_dataclass(cls)
+            spec = _modelspec_for_class(
+                cls,
+                cache_dir=cache_dir,
+                use_cache=use_cache,
+                mode="stub",
+                merge=merge,
+                stub_style=stub_style,
+            )
         except TypeError as e:
             err = BatchItemError(target=path, phase="build", message=str(e))
             errors.append(err)
             if fail_fast:
                 return BatchEmitResult(written=written, errors=errors)
             continue
-        text = generate_pyi(spec, style="minimal")
+        text = generate_pyi(spec, style=stub_style)
         if merge:
             merged_chunks.append(f"# --- {path} ---\n{text}")
         else:
@@ -191,8 +286,13 @@ def emit_batch_ir(
     *,
     merge: bool = False,
     fail_fast: bool = False,
+    cache_dir: Path | None = None,
+    use_cache: bool = True,
 ) -> BatchEmitResult:
-    """Write one JSON file per class, or ``merged.json`` if ``merge`` is True."""
+    """Write one JSON file per class, or ``merged.json`` if ``merge`` is True.
+
+    Caching uses the same rules as :func:`emit_batch_stubs` when ``cache_dir`` is set.
+    """
     out_dir.mkdir(parents=True, exist_ok=True)
     written: list[Path] = []
     errors: list[BatchItemError] = []
@@ -202,7 +302,14 @@ def emit_batch_ir(
     for cls in targets:
         path = _class_import_path(cls)
         try:
-            spec = modelspec_from_dataclass(cls)
+            spec = _modelspec_for_class(
+                cls,
+                cache_dir=cache_dir,
+                use_cache=use_cache,
+                mode="ir",
+                merge=merge,
+                stub_style="minimal",
+            )
         except TypeError as e:
             errors.append(BatchItemError(target=path, phase="build", message=str(e)))
             if fail_fast:

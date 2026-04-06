@@ -38,6 +38,8 @@ Optional flags:
 - **`--merge`** — emit a single `merged.pyi` instead of one file per class.
 - **`--exclude PATTERN`** — repeat to add [fnmatch](https://docs.python.org/3/library/fnmatch.html) patterns against source file paths (in addition to built-in skips for library `tests/` trees).
 - **`--fail-fast`** — stop on the first build/write error instead of collecting all failures.
+- **`--cache-dir DIR`** — store per-class **ModelSpec** JSON so unchanged sources skip rebuilding IR (invalidated when **`velarium`** / **`velotype`** versions change or source bytes change). See [performance.md](performance.md).
+- **`--no-cache`** — do not read or write the batch cache, even if **`--cache-dir`** is set.
 
 ## 4. Batch IR (JSON) instead of stubs
 
@@ -66,6 +68,7 @@ Stop with **Ctrl+C**. New classes may require a new process if Python has alread
 
 ## Next steps
 
+- [Performance](performance.md) — batch cache, normalization hook, benchmark scripts.
 - [Stub compatibility](stub-compatibility.md) — what we guarantee for generated `.pyi` files.
 - [Troubleshooting CLI](troubleshooting-cli.md) — exit codes and common failures.
 - [Interchange: IR JSON](interchange-ir-json.md) — using IR outside Python.

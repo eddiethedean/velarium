@@ -1,6 +1,6 @@
 # Installing and releasing Velarium packages
 
-The repo is a **[uv](https://docs.astral.sh/uv/) workspace** at the root. **Tier-1** publish targets are **`velarium`** (core IR) and **`velotype`** (stubs + CLI). Scaffold packages (**`viperis`**, **`morphra`**, **`granitus`**, **`velocus`**) are versioned in lockstep (e.g. **0.5.0**) and buildable; publish them to PyPI only when you want those names live (they remain minimal stubs).
+The repo is a **[uv](https://docs.astral.sh/uv/) workspace** at the root. **Tier-1** publish targets are **`velarium`** (core IR) and **`velotype`** (stubs + CLI). Scaffold packages (**`viperis`**, **`morphra`**, **`granitus`**, **`velocus`**) are versioned in lockstep (e.g. **0.6.0**) and buildable; publish them to PyPI only when you want those names live (they remain minimal stubs).
 
 ## Version numbers
 
@@ -17,22 +17,22 @@ uv sync --reinstall-package velarium --reinstall-package velotype
 
 Before tagging a release for **`velarium`** or **`velotype`**, run the full test suite (`pytest` with coverage) and `ty check` as in the root [README.md](../README.md#development). Any intentional **JSON IR** output change should update golden fixtures under `tests/fixtures/ir_golden/`; any intentional **stub** output change should update goldens under `tests/fixtures/stub_corpus/` (and keep **`stub-check`** green — **mypy** / **Pyright** on that corpus). Record user-facing changes in [CHANGELOG.md](../CHANGELOG.md).
 
-### Ready for **0.5.0**?
+### Ready for **0.6.0**?
 
-Before publishing the **0.5.0** tag / GitHub Release, confirm:
+Before publishing the **0.6.0** tag / GitHub Release, confirm:
 
 | Check | Notes |
 |-------|--------|
-| Versions | Every package’s `__version__` is **`0.5.0`** (see each `packages/*/…/__init__.py`). **`velotype`** lists **`velarium>=0.5.0`** in [packages/velotype/pyproject.toml](../packages/velotype/pyproject.toml). |
-| Changelog | [CHANGELOG.md](../CHANGELOG.md) has a **`[0.5.0]`** section with the correct date and `[Unreleased]` compare link pointing at **`v0.5.0...HEAD`**. |
+| Versions | Every package’s `__version__` is **`0.6.0`** (see each `packages/*/…/__init__.py`). **`velotype`** lists **`velarium>=0.6.0`** in [packages/velotype/pyproject.toml](../packages/velotype/pyproject.toml). |
+| Changelog | [CHANGELOG.md](../CHANGELOG.md) has a **`[0.6.0]`** section with the correct date and `[Unreleased]` compare link pointing at **`v0.6.0...HEAD`**. |
 | CI | [ci.yml](../.github/workflows/ci.yml) green on **`main`** (pytest, `ty`, wheel build for all packages, **`stub-check`** with **mypy** + **Pyright** on `tests/fixtures/stub_corpus/`). |
 | Local build | `python -m build` in each `packages/*/`, or the merged `dist/` loop + `twine check dist/*` below. |
-| Tag | Create **`v0.5.0`** on the commit that contains the version bump (annotated tag recommended). |
+| Tag | Create **`v0.6.0`** on the commit that contains the version bump (annotated tag recommended). |
 | PyPI order | If uploading manually, ensure **`velarium`** is available before **`velotype`** (dependency). |
 
-Scaffold packages (**`viperis`**, **`morphra`**, **`granitus`**, **`velocus`**) are also **0.5.0** in-repo; only publish them to PyPI if you intend those names to update.
+Scaffold packages (**`viperis`**, **`morphra`**, **`granitus`**, **`velocus`**) are also **0.6.0** in-repo; only publish them to PyPI if you intend those names to update.
 
-For a **later** release (e.g. **0.6.0**), repeat the same checks with the new version everywhere: each package’s `__version__`, **`velotype`**’s `velarium>=…` lower bound if it changes, a new **`[x.y.z]`** section in [CHANGELOG.md](../CHANGELOG.md), tag **`vx.y.z`**, and update tagged-install / compare-link examples in this doc and the changelog as needed.
+For a **later** release (e.g. **0.7.0**), repeat the same checks with the new version everywhere: each package’s `__version__`, **`velotype`**’s `velarium>=…` lower bound if it changes, a new **`[x.y.z]`** section in [CHANGELOG.md](../CHANGELOG.md), tag **`vx.y.z`**, and update tagged-install / compare-link examples in this doc and the changelog as needed.
 
 ## Install from a Git checkout
 
@@ -51,7 +51,7 @@ pip install -e packages/velarium -e "packages/velotype[dev]"
 Tagged installs:
 
 ```bash
-pip install git+https://github.com/eddiethedean/velarium.git@v0.5.0#subdirectory=packages/velotype
+pip install git+https://github.com/eddiethedean/velarium.git@v0.6.0#subdirectory=packages/velotype
 ```
 
 (Adjust tag and subdirectory for **`velarium`** or scaffold packages as needed.)
@@ -83,17 +83,17 @@ Then upload:
 uv run twine upload dist/*
 ```
 
-Upload **`velarium`** before **`velotype`** if you step through uploads manually (so **`velotype`**’s `velarium>=0.5.0` resolves on PyPI). A single `twine upload dist/*` is fine once **`velarium`** is already published or all files upload in one batch.
+Upload **`velarium`** before **`velotype`** if you step through uploads manually (so **`velotype`**’s `velarium>=0.6.0` resolves on PyPI). A single `twine upload dist/*` is fine once **`velarium`** is already published or all files upload in one batch.
 
 ### Manual release checklist
 
 1. Bump `__version__` in the package(s) you release and update [CHANGELOG.md](../CHANGELOG.md).
-2. Tag (e.g. `git tag -a v0.5.0 -m "Release 0.5.0"`) and `git push origin v0.5.0`.
+2. Tag (e.g. `git tag -a v0.6.0 -m "Release 0.6.0"`) and `git push origin v0.6.0`.
 3. Build and upload as above.
 
 ### Automated (GitHub Actions)
 
-The [Publish workflow](../.github/workflows/publish.yml) runs when you **push a version tag** (e.g. `v0.5.0`) **or** when you **publish a GitHub Release** (useful if you add release notes without a fresh tag push). It builds **all workspace packages** into a single `dist/` folder and uploads via [pypa/gh-action-pypi-publish](https://github.com/pypa/gh-action-pypi-publish). Publish **`velarium`** before **`velotype`** on PyPI if you upload manually (velotype depends on velarium).
+The [Publish workflow](../.github/workflows/publish.yml) runs when you **push a version tag** (e.g. `v0.6.0`) **or** when you **publish a GitHub Release** (useful if you add release notes without a fresh tag push). It builds **all workspace packages** into a single `dist/` folder and uploads via [pypa/gh-action-pypi-publish](https://github.com/pypa/gh-action-pypi-publish). Publish **`velarium`** before **`velotype`** on PyPI if you upload manually (velotype depends on velarium).
 
 Pushing a tag alone **does** trigger the workflow; you do **not** have to create a GitHub Release unless you want one.
 
@@ -102,7 +102,7 @@ Pushing a tag alone **does** trigger the workflow; you do **not** have to create
 1. **API token (configured in-repo):** Add a repository secret named **`PYPI_API_TOKEN`** whose value is a [PyPI API token](https://pypi.org/manage/account/token/) with scope for every project this workflow uploads (`velarium`, `velotype`, and any scaffold packages you ship). The workflow uses username **`__token__`** and that secret as the password.
 2. **Trusted publishing (OIDC):** If you prefer not to store a long-lived token, configure **trusted publishing** on [pypi.org](https://pypi.org) for this GitHub repo, then adjust the workflow to use OIDC (see the action docs) and you can omit **`PYPI_API_TOKEN`**.
 
-To trigger a publish: **`git push origin v0.5.0`** (or any matching `v*` tag), or **publish a GitHub Release** for that tag if you use the Releases UI.
+To trigger a publish: **`git push origin v0.6.0`** (or any matching `v*` tag), or **publish a GitHub Release** for that tag if you use the Releases UI.
 
 Optional: add a GitHub **environment** named `pypi` with protection rules and reference it in the workflow if you want approval gates.
 

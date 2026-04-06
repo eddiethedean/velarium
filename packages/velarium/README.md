@@ -22,7 +22,7 @@ Downstream packages (e.g. [**velotype** on PyPI](https://pypi.org/project/veloty
 |------|-------------------------|
 | IR types | `velarium.ir` — `ModelSpec`, `TypeSpec`, `TypeKind`, … |
 | JSON | `velarium.json_codec` — `dumps_model_spec`, `loads_model_spec`, dict helpers |
-| Normalization | `velarium.normalize` — `normalize_typespec`, unions, optional handling |
+| Normalization | `velarium.normalize` — `normalize_typespec`, unions, optional handling; optional **`VELARIUM_NORMALIZE_BACKEND=native`** (falls back to Python; see [performance.md](https://github.com/eddiethedean/velarium/blob/main/docs/performance.md)) |
 | Annotations | `velarium.annotations` — `type_to_typespec`, `annotation_to_typespec` |
 | Builders | `velarium.modelspec_build` — `modelspec_from_dataclass`, `modelspec_from_typed_dict`, `typespec_from_object`; `velarium.modelspec_pydantic` / `modelspec_from_pydantic_model` (extra); `velarium.modelspec_attrs` / `modelspec_from_attrs_class` (extra) |
 | Resolution | `velarium.typing_resolve` — `get_resolved_hints`, `module_globals_for_class`, `evaluate_forward_ref` (used by builders; re-export not required for typical use) |

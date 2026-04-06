@@ -102,6 +102,7 @@ def test_cli_batch_stub_help() -> None:
     assert r.returncode == 0, (r.stderr or "") + (r.stdout or "")
     out = (r.stdout or "") + (r.stderr or "")
     assert "--out-dir" in out
+    assert "--cache-dir" in out
 
 
 def test_cli_batch_stub_runs(tmp_path: Path) -> None:

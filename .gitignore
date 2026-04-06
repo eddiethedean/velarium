@@ -23,6 +23,9 @@ share/python-wheels/
 # Hatch / setuptools
 .hatch/
 
+# Local profiling (scripts/profile_velotype_batch.py)
+.velotype_profile.stats
+
 # Testing / coverage
 .pytest_cache/
 .coverage

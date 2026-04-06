@@ -2,25 +2,28 @@
 
 from __future__ import annotations
 
+import importlib
+import os
+
 from velarium.ir import TypeKind, TypeSpec
 
 
 def normalize_union(ts: TypeSpec) -> TypeSpec:
     """Flatten nested unions, remove duplicates, preserve first-seen order."""
+    return _normalize_union_python(ts)
+
+
+def _normalize_union_python(ts: TypeSpec) -> TypeSpec:
+    """Flatten nested unions, remove duplicates, preserve first-seen order (Python impl)."""
     if ts.kind != TypeKind.UNION:
         return ts
     flat: list[TypeSpec] = []
     seen: list[str] = []
 
-    def json_key_obj(d: object) -> str:
-        import json
-
-        return json.dumps(d, sort_keys=True)
-
     def key(x: TypeSpec) -> str:
-        from velarium.json_codec import typespec_to_dict
+        from velarium.json_codec import typespec_dedupe_key
 
-        return json_key_obj(typespec_to_dict(x))
+        return typespec_dedupe_key(x)
 
     stack = list(ts.args or [])
     while stack:
@@ -56,8 +59,8 @@ def normalize_union(ts: TypeSpec) -> TypeSpec:
     )
 
 
-def normalize_typespec(ts: TypeSpec) -> TypeSpec:
-    """Recursively normalize unions and nested structures."""
+def _normalize_typespec_python(ts: TypeSpec) -> TypeSpec:
+    """Recursively normalize unions and nested structures (Python implementation)."""
     args = ts.args
     if args:
         args = [normalize_typespec(a) for a in args]
@@ -72,8 +75,26 @@ def normalize_typespec(ts: TypeSpec) -> TypeSpec:
         module=ts.module,
     )
     if out.kind == TypeKind.UNION:
-        return normalize_union(out)
+        return _normalize_union_python(out)
     return out
+
+
+def normalize_typespec(ts: TypeSpec) -> TypeSpec:
+    """Recursively normalize unions and nested structures.
+
+    Set ``VELARIUM_NORMALIZE_BACKEND=native`` to use ``velarium._native.normalize_typespec``
+    when an optional native extension is installed; otherwise falls back to Python.
+    """
+    backend = os.environ.get("VELARIUM_NORMALIZE_BACKEND", "python").lower().strip()
+    if backend == "native":
+        try:
+            mod = importlib.import_module("velarium._native")
+            native_fn = getattr(mod, "normalize_typespec", None)
+            if callable(native_fn):
+                return native_fn(ts)  # type: ignore[no-any-return]
+        except ImportError:
+            pass
+    return _normalize_typespec_python(ts)
 
 
 def optional_to_union(ts: TypeSpec) -> TypeSpec:
