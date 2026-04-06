@@ -125,7 +125,7 @@ Hosted on **Read the Docs** ([MkDocs](https://www.mkdocs.org/) + [Material](http
 | | |
 |---|---|
 | [Documentation home](https://velarium.readthedocs.io/en/latest/) | Same content as the docs index |
-| [User guides](https://velarium.readthedocs.io/en/latest/guides/) | Getting started, **`velotype`** CLI, **`velarium`** library |
+| [User guides](https://velarium.readthedocs.io/en/latest/guides/) | Getting started, [whole-package stubs](https://velarium.readthedocs.io/en/latest/guides/package-stubs/), **`velotype`** CLI, **`velarium`** library |
 | [API reference](https://velarium.readthedocs.io/en/latest/api-reference/) | Public **`velarium`** / **`velotype`** surface (`__all__`, CLI, batch helpers) |
 | [Stability](https://velarium.readthedocs.io/en/latest/stability/) | Pre-1.0 semver and IR policy |
 | [IR JSON migration](https://velarium.readthedocs.io/en/latest/migration-ir/) | **`format_version`**, legacy JSON, fixtures |

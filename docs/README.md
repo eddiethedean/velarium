@@ -14,8 +14,9 @@ Welcome to the **Velarium** monorepo docs: a shared **ModelSpec IR** ([**velariu
 
 | Guide | Contents |
 |-------|----------|
-| **[Guides index](https://github.com/eddiethedean/velarium/blob/main/docs/guides/README.md)** | Hub: getting started, CLI, library |
+| **[Guides index](https://github.com/eddiethedean/velarium/blob/main/docs/guides/README.md)** | Hub: getting started, whole-package stubs, CLI, library |
 | **[Getting started](https://github.com/eddiethedean/velarium/blob/main/docs/guides/getting-started.md)** | Install, first **`ir`** / **`stub`**, minimal Python snippet |
+| **[Stubs for a whole package](https://github.com/eddiethedean/velarium/blob/main/docs/guides/package-stubs.md)** | **`velotype batch stub`**, **`PYTHONPATH`**, flags, checkers, Pydantic / attrs pointers |
 | **[Velotype CLI](https://github.com/eddiethedean/velarium/blob/main/docs/guides/velotype-cli.md)** | **`ir`**, **`stub`**, **`batch`**, **`watch`** |
 | **[Velarium library](https://github.com/eddiethedean/velarium/blob/main/docs/guides/velarium-library.md)** | Builders, JSON, normalization, **`velotype`** integration |
 

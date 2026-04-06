@@ -47,6 +47,7 @@ nav:
   - User guides:
       - guides/README.md
       - guides/getting-started.md
+      - guides/package-stubs.md
       - guides/velotype-cli.md
       - guides/velarium-library.md
   - Ecosystem & design:

@@ -106,7 +106,7 @@ For many dataclasses under one import root, use **batch** mode:
 velotype batch stub myapp.models --out-dir stubs/
 ```
 
-See [Velotype CLI](velotype-cli.md) and [Tutorial: stubs](../tutorial-stubs.md).
+For **`PYTHONPATH`**, **`--merge`**, type checkers, and non-dataclass models, see **[Stubs for a whole package](package-stubs.md)**. Also [Velotype CLI](velotype-cli.md) and [Tutorial: stubs](../tutorial-stubs.md).
 
 ## Next steps
 
