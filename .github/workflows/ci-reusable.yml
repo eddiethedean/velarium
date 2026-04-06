@@ -1,0 +1,131 @@
+# Reusable CI (lint, tests, builds, stub-check). Used by ci.yml and publish.yml.
+name: CI (reusable)
+
+on:
+  workflow_call:
+    inputs:
+      checkout_ref:
+        description: "Git ref to checkout (tag name or refs/tags/…). Omit to use the caller default ref."
+        type: string
+        required: false
+        default: ""
+
+permissions:
+  contents: read
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ inputs.checkout_ref != '' && inputs.checkout_ref || github.ref }}
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7
+        with:
+          python-version: "3.12"
+          enable-cache: true
+          cache-suffix: lint
+
+      - name: Install workspace and dev tools
+        run: uv sync --locked --group dev
+
+      - name: Ruff (lint)
+        run: uv run ruff check .
+
+      - name: Ruff (format)
+        run: uv run ruff format --check .
+
+      - name: ty (type check)
+        run: uv run python -m ty check
+
+  test:
+    runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        shell: bash
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            python-version: "3.10"
+          - os: ubuntu-latest
+            python-version: "3.11"
+          - os: ubuntu-latest
+            python-version: "3.12"
+          - os: ubuntu-latest
+            python-version: "3.13"
+          - os: windows-latest
+            python-version: "3.12"
+          - os: macos-latest
+            python-version: "3.12"
+
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ inputs.checkout_ref != '' && inputs.checkout_ref || github.ref }}
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7
+        with:
+          python-version: ${{ matrix.python-version }}
+          enable-cache: true
+          cache-suffix: test-${{ matrix.os }}-${{ matrix.python-version }}
+
+      - name: Install workspace and dev tools
+        run: uv sync --locked --group dev
+
+      - name: Run tests
+        run: uv run pytest
+
+      - name: Build sdist and wheel (each package)
+        run: |
+          set -e
+          for pkg in velarium velotype viperis morphra granitus velocus; do
+            uv run python -m build "packages/$pkg"
+          done
+
+      - name: Verify artifacts
+        run: |
+          python -c "import pathlib; ps=sorted(pathlib.Path('packages').rglob('dist')); assert ps, 'no dist dirs'; print('\n'.join(str(p) for p in ps))"
+
+  stub-check:
+    runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        shell: bash
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ inputs.checkout_ref != '' && inputs.checkout_ref || github.ref }}
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7
+        with:
+          python-version: "3.12"
+          enable-cache: true
+          cache-suffix: stub-${{ matrix.os }}
+
+      - name: Install stub checkers (pinned via uv.lock)
+        run: uv sync --locked --group stubcheck
+
+      - name: mypy on fixture corpus
+        run: |
+          uv run mypy \
+            --config-file tests/fixtures/stub_corpus/mypy.ini \
+            tests/fixtures/stub_corpus/simple_int.pyi \
+            tests/fixtures/stub_corpus/with_datetime.pyi \
+            tests/fixtures/stub_corpus/mixed_kinds.pyi
+
+      - name: Pyright on fixture corpus
+        run: uv run pyright --project tests/fixtures/stub_corpus

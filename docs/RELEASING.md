@@ -93,7 +93,7 @@ Upload **`velarium`** before **`velotype`** if you step through uploads manually
 
 ### Automated (GitHub Actions)
 
-The [Publish workflow](../.github/workflows/publish.yml) runs when you **push a version tag** (e.g. `v0.6.0`) **or** when you **publish a GitHub Release** (useful if you add release notes without a fresh tag push). It builds **all workspace packages** into a single `dist/` folder and uploads via [pypa/gh-action-pypi-publish](https://github.com/pypa/gh-action-pypi-publish). Publish **`velarium`** before **`velotype`** on PyPI if you upload manually (velotype depends on velarium).
+The [Publish workflow](../.github/workflows/publish.yml) runs when you **push a version tag** (e.g. `v0.6.0`) **or** when you **publish a GitHub Release** (useful if you add release notes without a fresh tag push). It first runs the same checks as [ci-reusable.yml](../.github/workflows/ci-reusable.yml) (**ruff** lint + format, **ty**, tests, per-package builds, **stub-check**); only if that succeeds does it build **all workspace packages** into a single `dist/` folder and upload via [pypa/gh-action-pypi-publish](https://github.com/pypa/gh-action-pypi-publish). Publish **`velarium`** before **`velotype`** on PyPI if you upload manually (velotype depends on velarium).
 
 Pushing a tag alone **does** trigger the workflow; you do **not** have to create a GitHub Release unless you want one.
 

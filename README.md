@@ -113,7 +113,7 @@ Build wheels for every package under `packages/`:
 for d in packages/*/; do (cd "$d" && uv run python -m build); done
 ```
 
-CI uses **`uv sync --locked`**, **pytest**, **ty**, and wheel builds for all packages on **Ubuntu** across Python 3.10–3.13, plus **Windows** and **macOS** on Python 3.12 (with **uv** dependency caching); a **`stub-check`** job runs pinned **mypy** + **Pyright** on `tests/fixtures/stub_corpus/` on all three OSes (see [.github/workflows/ci.yml](https://github.com/eddiethedean/velarium/blob/main/.github/workflows/ci.yml)).
+CI uses **`uv sync --locked`**: a **`lint`** job on **Ubuntu** runs **ruff** (`check` + `format --check`) and **ty**; **`pytest`** and wheel builds for all packages run on **Ubuntu** across Python 3.10–3.13, plus **Windows** and **macOS** on Python 3.12 (with **uv** dependency caching); a **`stub-check`** job runs pinned **mypy** + **Pyright** on `tests/fixtures/stub_corpus/` on all three OSes (see [.github/workflows/ci-reusable.yml](https://github.com/eddiethedean/velarium/blob/main/.github/workflows/ci-reusable.yml), invoked from [.github/workflows/ci.yml](https://github.com/eddiethedean/velarium/blob/main/.github/workflows/ci.yml)).
 
 ## Documentation
 

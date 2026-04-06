@@ -1,6 +1,7 @@
 # Publish to PyPI when:
 # - a version tag is pushed (e.g. git push origin v0.6.0), or
 # - a GitHub Release is published (for release notes without a new tag push).
+# Full CI (ci-reusable.yml) must pass before build/publish.
 # Auth: repository secret PYPI_API_TOKEN. See docs/RELEASING.md
 
 name: Publish
@@ -16,7 +17,14 @@ permissions:
   contents: read
 
 jobs:
+  ci:
+    uses: ./.github/workflows/ci-reusable.yml
+    secrets: inherit
+    with:
+      checkout_ref: ${{ github.event_name == 'release' && github.event.release.tag_name || '' }}
+
   pypi:
+    needs: ci
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
@@ -29,6 +37,7 @@ jobs:
         with:
           python-version: "3.12"
           enable-cache: true
+          cache-suffix: publish
 
       - name: Sync workspace (velarium + velotype)
         run: uv sync --locked --group dev
