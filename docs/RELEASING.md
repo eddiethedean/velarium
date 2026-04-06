@@ -25,7 +25,7 @@ Before publishing the **0.6.0** tag / GitHub Release, confirm:
 |-------|--------|
 | Versions | Every package’s `__version__` is **`0.6.0`** (see each `packages/*/…/__init__.py`). **`velotype`** lists **`velarium>=0.6.0`** in [packages/velotype/pyproject.toml](../packages/velotype/pyproject.toml). |
 | Changelog | [CHANGELOG.md](../CHANGELOG.md) has a **`[0.6.0]`** section with the correct date and `[Unreleased]` compare link pointing at **`v0.6.0...HEAD`**. |
-| CI | [ci.yml](../.github/workflows/ci.yml) green on **`main`** (pytest, `ty`, wheel build for all packages, **`stub-check`** with **mypy** + **Pyright** on `tests/fixtures/stub_corpus/`). |
+| CI | [ci.yml](../.github/workflows/ci.yml) green on **`main`** (pytest, `ty`, wheel build for all packages on **Ubuntu** × Python 3.10–3.13 plus **Windows** and **macOS** on 3.12; **`stub-check`** with **mypy** + **Pyright** on all three OSes). |
 | Local build | `python -m build` in each `packages/*/`, or the merged `dist/` loop + `twine check dist/*` below. |
 | Tag | Create **`v0.6.0`** on the commit that contains the version bump (annotated tag recommended). |
 | PyPI order | If uploading manually, ensure **`velarium`** is available before **`velotype`** (dependency). |
